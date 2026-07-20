@@ -1,0 +1,21 @@
+{
+  "status": "passed",
+  "baseline": "benchmark-baseline/small-v0.14.0.json",
+  "current": "benchmark-results/current-v0.14.0.json",
+  "budgets": "benchmark-baseline/budgets.json",
+  "duration_ratios": {
+    "csv_connector": 1.1306,
+    "deterministic_matching": 0.9148,
+    "json_connector": 1.1975,
+    "mapping": 1.1743,
+    "parquet_connector": 1.581,
+    "parquet_export": 0.9783,
+    "probabilistic_matching": 1.0264,
+    "profiling": 1.0169,
+    "synthetic_generation": 1.3246,
+    "training_mart": 1.0806,
+    "validation": 1.0538,
+    "xlsx_connector": 1.0197
+  },
+  "interpretation": "Shared-sandbox regression check only; not a production SLA."
+}

@@ -1,0 +1,10 @@
+{
+  "docker_daemon_available": false,
+  "docker_compose_runtime_test": "not_run_no_daemon",
+  "live_postgresql_connector_test": "not_run_no_daemon",
+  "container_image_scan": "not_run_no_image_runtime",
+  "container_signing_and_verification": "not_run_no_registry_or_cosign",
+  "dagster_daemon_runtime": "not_run_no_container_runtime",
+  "real_external_technical_review": "not_performed_review_checklist_prepared",
+  "maturity_effect": "Blueprint-complete release candidate; pre-production until target-environment and independent-review gates are completed."
+}

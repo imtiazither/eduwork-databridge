@@ -1,0 +1,14 @@
+{
+  "version": "0.14.0",
+  "wheel": {
+    "name": "eduwork_databridge-0.14.0-py3-none-any.whl",
+    "bytes": 92600,
+    "sha256": "dfc95d2ff715b73c1149000cd2f996a99f31721e51d612c4a780353d4fc67a1f"
+  },
+  "sdist": {
+    "name": "eduwork_databridge-0.14.0.tar.gz",
+    "bytes": 71282,
+    "sha256": "baa26a64fb746068f3ac6b64e2333ae353afdb80d74432dcce975c18e1441c9b"
+  },
+  "status": "passed"
+}
