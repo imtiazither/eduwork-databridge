@@ -1,0 +1,66 @@
+name: CI
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+      - run: python -m pip install uv==0.11.29
+      - run: uv sync --frozen --extra dev
+      - run: uv run ruff check .
+      - run: uv run ruff format --check .
+      - run: uv run mypy packages/eduwork_databridge scripts
+      - run: uv run pytest
+      - run: uv run python scripts/export_json_schemas.py --check
+      - run: uv run python scripts/generate_data_dictionary.py --check
+      - run: uv run python scripts/verify_synthetic_data.py
+
+  frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/reviewer-ui
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: "24"
+          cache: npm
+          cache-dependency-path: apps/reviewer-ui/package-lock.json
+      - run: npm ci
+      - run: npm test -- --run
+      - run: npm run build
+
+  docs-and-release-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: "24"
+          cache: npm
+          cache-dependency-path: apps/reviewer-ui/package-lock.json
+      - run: python -m pip install uv==0.11.29
+      - run: uv sync --frozen --extra dev
+      - run: npm --prefix apps/reviewer-ui ci
+      - run: uv run mkdocs build --strict
+      - run: mkdir -p benchmark-results && uv run python scripts/run_benchmark.py --preset small --seed 20260719 --output benchmark-results/ci.json
+      - run: uv run python scripts/verify_benchmark.py --current benchmark-results/ci.json --baseline benchmark-baseline/small-v0.14.0.json --budgets benchmark-baseline/budgets.json
+      - run: uv run pip-audit --local
+      - run: npm --prefix apps/reviewer-ui audit
+      - run: uv run python scripts/scan_secrets.py --root .
+      - run: rm -rf release/packages && mkdir -p release/packages && uv run python -m build --outdir release/packages
+      - run: uv run python scripts/verify_packages.py
