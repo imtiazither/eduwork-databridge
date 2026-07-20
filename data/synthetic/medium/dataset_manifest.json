@@ -37,16 +37,16 @@
       "sha256": "bb05a769c75f3dbf8d73fc134ea49ff1f5f463f648b3301086fa65359d1cf65c"
     },
     {
-      "bytes": 3655,
+      "bytes": 3675,
       "logical_name": "credential_awards_parquet",
       "path": "medium/credential/credential_awards.parquet",
-      "sha256": "5dd67ba673cbd1e8d38f894d3a9aef53b9f5bcbf2c1ab2b7a087f931e0372290"
+      "sha256": "ca230d41582ccd6004076f615a255d1a30d78df26ff8d382bb1e1633135e4781"
     },
     {
-      "bytes": 220857,
+      "bytes": 218856,
       "logical_name": "hris_employees_csv",
       "path": "medium/hris/employees.csv",
-      "sha256": "f6c2b3f4dd62854a6a0b9362fc674de7078fccb1a263d7a30264e26e06032dbc"
+      "sha256": "9f187e58d7c9717c68c7813a62c9a7b5048b7239fef2e93df2c472932cc8044a"
     },
     {
       "bytes": 404003,
@@ -55,10 +55,10 @@
       "sha256": "8e23caf789303e239145d46e5b42bb1acd82da389bdbbeae5fb016998b26b8ac"
     },
     {
-      "bytes": 1506,
+      "bytes": 1487,
       "logical_name": "lms_courses_csv",
       "path": "medium/lms/courses.csv",
-      "sha256": "4491848d162e3e034dae7ecb0ac62655589d7870756258008956514573ff67b0"
+      "sha256": "13f50918582dda36d97d12e6cda4cfad4906392eed19d8c835783096b0dc8b8a"
     },
     {
       "bytes": 4982925,

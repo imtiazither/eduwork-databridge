@@ -5,7 +5,7 @@
     "machine": "x86_64",
     "packages": {
       "polars": "1.42.1",
-      "pyarrow": "21.0.0",
+      "pyarrow": "23.0.1",
       "rapidfuzz": "3.14.5",
       "sqlalchemy": "2.0.51"
     },
@@ -32,7 +32,7 @@
   "seed": 20260719,
   "stages": [
     {
-      "duration_seconds": 0.027098,
+      "duration_seconds": 0.028934,
       "generated_counts": {
         "assessment_results": 120,
         "credential_awards": 25,
@@ -41,79 +41,79 @@
         "lms_courses": 6,
         "lms_participations": 366
       },
-      "max_rss_kb": 133284,
+      "max_rss_kb": 128648,
       "record_count": 1,
-      "records_per_second": 36.9,
-      "rss_increase_kb": 8416,
+      "records_per_second": 34.56,
+      "rss_increase_kb": 7032,
       "stage": "synthetic_generation"
     },
     {
-      "duration_seconds": 0.001118,
-      "max_rss_kb": 133284,
+      "duration_seconds": 0.000934,
+      "max_rss_kb": 128648,
       "record_count": 120,
-      "records_per_second": 107351.23,
+      "records_per_second": 128546.96,
       "rss_increase_kb": 0,
       "stage": "csv_connector"
     },
     {
-      "duration_seconds": 0.001296,
-      "max_rss_kb": 133708,
+      "duration_seconds": 0.00134,
+      "max_rss_kb": 129012,
       "record_count": 366,
-      "records_per_second": 282417.43,
-      "rss_increase_kb": 424,
+      "records_per_second": 273104.78,
+      "rss_increase_kb": 364,
       "stage": "json_connector"
     },
     {
-      "duration_seconds": 0.014919,
-      "max_rss_kb": 134032,
+      "duration_seconds": 0.015082,
+      "max_rss_kb": 129336,
       "record_count": 120,
-      "records_per_second": 8043.4,
+      "records_per_second": 7956.36,
       "rss_increase_kb": 324,
       "stage": "xlsx_connector"
     },
     {
-      "duration_seconds": 0.039416,
-      "max_rss_kb": 149408,
+      "duration_seconds": 0.036375,
+      "max_rss_kb": 139848,
       "record_count": 25,
-      "records_per_second": 634.26,
-      "rss_increase_kb": 15376,
+      "records_per_second": 687.29,
+      "rss_increase_kb": 10512,
       "stage": "parquet_connector"
     },
     {
-      "duration_seconds": 0.005561,
-      "max_rss_kb": 159820,
+      "duration_seconds": 0.004267,
+      "max_rss_kb": 150424,
       "record_count": 366,
-      "records_per_second": 65815.81,
-      "rss_increase_kb": 10412,
+      "records_per_second": 85783.94,
+      "rss_increase_kb": 10576,
       "stage": "profiling"
     },
     {
-      "duration_seconds": 0.000677,
-      "max_rss_kb": 159820,
+      "duration_seconds": 0.000688,
+      "max_rss_kb": 150424,
       "record_count": 120,
-      "records_per_second": 177174.34,
+      "records_per_second": 174475.41,
       "rss_increase_kb": 0,
       "stage": "mapping"
     },
     {
-      "duration_seconds": 0.000799,
-      "max_rss_kb": 159820,
+      "duration_seconds": 0.000795,
+      "max_rss_kb": 150424,
       "record_count": 111,
-      "records_per_second": 138881.76,
+      "records_per_second": 139557.34,
       "rss_increase_kb": 0,
       "stage": "validation"
     },
     {
-      "duration_seconds": 0.002852,
-      "max_rss_kb": 161544,
+      "duration_seconds": 0.002634,
+      "max_rss_kb": 151816,
       "record_count": 246,
-      "records_per_second": 86255.71,
+      "records_per_second": 93386.77,
       "rss_increase_kb": 0,
       "stage": "deterministic_matching"
     },
     {
-      "duration_seconds": 0.372068,
-      "max_rss_kb": 164448,
+      "duration_seconds": 0.366412,
+      "max_rss_kb": 154720,
       "metrics": {
         "auto_false_positives": 0,
         "auto_match_pairs": 121,
@@ -126,25 +126,25 @@
         "total_truth_pairs": 132
       },
       "record_count": 246,
-      "records_per_second": 661.17,
+      "records_per_second": 671.38,
       "rss_increase_kb": 2904,
       "stage": "probabilistic_matching"
     },
     {
-      "duration_seconds": 0.000273,
-      "max_rss_kb": 164448,
+      "duration_seconds": 0.000288,
+      "max_rss_kb": 154720,
       "record_count": 366,
-      "records_per_second": 1338629.33,
+      "records_per_second": 1271270.34,
       "rss_increase_kb": 0,
       "stage": "training_mart"
     },
     {
-      "bytes": 5961,
-      "duration_seconds": 0.002024,
-      "max_rss_kb": 166496,
+      "bytes": 6001,
+      "duration_seconds": 0.001597,
+      "max_rss_kb": 155160,
       "record_count": 366,
-      "records_per_second": 180816.91,
-      "rss_increase_kb": 2048,
+      "records_per_second": 229128.35,
+      "rss_increase_kb": 440,
       "stage": "parquet_export"
     }
   ]

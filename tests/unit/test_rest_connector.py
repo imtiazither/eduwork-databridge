@@ -1,10 +1,25 @@
 import asyncio
+import socket
+from typing import Any
 
 import httpx
 import pytest
 from eduwork_databridge.connectors.base import ConnectorError
 from eduwork_databridge.connectors.rest import RESTConnector
 from eduwork_databridge.schemas.config import RetryPolicy, SourceObjectConfig
+
+
+@pytest.fixture(autouse=True)
+def resolve_mock_transport_host(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Keep HTTPX's synthetic test host independent of runner DNS."""
+    original = socket.getaddrinfo
+
+    def resolve(host: str, port: int, *args: Any, **kwargs: Any) -> Any:
+        if host == "testserver":
+            return [(socket.AF_INET, socket.SOCK_STREAM, 6, "", ("127.0.0.1", port))]
+        return original(host, port, *args, **kwargs)
+
+    monkeypatch.setattr(socket, "getaddrinfo", resolve)
 
 
 def test_rest_connector_handles_pagination_and_retry() -> None:

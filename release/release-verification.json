@@ -10,7 +10,7 @@
     "sboms": "passed",
     "packages": "passed",
     "backup_restore_and_regression": "passed",
-    "demo_video": "passed",
+    "demo_video": "passed_with_ffprobe",
     "environment_gaps_documented": "passed"
   },
   "checksums": "generated_after_verification"
