@@ -1,0 +1,7 @@
+course_id,course_uuid,course_title,required,credential_code
+CRS-00001,c18344b4-b6e7-5c26-8c00-446f20abdbd1,Data Privacy Essentials 1,True,CERT-00001
+CRS-00002,85c07d15-5195-510c-9953-3c29e89cf503,Workplace Safety 1,False,
+CRS-00003,613a92d1-6129-58aa-a89d-d32d3577265d,Customer Communication 1,False,
+CRS-00004,58dc147c-0544-5c34-ac2d-402b8e84ad52,Responsible AI Foundations 1,True,
+CRS-00005,aa31f1fb-38a4-56f9-be75-f5fd31ff6298,Manager Coaching 1,False,CERT-00005
+CRS-00006,919b9fef-bbdd-524a-ad3f-61439460494c,Information Security 1,False,

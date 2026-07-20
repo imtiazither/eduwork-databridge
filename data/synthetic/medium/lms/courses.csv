@@ -1,0 +1,19 @@
+course_id,course_uuid,course_title,required,credential_code
+CRS-00001,c18344b4-b6e7-5c26-8c00-446f20abdbd1,Data Privacy Essentials 1,True,CERT-00001
+CRS-00002,85c07d15-5195-510c-9953-3c29e89cf503,Workplace Safety 1,False,
+CRS-00003,613a92d1-6129-58aa-a89d-d32d3577265d,Customer Communication 1,False,
+CRS-00004,58dc147c-0544-5c34-ac2d-402b8e84ad52,Responsible AI Foundations 1,True,
+CRS-00005,aa31f1fb-38a4-56f9-be75-f5fd31ff6298,Manager Coaching 1,False,CERT-00005
+CRS-00006,919b9fef-bbdd-524a-ad3f-61439460494c,Information Security 1,False,
+CRS-00007,d6445ea6-e367-5c2e-8618-5d1257c32b8b,Quality Fundamentals 1,True,
+CRS-00008,a38eb921-6f7c-582b-8a50-c6b986a82dac,Project Delivery 1,False,
+CRS-00009,dddcbabc-62aa-5502-87ea-915fa97be31d,Data Privacy Essentials 2,False,CERT-00009
+CRS-00010,8a5a6994-c9d5-585b-bcdd-205fdd5e10bf,Workplace Safety 2,True,
+CRS-00011,282e718f-6cb5-564e-af57-3c79e4595ab4,Customer Communication 2,False,
+CRS-00012,1113dbc0-7829-569e-9e0b-03523f064031,Responsible AI Foundations 2,False,
+CRS-00013,34493298-6c15-5503-b138-18a91f0ccf35,Manager Coaching 2,True,CERT-00013
+CRS-00014,33e0a581-df4b-54ee-abb9-37e49f67ac76,Information Security 2,False,
+CRS-00015,7ce5d505-e54e-573f-8b09-c24947cce298,Quality Fundamentals 2,False,
+CRS-00016,4cfa221e-ad94-5a0a-8639-955e2d16c270,Project Delivery 2,True,
+CRS-00017,a93a77b1-13f5-5d9e-a8f2-3c349ae321b7,Data Privacy Essentials 3,False,CERT-00017
+CRS-00018,af75268f-fe5a-58b9-8003-3c44a50945b7,Workplace Safety 3,False,

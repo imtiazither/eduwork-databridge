@@ -1,0 +1,83 @@
+{
+  "counts": {
+    "assessment_results": 120,
+    "credential_awards": 25,
+    "hris_people": 120,
+    "identity_truth_rows": 120,
+    "lms_courses": 6,
+    "lms_participations": 366
+  },
+  "defect_catalog": {
+    "completion_before_assignment": "Completion timestamp precedes assignment timestamp.",
+    "conflicting_department": "HRIS and LMS department codes disagree.",
+    "credential_before_assessment": "Credential award precedes the qualifying assessment.",
+    "duplicate_lms_account": "One synthetic person has two LMS accounts.",
+    "formula_like_text": "A harmless synthetic text value begins with a spreadsheet formula character.",
+    "invalid_completion_status": "LMS status contains a value outside the approved code set.",
+    "late_event": "A learning event arrives after the expected reporting window.",
+    "missing_employee_id": "HRIS employee identifier is blank while related systems retain an ID.",
+    "name_variant": "LMS name contains spacing, punctuation, or nickname variation."
+  },
+  "defect_summary": {
+    "completion_before_assignment": 5,
+    "conflicting_department": 3,
+    "credential_before_assessment": 1,
+    "duplicate_lms_account": 6,
+    "formula_like_text": 1,
+    "invalid_completion_status": 7,
+    "late_event": 2,
+    "missing_employee_id": 9,
+    "name_variant": 9
+  },
+  "files": [
+    {
+      "bytes": 9550,
+      "logical_name": "assessment_results_xlsx",
+      "path": "small/assessment/assessment_results.xlsx",
+      "sha256": "e708e32c79cd7e10b507a3b3fda5fc073dc00854dcdd9055fcdd9de0c228e2bb"
+    },
+    {
+      "bytes": 2140,
+      "logical_name": "credential_awards_parquet",
+      "path": "small/credential/credential_awards.parquet",
+      "sha256": "127f2d069a5bd93ce13bd0faceec9df7cec6d615fe2d8f8994fbed2c69c8270c"
+    },
+    {
+      "bytes": 13163,
+      "logical_name": "hris_employees_csv",
+      "path": "small/hris/employees.csv",
+      "sha256": "48c86931abe7aecf44b6866079f6d1d23eeb41c095abba764790a6bfcd5d9197"
+    },
+    {
+      "bytes": 24273,
+      "logical_name": "identity_truth_json",
+      "path": "small/truth/identity_truth.json",
+      "sha256": "de77fdb10f860a5f5583cc4b8e4868ebc565e0a7d10860e52485aa0f85518f5f"
+    },
+    {
+      "bytes": 550,
+      "logical_name": "lms_courses_csv",
+      "path": "small/lms/courses.csv",
+      "sha256": "ba5f6c408ee2b0110a3b3927a966af71dfdc8a6775f3771d3e0beae01cc42e50"
+    },
+    {
+      "bytes": 150996,
+      "logical_name": "lms_participation_json",
+      "path": "small/lms/participation.json",
+      "sha256": "52b900c29534a5c23cc696eddd80b427c654ace4981f1042b13625405a67abf9"
+    }
+  ],
+  "generated_at": "2026-07-19T00:00:00+00:00",
+  "preset": "small",
+  "preset_spec": {
+    "courses": 6,
+    "defect_rate": 0.08,
+    "duplicate_rate": 0.05,
+    "participations_per_person": 3,
+    "people": 120
+  },
+  "privacy_notice": "All records are deterministic synthetic fixtures. They do not describe real people or organizations.",
+  "project": "EduWork DataBridge",
+  "seed": 20260719,
+  "synthetic": true
+}

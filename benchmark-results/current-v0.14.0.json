@@ -1,0 +1,151 @@
+{
+  "benchmark_version": "1.0",
+  "environment": {
+    "cpu_count": 2,
+    "machine": "x86_64",
+    "packages": {
+      "polars": "1.42.1",
+      "pyarrow": "23.0.1",
+      "rapidfuzz": "3.14.5",
+      "sqlalchemy": "2.0.51"
+    },
+    "platform": "Linux-5.10.174-x86_64-with-glibc2.34",
+    "processor": "x86_64",
+    "python": "3.12.13"
+  },
+  "input_counts": {
+    "assessment_results": 120,
+    "credential_awards": 25,
+    "hris_people": 120,
+    "identity_truth_rows": 120,
+    "lms_courses": 6,
+    "lms_participations": 366
+  },
+  "limitations": [
+    "Synthetic data only",
+    "Single-process sandbox measurement",
+    "Not a production SLA or cloud benchmark",
+    "Filesystem cache and shared-host load may affect results"
+  ],
+  "preset": "small",
+  "project_version": "0.14.0",
+  "seed": 20260719,
+  "stages": [
+    {
+      "duration_seconds": 0.035894,
+      "generated_counts": {
+        "assessment_results": 120,
+        "credential_awards": 25,
+        "hris_people": 120,
+        "identity_truth_rows": 120,
+        "lms_courses": 6,
+        "lms_participations": 366
+      },
+      "max_rss_kb": 128408,
+      "record_count": 1,
+      "records_per_second": 27.86,
+      "rss_increase_kb": 7128,
+      "stage": "synthetic_generation"
+    },
+    {
+      "duration_seconds": 0.001264,
+      "max_rss_kb": 128408,
+      "record_count": 120,
+      "records_per_second": 94972.62,
+      "rss_increase_kb": 0,
+      "stage": "csv_connector"
+    },
+    {
+      "duration_seconds": 0.001552,
+      "max_rss_kb": 128768,
+      "record_count": 366,
+      "records_per_second": 235757.75,
+      "rss_increase_kb": 360,
+      "stage": "json_connector"
+    },
+    {
+      "duration_seconds": 0.015213,
+      "max_rss_kb": 129092,
+      "record_count": 120,
+      "records_per_second": 7887.9,
+      "rss_increase_kb": 324,
+      "stage": "xlsx_connector"
+    },
+    {
+      "duration_seconds": 0.062318,
+      "max_rss_kb": 141732,
+      "record_count": 25,
+      "records_per_second": 401.17,
+      "rss_increase_kb": 12640,
+      "stage": "parquet_connector"
+    },
+    {
+      "duration_seconds": 0.005655,
+      "max_rss_kb": 149328,
+      "record_count": 366,
+      "records_per_second": 64725.56,
+      "rss_increase_kb": 7596,
+      "stage": "profiling"
+    },
+    {
+      "duration_seconds": 0.000795,
+      "max_rss_kb": 149328,
+      "record_count": 120,
+      "records_per_second": 150865.59,
+      "rss_increase_kb": 0,
+      "stage": "mapping"
+    },
+    {
+      "duration_seconds": 0.000842,
+      "max_rss_kb": 149328,
+      "record_count": 111,
+      "records_per_second": 131816.61,
+      "rss_increase_kb": 0,
+      "stage": "validation"
+    },
+    {
+      "duration_seconds": 0.002609,
+      "max_rss_kb": 151776,
+      "record_count": 246,
+      "records_per_second": 94306.42,
+      "rss_increase_kb": 0,
+      "stage": "deterministic_matching"
+    },
+    {
+      "duration_seconds": 0.381883,
+      "max_rss_kb": 154416,
+      "metrics": {
+        "auto_false_positives": 0,
+        "auto_match_pairs": 121,
+        "auto_precision": 1.0,
+        "auto_true_positives": 121,
+        "false_negatives_after_review": 0,
+        "potential_recall_with_review": 1.0,
+        "review_capture": 0.37931034,
+        "review_pairs": 29,
+        "total_truth_pairs": 132
+      },
+      "record_count": 246,
+      "records_per_second": 644.18,
+      "rss_increase_kb": 2640,
+      "stage": "probabilistic_matching"
+    },
+    {
+      "duration_seconds": 0.000295,
+      "max_rss_kb": 154416,
+      "record_count": 366,
+      "records_per_second": 1240686.37,
+      "rss_increase_kb": 0,
+      "stage": "training_mart"
+    },
+    {
+      "bytes": 6001,
+      "duration_seconds": 0.00198,
+      "max_rss_kb": 154840,
+      "record_count": 366,
+      "records_per_second": 184844.84,
+      "rss_increase_kb": 424,
+      "stage": "parquet_export"
+    }
+  ]
+}

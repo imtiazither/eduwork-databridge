@@ -1,0 +1,9 @@
+{
+  "default_duration_multiplier": 3.0,
+  "default_absolute_slack_seconds": 1.0,
+  "stages": {
+    "synthetic_generation": {"duration_multiplier": 4.0, "absolute_slack_seconds": 2.0},
+    "probabilistic_matching": {"duration_multiplier": 3.0, "absolute_slack_seconds": 2.0}
+  },
+  "interpretation": "Generous shared-sandbox regression guardrails; not production SLAs."
+}

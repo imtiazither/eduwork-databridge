@@ -1,0 +1,968 @@
+[
+  {
+    "assessment_person_id": "ASM-0000001",
+    "canonical_person_id": "c3e5054c-2c0d-501b-bcd4-b8542429f7df",
+    "employee_id": "EMP-0000001",
+    "lms_user_ids": [
+      "LMS-0000001"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000002",
+    "canonical_person_id": "222c6d62-631d-5bf9-b6c6-bfad370707a8",
+    "employee_id": "EMP-0000002",
+    "lms_user_ids": [
+      "LMS-0000002"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000003",
+    "canonical_person_id": "aeb5ce09-db93-5f6c-82d5-bd000e8d0035",
+    "employee_id": "EMP-0000003",
+    "lms_user_ids": [
+      "LMS-0000003"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000004",
+    "canonical_person_id": "5913ea14-0e2c-5217-b200-001ff7d2a91f",
+    "employee_id": "EMP-0000004",
+    "lms_user_ids": [
+      "LMS-0000004"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000005",
+    "canonical_person_id": "599419a7-f4a6-52da-8e01-efc3fe9a8514",
+    "employee_id": "EMP-0000005",
+    "lms_user_ids": [
+      "LMS-0000005",
+      "LMS-DUP-0000005"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000006",
+    "canonical_person_id": "4cbbfa7a-e639-56ab-aee8-d3ce9e6c2bf8",
+    "employee_id": "EMP-0000006",
+    "lms_user_ids": [
+      "LMS-0000006"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000007",
+    "canonical_person_id": "e2ab5112-3be9-54b0-abfd-3248f388d5ff",
+    "employee_id": "EMP-0000007",
+    "lms_user_ids": [
+      "LMS-0000007"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000008",
+    "canonical_person_id": "e851d8fb-be68-56cd-aa47-0f945550d0e0",
+    "employee_id": "EMP-0000008",
+    "lms_user_ids": [
+      "LMS-0000008"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000009",
+    "canonical_person_id": "21c80f8a-b91d-579f-81fa-f0f7ae5dc6c2",
+    "employee_id": "EMP-0000009",
+    "lms_user_ids": [
+      "LMS-0000009"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000010",
+    "canonical_person_id": "e8bad9a8-fadb-5e9b-b4c0-4b5f8d42ffc8",
+    "employee_id": "EMP-0000010",
+    "lms_user_ids": [
+      "LMS-0000010"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000011",
+    "canonical_person_id": "ddccfd46-a315-5c7c-ac8c-31ff7db7779a",
+    "employee_id": "EMP-0000011",
+    "lms_user_ids": [
+      "LMS-0000011"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000012",
+    "canonical_person_id": "f9b574f2-5bfa-5e87-90a0-5eccba3b635d",
+    "employee_id": "EMP-0000012",
+    "lms_user_ids": [
+      "LMS-0000012"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000013",
+    "canonical_person_id": "0c7d616b-427d-5653-b1d4-fd53d6c6a950",
+    "employee_id": "EMP-0000013",
+    "lms_user_ids": [
+      "LMS-0000013"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000014",
+    "canonical_person_id": "f8134856-5e5d-52cc-b0d2-ce33f30db138",
+    "employee_id": "EMP-0000014",
+    "lms_user_ids": [
+      "LMS-0000014"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000015",
+    "canonical_person_id": "401f4485-1fbb-5d9b-a95c-241e5ef52562",
+    "employee_id": "EMP-0000015",
+    "lms_user_ids": [
+      "LMS-0000015"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000016",
+    "canonical_person_id": "baca21ab-e72e-543b-9afc-9a685757c356",
+    "employee_id": "EMP-0000016",
+    "lms_user_ids": [
+      "LMS-0000016",
+      "LMS-DUP-0000016"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000017",
+    "canonical_person_id": "bca4fb08-e2f8-5418-9b7d-8f8718892c81",
+    "employee_id": "EMP-0000017",
+    "lms_user_ids": [
+      "LMS-0000017"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000018",
+    "canonical_person_id": "a1c2251f-f46a-5f2a-8e46-3772d8bdb57e",
+    "employee_id": "EMP-0000018",
+    "lms_user_ids": [
+      "LMS-0000018"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000019",
+    "canonical_person_id": "a1f514ae-c67a-54e0-96fc-955da9a24f93",
+    "employee_id": "EMP-0000019",
+    "lms_user_ids": [
+      "LMS-0000019"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000020",
+    "canonical_person_id": "4afab0cc-1a83-535b-bd2c-96318de9a002",
+    "employee_id": "EMP-0000020",
+    "lms_user_ids": [
+      "LMS-0000020"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000021",
+    "canonical_person_id": "d94290f9-8ace-5cfb-bf20-8484fcab9c62",
+    "employee_id": "EMP-0000021",
+    "lms_user_ids": [
+      "LMS-0000021"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000022",
+    "canonical_person_id": "9650ee6a-428e-585a-a9dd-d5085e09e840",
+    "employee_id": "EMP-0000022",
+    "lms_user_ids": [
+      "LMS-0000022"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000023",
+    "canonical_person_id": "940f6491-f307-5b8c-8e14-40dc9e06c4ff",
+    "employee_id": "EMP-0000023",
+    "lms_user_ids": [
+      "LMS-0000023"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000024",
+    "canonical_person_id": "d7c1eb46-1d60-5f31-b1fc-ae59f198efc6",
+    "employee_id": "EMP-0000024",
+    "lms_user_ids": [
+      "LMS-0000024"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000025",
+    "canonical_person_id": "6a6e4d4e-8c07-59f4-a159-094e7cacd4dd",
+    "employee_id": "EMP-0000025",
+    "lms_user_ids": [
+      "LMS-0000025"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000026",
+    "canonical_person_id": "21f01640-a46a-54d8-a3ee-fb6c94e5f076",
+    "employee_id": "EMP-0000026",
+    "lms_user_ids": [
+      "LMS-0000026"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000027",
+    "canonical_person_id": "15ad09b0-ba5d-57d0-a942-f4f7eae568ee",
+    "employee_id": "EMP-0000027",
+    "lms_user_ids": [
+      "LMS-0000027"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000028",
+    "canonical_person_id": "3c04c850-9eef-53ca-ab27-aee4c2295797",
+    "employee_id": "EMP-0000028",
+    "lms_user_ids": [
+      "LMS-0000028"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000029",
+    "canonical_person_id": "2233d11b-119e-54ac-947e-ccd7f7554335",
+    "employee_id": "EMP-0000029",
+    "lms_user_ids": [
+      "LMS-0000029"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000030",
+    "canonical_person_id": "d9e00e34-e3c5-58bd-99e7-556791a0bef4",
+    "employee_id": "EMP-0000030",
+    "lms_user_ids": [
+      "LMS-0000030"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000031",
+    "canonical_person_id": "775d64ee-932e-5f54-9f0e-a8b8df0af66c",
+    "employee_id": "EMP-0000031",
+    "lms_user_ids": [
+      "LMS-0000031"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000032",
+    "canonical_person_id": "50ce638b-7469-576a-b382-fda53ecdfea0",
+    "employee_id": "EMP-0000032",
+    "lms_user_ids": [
+      "LMS-0000032"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000033",
+    "canonical_person_id": "0dd351a2-139b-5312-97e2-d49ca2b9e2c1",
+    "employee_id": "EMP-0000033",
+    "lms_user_ids": [
+      "LMS-0000033"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000034",
+    "canonical_person_id": "c64e6a42-3667-55fc-a120-5a4cc49acb80",
+    "employee_id": "EMP-0000034",
+    "lms_user_ids": [
+      "LMS-0000034"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000035",
+    "canonical_person_id": "cd2592c4-95e9-553f-9e0a-ba376d60aea7",
+    "employee_id": "EMP-0000035",
+    "lms_user_ids": [
+      "LMS-0000035"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000036",
+    "canonical_person_id": "262d8f2e-8d24-572e-b500-99dc5380eb2c",
+    "employee_id": "EMP-0000036",
+    "lms_user_ids": [
+      "LMS-0000036"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000037",
+    "canonical_person_id": "e266c8ab-ca78-5d69-a482-3c229dafc8c8",
+    "employee_id": "EMP-0000037",
+    "lms_user_ids": [
+      "LMS-0000037"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000038",
+    "canonical_person_id": "b4ece224-8aee-58cc-960a-5215481139ce",
+    "employee_id": "EMP-0000038",
+    "lms_user_ids": [
+      "LMS-0000038"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000039",
+    "canonical_person_id": "d4838cfc-1871-57c7-9276-bb3078c9573d",
+    "employee_id": "EMP-0000039",
+    "lms_user_ids": [
+      "LMS-0000039"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000040",
+    "canonical_person_id": "28e715cc-7e9a-51b8-8742-5646ec7922d8",
+    "employee_id": "EMP-0000040",
+    "lms_user_ids": [
+      "LMS-0000040"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000041",
+    "canonical_person_id": "e9931e7b-9294-50ac-87a9-de8646454000",
+    "employee_id": "EMP-0000041",
+    "lms_user_ids": [
+      "LMS-0000041"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000042",
+    "canonical_person_id": "b0c077dd-5b96-5f09-8591-4ea0263ddff3",
+    "employee_id": "EMP-0000042",
+    "lms_user_ids": [
+      "LMS-0000042"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000043",
+    "canonical_person_id": "095fac6c-a3a2-52ce-bbc1-f892d830a839",
+    "employee_id": "EMP-0000043",
+    "lms_user_ids": [
+      "LMS-0000043"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000044",
+    "canonical_person_id": "f1826262-e4ec-5cbd-b288-b6002f661ece",
+    "employee_id": "EMP-0000044",
+    "lms_user_ids": [
+      "LMS-0000044"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000045",
+    "canonical_person_id": "1ed4eed8-f09a-59f6-b9c6-07f8f32ddc5c",
+    "employee_id": "EMP-0000045",
+    "lms_user_ids": [
+      "LMS-0000045"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000046",
+    "canonical_person_id": "a9f9319f-f1ca-58ec-b888-edd54f5fde13",
+    "employee_id": "EMP-0000046",
+    "lms_user_ids": [
+      "LMS-0000046"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000047",
+    "canonical_person_id": "7e960592-02af-54a9-9bfa-119293b0f71b",
+    "employee_id": "EMP-0000047",
+    "lms_user_ids": [
+      "LMS-0000047"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000048",
+    "canonical_person_id": "f150ca25-2d61-5bba-a73b-80958b953121",
+    "employee_id": "EMP-0000048",
+    "lms_user_ids": [
+      "LMS-0000048"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000049",
+    "canonical_person_id": "ba26be16-d485-59d5-ae76-f797daf2f820",
+    "employee_id": "EMP-0000049",
+    "lms_user_ids": [
+      "LMS-0000049"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000050",
+    "canonical_person_id": "3925d695-639d-52fd-9af3-5acae08f1831",
+    "employee_id": "EMP-0000050",
+    "lms_user_ids": [
+      "LMS-0000050"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000051",
+    "canonical_person_id": "c276f13b-059b-5b46-8e1b-8302fe9bed96",
+    "employee_id": "EMP-0000051",
+    "lms_user_ids": [
+      "LMS-0000051"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000052",
+    "canonical_person_id": "02e595ec-38df-5e27-9ef1-48f8249c1435",
+    "employee_id": "EMP-0000052",
+    "lms_user_ids": [
+      "LMS-0000052"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000053",
+    "canonical_person_id": "0d09e5a0-6919-5f1b-8a0f-1269f12ddf76",
+    "employee_id": "EMP-0000053",
+    "lms_user_ids": [
+      "LMS-0000053"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000054",
+    "canonical_person_id": "422cc40f-76c2-54e6-a791-77f30f3f5547",
+    "employee_id": "EMP-0000054",
+    "lms_user_ids": [
+      "LMS-0000054"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000055",
+    "canonical_person_id": "96f25aad-f328-584f-bcd2-cc7c4127c6f4",
+    "employee_id": "EMP-0000055",
+    "lms_user_ids": [
+      "LMS-0000055"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000056",
+    "canonical_person_id": "32ddb5b7-6d87-59cf-91e8-22fe85042eb5",
+    "employee_id": "EMP-0000056",
+    "lms_user_ids": [
+      "LMS-0000056"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000057",
+    "canonical_person_id": "120dd0a4-9932-5931-aef5-ef390b51b4ac",
+    "employee_id": "EMP-0000057",
+    "lms_user_ids": [
+      "LMS-0000057"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000058",
+    "canonical_person_id": "ae43befc-0b0e-51eb-b4cf-0248fd296876",
+    "employee_id": "EMP-0000058",
+    "lms_user_ids": [
+      "LMS-0000058"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000059",
+    "canonical_person_id": "d8527c5c-a9c4-559f-9d3e-7cab8d3955b2",
+    "employee_id": "EMP-0000059",
+    "lms_user_ids": [
+      "LMS-0000059"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000060",
+    "canonical_person_id": "a6b22ba5-b3da-54a7-8307-f0025cf4bbf3",
+    "employee_id": "EMP-0000060",
+    "lms_user_ids": [
+      "LMS-0000060"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000061",
+    "canonical_person_id": "0a90776c-874e-57e1-b894-07873497fd08",
+    "employee_id": "EMP-0000061",
+    "lms_user_ids": [
+      "LMS-0000061"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000062",
+    "canonical_person_id": "e7ed1581-5802-5cae-8859-ce8e0dff4f90",
+    "employee_id": "EMP-0000062",
+    "lms_user_ids": [
+      "LMS-0000062"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000063",
+    "canonical_person_id": "42126750-4177-5764-b879-3bc172313d5e",
+    "employee_id": "EMP-0000063",
+    "lms_user_ids": [
+      "LMS-0000063"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000064",
+    "canonical_person_id": "c984969e-8ce9-5a6f-b2e0-ff3799f1d011",
+    "employee_id": "EMP-0000064",
+    "lms_user_ids": [
+      "LMS-0000064"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000065",
+    "canonical_person_id": "4212fa28-ff74-5a33-9d89-21702dd23c1c",
+    "employee_id": "EMP-0000065",
+    "lms_user_ids": [
+      "LMS-0000065",
+      "LMS-DUP-0000065"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000066",
+    "canonical_person_id": "db349d40-f835-544e-8d14-fa30a0980062",
+    "employee_id": "EMP-0000066",
+    "lms_user_ids": [
+      "LMS-0000066"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000067",
+    "canonical_person_id": "adfc8aa0-ea87-5b33-8919-9dd340a84d67",
+    "employee_id": "EMP-0000067",
+    "lms_user_ids": [
+      "LMS-0000067"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000068",
+    "canonical_person_id": "b7d5d035-e759-5c5c-92a5-5b04e02f6897",
+    "employee_id": "EMP-0000068",
+    "lms_user_ids": [
+      "LMS-0000068"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000069",
+    "canonical_person_id": "7df53a0e-b2d8-5e5a-82bc-69451a71d9f2",
+    "employee_id": "EMP-0000069",
+    "lms_user_ids": [
+      "LMS-0000069"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000070",
+    "canonical_person_id": "5adf7e4a-f13e-5bca-b5d1-1f0f7c79b1c8",
+    "employee_id": "EMP-0000070",
+    "lms_user_ids": [
+      "LMS-0000070"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000071",
+    "canonical_person_id": "b88fe55b-713e-54ca-9773-b6d6fb5f8641",
+    "employee_id": "EMP-0000071",
+    "lms_user_ids": [
+      "LMS-0000071"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000072",
+    "canonical_person_id": "c5f02974-d632-5dc3-a6e8-75aa7f1982f5",
+    "employee_id": "EMP-0000072",
+    "lms_user_ids": [
+      "LMS-0000072"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000073",
+    "canonical_person_id": "051d998e-f8c3-5eb4-8b9b-3ddf3fbb0211",
+    "employee_id": "EMP-0000073",
+    "lms_user_ids": [
+      "LMS-0000073"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000074",
+    "canonical_person_id": "092294ef-b2e5-5db6-8023-51223c4e547e",
+    "employee_id": "EMP-0000074",
+    "lms_user_ids": [
+      "LMS-0000074"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000075",
+    "canonical_person_id": "eeef97f3-f535-50ab-afb5-53d7121b3199",
+    "employee_id": "EMP-0000075",
+    "lms_user_ids": [
+      "LMS-0000075"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000076",
+    "canonical_person_id": "7d5a2c0f-2c5c-522b-b794-9f38ca8ed8f4",
+    "employee_id": "EMP-0000076",
+    "lms_user_ids": [
+      "LMS-0000076"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000077",
+    "canonical_person_id": "3f055ff6-5885-5e0e-b0d0-5b34f5265be2",
+    "employee_id": "EMP-0000077",
+    "lms_user_ids": [
+      "LMS-0000077"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000078",
+    "canonical_person_id": "899fd234-6c57-5e66-9af8-53fc68e07928",
+    "employee_id": "EMP-0000078",
+    "lms_user_ids": [
+      "LMS-0000078"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000079",
+    "canonical_person_id": "1e2636f8-b6a2-5a91-99b7-654cbb38f242",
+    "employee_id": "EMP-0000079",
+    "lms_user_ids": [
+      "LMS-0000079",
+      "LMS-DUP-0000079"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000080",
+    "canonical_person_id": "ea2340b9-c5db-5efd-8f9a-831d836169b7",
+    "employee_id": "EMP-0000080",
+    "lms_user_ids": [
+      "LMS-0000080"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000081",
+    "canonical_person_id": "f6bd4866-f104-56a4-a411-2c8c4571ad34",
+    "employee_id": "EMP-0000081",
+    "lms_user_ids": [
+      "LMS-0000081"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000082",
+    "canonical_person_id": "b2073a23-823a-5750-9bca-3a304ebb4346",
+    "employee_id": "EMP-0000082",
+    "lms_user_ids": [
+      "LMS-0000082"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000083",
+    "canonical_person_id": "50f30d11-3b8e-510d-9321-48d85c76e2e2",
+    "employee_id": "EMP-0000083",
+    "lms_user_ids": [
+      "LMS-0000083"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000084",
+    "canonical_person_id": "bfdd9137-038a-5bb0-af62-7d70a6630c86",
+    "employee_id": "EMP-0000084",
+    "lms_user_ids": [
+      "LMS-0000084"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000085",
+    "canonical_person_id": "68096787-a8b9-5704-8b9e-5ddc48c5edad",
+    "employee_id": "EMP-0000085",
+    "lms_user_ids": [
+      "LMS-0000085"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000086",
+    "canonical_person_id": "81717578-036f-5a50-90c5-6696c91c648d",
+    "employee_id": "EMP-0000086",
+    "lms_user_ids": [
+      "LMS-0000086"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000087",
+    "canonical_person_id": "e26c0c1f-c99c-5782-894b-a0a767b0658e",
+    "employee_id": "EMP-0000087",
+    "lms_user_ids": [
+      "LMS-0000087"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000088",
+    "canonical_person_id": "b1e7b844-b4d7-5559-9945-481344f007fb",
+    "employee_id": "EMP-0000088",
+    "lms_user_ids": [
+      "LMS-0000088"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000089",
+    "canonical_person_id": "98f5dac1-cca9-5038-be4a-0c8a9fc91770",
+    "employee_id": "EMP-0000089",
+    "lms_user_ids": [
+      "LMS-0000089"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000090",
+    "canonical_person_id": "5dcbae7f-b21d-5a2e-bdce-b0f432e89553",
+    "employee_id": "EMP-0000090",
+    "lms_user_ids": [
+      "LMS-0000090"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000091",
+    "canonical_person_id": "96ce09c7-c914-58f2-877a-10b087839979",
+    "employee_id": "EMP-0000091",
+    "lms_user_ids": [
+      "LMS-0000091"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000092",
+    "canonical_person_id": "60bebae2-f60c-53eb-ad63-a54098c9c3a8",
+    "employee_id": "EMP-0000092",
+    "lms_user_ids": [
+      "LMS-0000092"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000093",
+    "canonical_person_id": "2ce9a541-e91f-573d-acd4-74f33f99995e",
+    "employee_id": "EMP-0000093",
+    "lms_user_ids": [
+      "LMS-0000093",
+      "LMS-DUP-0000093"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000094",
+    "canonical_person_id": "a08a90f1-d9ce-56b2-b8c8-e3c272d6d0e1",
+    "employee_id": "EMP-0000094",
+    "lms_user_ids": [
+      "LMS-0000094"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000095",
+    "canonical_person_id": "714060fd-abee-5028-965b-167eadd8b4a0",
+    "employee_id": "EMP-0000095",
+    "lms_user_ids": [
+      "LMS-0000095"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000096",
+    "canonical_person_id": "cd601e9c-ff5a-5691-94c5-0914a88afc93",
+    "employee_id": "EMP-0000096",
+    "lms_user_ids": [
+      "LMS-0000096"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000097",
+    "canonical_person_id": "129150a3-0fa4-591b-9bce-b519ef6ddfa2",
+    "employee_id": "EMP-0000097",
+    "lms_user_ids": [
+      "LMS-0000097"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000098",
+    "canonical_person_id": "57e84813-3ee9-5e3c-938b-82c66c6391ac",
+    "employee_id": "EMP-0000098",
+    "lms_user_ids": [
+      "LMS-0000098"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000099",
+    "canonical_person_id": "424ac8bd-0ee7-5d2e-add5-1ea2a0fd95fa",
+    "employee_id": "EMP-0000099",
+    "lms_user_ids": [
+      "LMS-0000099"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000100",
+    "canonical_person_id": "373f6dcc-bbb8-5036-813d-d26ad1437854",
+    "employee_id": "EMP-0000100",
+    "lms_user_ids": [
+      "LMS-0000100"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000101",
+    "canonical_person_id": "ccdfb7d4-50af-59f0-87e0-ad72d4e95895",
+    "employee_id": "EMP-0000101",
+    "lms_user_ids": [
+      "LMS-0000101"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000102",
+    "canonical_person_id": "fcdf8c93-7960-50bb-9b87-cc099339b009",
+    "employee_id": "EMP-0000102",
+    "lms_user_ids": [
+      "LMS-0000102"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000103",
+    "canonical_person_id": "554739ef-f7df-5e47-8b34-4fcdf438d292",
+    "employee_id": "EMP-0000103",
+    "lms_user_ids": [
+      "LMS-0000103"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000104",
+    "canonical_person_id": "23cc4bc6-3fd1-539c-b896-6641205a6213",
+    "employee_id": "EMP-0000104",
+    "lms_user_ids": [
+      "LMS-0000104"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000105",
+    "canonical_person_id": "238d0c4a-d692-5ca2-8cc0-e75a8be0ed4e",
+    "employee_id": "EMP-0000105",
+    "lms_user_ids": [
+      "LMS-0000105"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000106",
+    "canonical_person_id": "9c701f6b-cd28-552f-8f0b-76d1e9bacd0b",
+    "employee_id": "EMP-0000106",
+    "lms_user_ids": [
+      "LMS-0000106"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000107",
+    "canonical_person_id": "4c7de6bf-4c07-5b59-a65b-b6e994cf1e91",
+    "employee_id": "EMP-0000107",
+    "lms_user_ids": [
+      "LMS-0000107"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000108",
+    "canonical_person_id": "9d847692-1ee7-50a2-9e2a-d25392639c6d",
+    "employee_id": "EMP-0000108",
+    "lms_user_ids": [
+      "LMS-0000108"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000109",
+    "canonical_person_id": "65869934-9348-5fa7-b39f-d2167a623616",
+    "employee_id": "EMP-0000109",
+    "lms_user_ids": [
+      "LMS-0000109"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000110",
+    "canonical_person_id": "0d9364c5-4a61-5918-bc74-724d8479cda6",
+    "employee_id": "EMP-0000110",
+    "lms_user_ids": [
+      "LMS-0000110"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000111",
+    "canonical_person_id": "f7ff15ec-1224-5e86-8eab-4988a235989b",
+    "employee_id": "EMP-0000111",
+    "lms_user_ids": [
+      "LMS-0000111"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000112",
+    "canonical_person_id": "10d05a00-d904-5253-a5fe-f15e1a491f56",
+    "employee_id": "EMP-0000112",
+    "lms_user_ids": [
+      "LMS-0000112"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000113",
+    "canonical_person_id": "f3fe37c6-9f2b-53d5-99f7-8af28d6e61ac",
+    "employee_id": "EMP-0000113",
+    "lms_user_ids": [
+      "LMS-0000113"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000114",
+    "canonical_person_id": "29161739-32c1-5ee1-a11a-40cd14bd83e5",
+    "employee_id": "EMP-0000114",
+    "lms_user_ids": [
+      "LMS-0000114"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000115",
+    "canonical_person_id": "46d50af9-7d7f-5f6b-b6b2-7ca5815f7e6d",
+    "employee_id": "EMP-0000115",
+    "lms_user_ids": [
+      "LMS-0000115"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000116",
+    "canonical_person_id": "b2147ca7-a55e-56bb-99f8-f47ad2637e88",
+    "employee_id": "EMP-0000116",
+    "lms_user_ids": [
+      "LMS-0000116"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000117",
+    "canonical_person_id": "1594b9ec-07cf-5e8c-82aa-d0402f0e315f",
+    "employee_id": "EMP-0000117",
+    "lms_user_ids": [
+      "LMS-0000117"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000118",
+    "canonical_person_id": "598a268d-bd78-5014-bc4a-6e3b2801c3e1",
+    "employee_id": "EMP-0000118",
+    "lms_user_ids": [
+      "LMS-0000118"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000119",
+    "canonical_person_id": "e39bb72b-3734-5e7f-9c9a-1edc72093df0",
+    "employee_id": "EMP-0000119",
+    "lms_user_ids": [
+      "LMS-0000119"
+    ]
+  },
+  {
+    "assessment_person_id": "ASM-0000120",
+    "canonical_person_id": "27877b68-2264-5c0d-843c-2fea2f3d066e",
+    "employee_id": "EMP-0000120",
+    "lms_user_ids": [
+      "LMS-0000120",
+      "LMS-DUP-0000120"
+    ]
+  }
+]
