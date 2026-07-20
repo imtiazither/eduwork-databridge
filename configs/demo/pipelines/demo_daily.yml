@@ -1,0 +1,7 @@
+schema_version: "1.0"
+pipeline_id: demo_daily
+organization_key: northstar_learning_labs
+sources: [demo_hris]
+mapping_sets: [hris_person_v1]
+validation_sets: [person_v1]
+publish_targets: []

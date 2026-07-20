@@ -1,0 +1,17 @@
+schema_version: "1.0"
+source_id: demo_postgresql
+name: Example PostgreSQL Training Store
+connector: postgresql
+owner_role: Data Platform Owner
+data_classification: confidential
+secret_reference: env://EDUWORK_DEMO_POSTGRES_URL
+refresh_expectation: daily
+objects:
+  - key: training_assignments
+    object_type: table
+    location: public.training_assignments
+    contract_version: "1.0"
+    incremental_field: updated_at
+    primary_key: [assignment_id]
+    options:
+      max_rows: 100000

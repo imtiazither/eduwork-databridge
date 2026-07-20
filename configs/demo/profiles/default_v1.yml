@@ -1,0 +1,10 @@
+schema_version: "1.0"
+profile_id: default_v1
+sample_limit: 100000
+top_values_limit: 10
+mask_samples: true
+thresholds:
+  null_rate_delta: 0.05
+  distinct_rate_delta: 0.10
+  numeric_mean_relative_delta: 0.20
+  top_value_share_delta: 0.15

@@ -1,0 +1,16 @@
+schema_version: "1.0"
+mart_id: training_participation_v1
+version: "1.0"
+entity: training_participation
+fields: [source_record_key, person_external_id, offering_external_id, status, assigned_at, completed_at, progress_percent, updated_at]
+definitions:
+  source_record_key: Traceable source participation key
+  person_external_id: Source-scoped person identifier
+  offering_external_id: Source-scoped learning offering identifier
+  status: Governed participation status
+  assigned_at: Assignment timestamp in UTC
+  completed_at: Completion timestamp in UTC when present
+  progress_percent: Source-reported completion percentage
+  updated_at: Source update timestamp in UTC
+  is_completed: Derived true when status is completed
+  has_progress: Derived true when a progress value is present

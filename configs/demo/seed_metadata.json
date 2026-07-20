@@ -1,0 +1,47 @@
+{
+  "organization": {
+    "name": "Northstar Learning Labs",
+    "organization_type": "employer",
+    "status": "active",
+    "metadata_json": {"synthetic": true}
+  },
+  "sources": [
+    {
+      "source": {"source_key": "demo_hris", "name": "Synthetic HRIS Export", "connector_type": "csv", "owner_role": "Learning Data Steward", "data_classification": "internal", "active": true},
+      "objects": [
+        {"object": {"object_key": "employees", "object_type": "file", "location_template": "data/synthetic/small/hris/employees.csv", "refresh_expectation": "daily"}, "contract": {"contract_key": "demo_hris_employees", "version": "1.0", "schema_uri": "schemas/source-config.schema.json", "schema_json": {"synthetic": true, "primary_key": ["employee_id"]}, "status": "approved"}}
+      ]
+    },
+    {
+      "source": {"source_key": "demo_lms", "name": "Synthetic LMS Participation", "connector_type": "json", "owner_role": "Learning Platform Owner", "data_classification": "internal", "active": true},
+      "objects": [
+        {"object": {"object_key": "participation", "object_type": "file", "location_template": "data/synthetic/small/lms/participation.json", "refresh_expectation": "daily"}, "contract": {"contract_key": "demo_lms_participation", "version": "1.0", "schema_uri": "schemas/source-config.schema.json", "schema_json": {"synthetic": true, "primary_key": ["assignment_id"]}, "status": "approved"}}
+      ]
+    },
+    {
+      "source": {"source_key": "demo_assessment", "name": "Synthetic Assessment Results", "connector_type": "xlsx", "owner_role": "Assessment Operations Owner", "data_classification": "internal", "active": true},
+      "objects": [
+        {"object": {"object_key": "assessment_results", "object_type": "file", "location_template": "data/synthetic/small/assessment/assessment_results.xlsx", "refresh_expectation": "weekly"}, "contract": {"contract_key": "demo_assessment_results", "version": "1.0", "schema_uri": "schemas/source-config.schema.json", "schema_json": {"synthetic": true, "primary_key": ["assessment_person_id", "assessment_id", "attempt_number"]}, "status": "approved"}}
+      ]
+    },
+    {
+      "source": {"source_key": "demo_credentials", "name": "Synthetic Credential Awards", "connector_type": "parquet", "owner_role": "Credential Program Owner", "data_classification": "internal", "active": true},
+      "objects": [
+        {"object": {"object_key": "credential_awards", "object_type": "file", "location_template": "data/synthetic/small/credential/credential_awards.parquet", "refresh_expectation": "weekly"}, "contract": {"contract_key": "demo_credential_awards", "version": "1.0", "schema_uri": "schemas/source-config.schema.json", "schema_json": {"synthetic": true, "primary_key": ["assessment_person_id", "credential_code"]}, "status": "approved"}}
+      ]
+    },
+    {
+      "source": {"source_key": "demo_rest", "name": "Example Training REST API", "connector_type": "rest", "owner_role": "Integration Owner", "data_classification": "internal", "active": true},
+      "objects": [
+        {"object": {"object_key": "assignments", "object_type": "api_resource", "location_template": "v1/assignments", "refresh_expectation": "daily"}, "contract": {"contract_key": "demo_rest_assignments", "version": "1.0", "schema_uri": "schemas/source-config.schema.json", "schema_json": {"synthetic": true, "primary_key": ["assignment_id"]}, "status": "draft"}}
+      ]
+    },
+    {
+      "source": {"source_key": "demo_postgresql", "name": "Example PostgreSQL Training Store", "connector_type": "postgresql", "owner_role": "Data Platform Owner", "data_classification": "confidential", "active": true},
+      "objects": [
+        {"object": {"object_key": "training_assignments", "object_type": "table", "location_template": "public.training_assignments", "refresh_expectation": "daily"}, "contract": {"contract_key": "demo_postgresql_assignments", "version": "1.0", "schema_uri": "schemas/source-config.schema.json", "schema_json": {"synthetic": true, "primary_key": ["assignment_id"]}, "status": "draft"}}
+      ]
+    }
+  ]
+}
+

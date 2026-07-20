@@ -1,0 +1,15 @@
+schema_version: "1.0"
+rule_set_id: person_v1
+organization_field: organization_id
+record_key_field: record_key
+rules:
+  - rule_id: trusted_employee_id
+    priority: 1
+    fields: [employee_id]
+    trusted: true
+    require_all: true
+  - rule_id: exact_email_and_name
+    priority: 2
+    fields: [email, display_name]
+    trusted: false
+    require_all: true

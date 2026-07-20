@@ -1,0 +1,35 @@
+schema_version: "1.0"
+mapping_id: hris_person_v1
+source_contract: demo_hris_employees_v1
+canonical_entity: Person
+rules:
+  - target: record_key
+    source: employee_id
+    transform: trim
+    required: true
+  - target: employee_id
+    source: employee_id
+    transform: trim
+  - target: display_name
+    source: display_name
+    transform: trim
+    required: true
+  - target: given_name
+    source: given_name
+    transform: trim
+  - target: family_name
+    source: family_name
+    transform: trim
+  - target: email
+    source: email
+    transform: lower
+  - target: organization_unit_key
+    source: department_code
+    transform: upper
+  - target: status
+    source: employment_status
+    transform: lookup
+    lookup: employment_status_v1
+  - target: updated_at
+    source: updated_at
+    transform: parse_datetime_utc

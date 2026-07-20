@@ -1,0 +1,32 @@
+schema_version: "1.0"
+mapping_id: lms_participation_v1
+source_contract: demo_lms_participation_v1
+canonical_entity: Participation
+rules:
+  - target: record_key
+    source: assignment_id
+    transform: trim
+    required: true
+  - target: person_external_id
+    source: employee_reference
+    transform: trim
+    required: true
+  - target: offering_external_id
+    source: course_id
+    transform: trim
+    required: true
+  - target: status
+    source: completion_status
+    transform: lower
+  - target: assigned_at
+    source: assigned_at
+    transform: parse_datetime_utc
+  - target: completed_at
+    source: completed_at
+    transform: parse_datetime_utc
+  - target: progress_percent
+    source: progress_percent
+    transform: copy
+  - target: updated_at
+    source: updated_at
+    transform: parse_datetime_utc

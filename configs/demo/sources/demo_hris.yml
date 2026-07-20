@@ -1,0 +1,24 @@
+schema_version: "1.0"
+source_id: demo_hris
+name: Synthetic HRIS Export
+connector: csv
+owner_role: Learning Data Steward
+data_classification: internal
+refresh_expectation: daily
+max_bytes: 104857600
+allowed_roots: [data/synthetic]
+retry:
+  attempts: 3
+  initial_seconds: 1
+  maximum_seconds: 30
+objects:
+  - key: employees
+    object_type: file
+    location: data/synthetic/small/hris/employees.csv
+    contract_version: "1.0"
+    incremental_field: updated_at
+    primary_key: [employee_id]
+    options:
+      delimiter: ","
+      encoding: utf-8
+

@@ -1,0 +1,76 @@
+schema_version: "1.0"
+validation_set_id: participation_v1
+entity: Participation
+rules:
+  - rule_id: participation_keys_required
+    title: Participation keys are present
+    entity: Participation
+    severity: blocking
+    rule_type: required
+    fields: [record_key, person_external_id, offering_external_id]
+    explanation: Participation requires traceable person, offering, and record keys.
+    remediation: Correct the source or mapping.
+  - rule_id: participation_status_allowed
+    title: Participation status uses approved values
+    entity: Participation
+    severity: error
+    rule_type: allowed_values
+    fields: [status]
+    parameters:
+      values: [assigned, in_progress, completed]
+    explanation: Status must use a governed value.
+    remediation: Correct the source code or approved lookup.
+  - rule_id: participation_progress_range
+    title: Progress is between zero and one hundred
+    entity: Participation
+    severity: error
+    rule_type: range
+    fields: [progress_percent]
+    parameters:
+      min: 0
+      max: 100
+    explanation: Progress outside the range is invalid.
+    remediation: Correct the source value.
+  - rule_id: participation_completion_after_assignment
+    title: Completion is not before assignment
+    entity: Participation
+    severity: blocking
+    rule_type: temporal
+    fields: [assigned_at, completed_at]
+    parameters:
+      relation: before_or_equal
+      allow_blank_right: true
+    explanation: Completion before assignment is temporally inconsistent.
+    remediation: Confirm source timestamps and timezone handling.
+  - rule_id: participation_person_reference
+    title: Person reference exists in the supplied reference set
+    entity: Participation
+    severity: error
+    rule_type: reference
+    fields: [person_external_id]
+    parameters:
+      reference_set: person_external_ids
+    explanation: Participation should refer to a known person source identifier.
+    remediation: Reconcile identity sources before publication.
+  - rule_id: participation_source_consistency
+    title: Duplicate records agree on status
+    entity: Participation
+    severity: warning
+    rule_type: cross_source
+    fields: [record_key, status]
+    parameters:
+      key_fields: [record_key]
+      compare_fields: [status]
+    explanation: Repeated records with conflicting status require review.
+    remediation: Identify authoritative source and record the resolution.
+  - rule_id: participation_updated_at_timely
+    title: Participation update is timely
+    entity: Participation
+    severity: warning
+    rule_type: timeliness
+    fields: [updated_at]
+    parameters:
+      as_of: '2026-07-19T00:00:00+00:00'
+      max_age_days: 180
+    explanation: Late events may affect reporting completeness.
+    remediation: Confirm the source event-delay policy.

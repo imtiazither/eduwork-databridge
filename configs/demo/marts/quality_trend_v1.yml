@@ -1,0 +1,11 @@
+schema_version: "1.0"
+mart_id: quality_trend_v1
+version: "1.0"
+entity: quality_trend
+fields: [run_id, dimension, evaluated, failed]
+definitions:
+  run_id: Processing run identifier
+  dimension: Data quality dimension
+  evaluated: Number of evaluated rule-record combinations
+  failed: Number of failed rule-record combinations
+  pass_rate: Derived transparent pass rate

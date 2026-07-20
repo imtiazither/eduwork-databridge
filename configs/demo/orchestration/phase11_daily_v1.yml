@@ -1,0 +1,16 @@
+schema_version: "1.0"
+orchestration_id: phase11_daily_v1
+assets:
+  - asset_key: raw_snapshot
+    cron: "0 2 * * *"
+    partitions: [daily]
+    max_attempts: 3
+  - asset_key: profile
+    partitions: [daily]
+    max_attempts: 2
+  - asset_key: validated
+    partitions: [daily]
+    max_attempts: 2
+  - asset_key: training_mart
+    partitions: [daily]
+    max_attempts: 2

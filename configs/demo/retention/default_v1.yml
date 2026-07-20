@@ -1,0 +1,6 @@
+schema_version: "1.0"
+policy_id: default_v1
+raw_days: 30
+quarantine_days: 180
+export_days: 30
+audit_days: 365

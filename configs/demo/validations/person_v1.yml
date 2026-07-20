@@ -1,0 +1,60 @@
+schema_version: "1.0"
+validation_set_id: person_v1
+entity: Person
+rules:
+  - rule_id: person_record_key_required
+    title: Person source record key is present
+    entity: Person
+    severity: blocking
+    rule_type: required
+    fields: [record_key]
+    explanation: A mapped person requires a source record key for traceability.
+    remediation: Correct the identifier in the source or an approved mapping.
+  - rule_id: person_display_name_required
+    title: Person display name is present
+    entity: Person
+    severity: blocking
+    rule_type: required
+    fields: [display_name]
+    explanation: A person record requires a display name for review and traceability.
+    remediation: Correct the value in the source or an approved mapping.
+  - rule_id: person_status_allowed
+    title: Person status uses the approved code set
+    entity: Person
+    severity: error
+    rule_type: allowed_values
+    fields: [status]
+    parameters:
+      values: [active, leave, inactive]
+    explanation: Status must map to a governed canonical value.
+    remediation: Update the lookup table or correct the source code.
+  - rule_id: person_email_pattern
+    title: Email has a basic valid structure when present
+    entity: Person
+    severity: warning
+    rule_type: pattern
+    fields: [email]
+    parameters:
+      regex: '^[^@\s]+@[^@\s]+[.][^@\s]+$'
+      allow_blank: true
+    explanation: Email is optional but should have a recognizable structure when present.
+    remediation: Correct the source value; do not invent an address.
+  - rule_id: person_record_key_unique
+    title: Person source record key is unique
+    entity: Person
+    severity: blocking
+    rule_type: unique
+    fields: [record_key]
+    explanation: Duplicate source identifiers create ambiguous identity evidence.
+    remediation: Investigate duplicates before canonical publication.
+  - rule_id: person_updated_at_timely
+    title: Person source update is within the configured reporting window
+    entity: Person
+    severity: warning
+    rule_type: timeliness
+    fields: [updated_at]
+    parameters:
+      as_of: '2026-07-19T00:00:00+00:00'
+      max_age_days: 365
+    explanation: Stale records may not represent the current training population.
+    remediation: Confirm source refresh cadence and obtain a newer extract if required.

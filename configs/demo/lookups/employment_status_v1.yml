@@ -1,0 +1,8 @@
+lookup_id: employment_status_v1
+version: "1.0"
+values:
+  active: active
+  leave: leave
+  inactive: inactive
+  terminated: inactive
+  on_leave: leave

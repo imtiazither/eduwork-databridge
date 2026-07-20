@@ -1,0 +1,25 @@
+schema_version: "1.0"
+source_id: demo_rest
+name: Example Training REST API
+connector: rest
+owner_role: Integration Owner
+data_classification: internal
+base_url: https://api.example.test/
+request_timeout_seconds: 20
+allow_private_network: false
+secret_reference: env://EDUWORK_DEMO_REST_TOKEN
+retry:
+  attempts: 3
+  initial_seconds: 0.5
+  maximum_seconds: 5
+objects:
+  - key: assignments
+    object_type: api_resource
+    location: v1/assignments
+    contract_version: "1.0"
+    incremental_field: updated_at
+    primary_key: [assignment_id]
+    options:
+      records_path: items
+      next_path: next
+      max_pages: 100

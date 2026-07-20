@@ -1,0 +1,11 @@
+name: Bug report
+description: Report reproducible unexpected behavior without sensitive data.
+body:
+  - type: textarea
+    attributes: {label: Reproduction, description: Provide synthetic steps and expected/actual behavior.}
+    validations: {required: true}
+  - type: input
+    attributes: {label: Version or commit}
+    validations: {required: true}
+  - type: textarea
+    attributes: {label: Environment}

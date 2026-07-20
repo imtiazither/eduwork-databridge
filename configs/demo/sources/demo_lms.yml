@@ -1,0 +1,15 @@
+schema_version: "1.0"
+source_id: demo_lms
+name: Synthetic LMS Participation
+connector: json
+owner_role: Learning Platform Owner
+data_classification: internal
+refresh_expectation: daily
+allowed_roots: [data/synthetic]
+objects:
+  - key: participation
+    object_type: file
+    location: data/synthetic/small/lms/participation.json
+    contract_version: "1.0"
+    incremental_field: updated_at
+    primary_key: [assignment_id]

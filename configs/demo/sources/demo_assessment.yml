@@ -1,0 +1,16 @@
+schema_version: "1.0"
+source_id: demo_assessment
+name: Synthetic Assessment Results
+connector: xlsx
+owner_role: Assessment Operations Owner
+data_classification: internal
+refresh_expectation: weekly
+allowed_roots: [data/synthetic]
+objects:
+  - key: assessment_results
+    object_type: file
+    location: data/synthetic/small/assessment/assessment_results.xlsx
+    contract_version: "1.0"
+    incremental_field: assessed_at
+    sheet_name: assessment_results
+    primary_key: [assessment_person_id, assessment_id, attempt_number]

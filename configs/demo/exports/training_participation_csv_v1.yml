@@ -1,0 +1,8 @@
+schema_version: "1.0"
+export_id: training_participation_csv_v1
+version: "1.0"
+mart_id: training_participation_v1
+format: csv
+fields: [person_external_id, offering_external_id, status, assigned_at, completed_at, progress_percent, is_completed]
+masked_fields: [person_external_id]
+retention_days: 30

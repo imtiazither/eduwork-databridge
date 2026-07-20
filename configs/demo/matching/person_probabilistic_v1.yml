@@ -1,0 +1,31 @@
+schema_version: "1.0"
+model_id: person_probabilistic_v1
+organization_field: organization_id
+record_key_field: record_key
+prior_match_probability: 0.02
+review_low: 0.40
+auto_match: 0.95
+max_candidates: 500000
+blocking_rules:
+  - rule_id: employee_id_block
+    fields: [employee_id]
+    require_all: true
+  - rule_id: name_department_block
+    fields: [display_name, organization_unit_key]
+    require_all: true
+comparisons:
+  - field: employee_id
+    method: exact
+    weight: 3.0
+    agreement_probability: 0.99
+    random_agreement_probability: 0.001
+  - field: display_name
+    method: string_similarity
+    weight: 2.0
+    agreement_probability: 0.95
+    random_agreement_probability: 0.05
+  - field: organization_unit_key
+    method: exact
+    weight: 0.75
+    agreement_probability: 0.80
+    random_agreement_probability: 0.20
