@@ -1,0 +1,44 @@
+[Script Info]
+Title: EduWork DataBridge Synthetic Walkthrough
+ScriptType: v4.00+
+PlayResX: 1280
+PlayResY: 720
+WrapStyle: 2
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Title,Arial,56,&H00FFFFFF,&H000000FF,&H00112233,&H40000000,-1,0,0,0,100,100,0,0,1,2,0,8,80,80,100,1
+Style: Body,Arial,30,&H00DDECF6,&H000000FF,&H00112233,&H40000000,0,0,0,0,100,100,0,0,1,1,0,8,110,110,205,1
+Style: Accent,Arial,26,&H005ED5EE,&H000000FF,&H00112233,&H40000000,-1,0,0,0,100,100,0,0,1,1,0,2,80,80,55,1
+Style: Footer,Arial,20,&H009CB6C8,&H000000FF,&H00112233,&H40000000,0,0,0,0,100,100,0,0,1,1,0,2,60,60,28,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.00,0:00:04.00,Title,,0,0,0,,EduWork DataBridge
+Dialogue: 0,0:00:00.00,0:00:04.00,Body,,0,0,0,,Blueprint-complete v0.14.0 reference release
+Dialogue: 0,0:00:00.00,0:00:36.00,Footer,,0,0,0,,SYNTHETIC DEMO · NO COMPANY DATA OR OUTCOME CLAIM
+Dialogue: 0,0:00:04.00,0:00:08.00,Title,,0,0,0,,Connect fragmented systems
+Dialogue: 0,0:00:04.00,0:00:08.00,Body,,0,0,0,,HRIS · LMS · CRM · assessment · credential · workforce data
+Dialogue: 0,0:00:04.00,0:00:08.00,Accent,,0,0,0,,Read-only connectors · bounded retries · safe files and networks
+Dialogue: 0,0:00:08.00,0:00:12.00,Title,,0,0,0,,Preserve original evidence
+Dialogue: 0,0:00:08.00,0:00:12.00,Body,,0,0,0,,Immutable snapshots · SHA-256 · manifests · cursors · resume
+Dialogue: 0,0:00:08.00,0:00:12.00,Accent,,0,0,0,,Identical content is reused—never silently overwritten
+Dialogue: 0,0:00:12.00,0:00:16.00,Title,,0,0,0,,Make data quality inspectable
+Dialogue: 0,0:00:12.00,0:00:16.00,Body,,0,0,0,,Masked profiles · approved baselines · drift · bounded mappings
+Dialogue: 0,0:00:12.00,0:00:16.00,Accent,,0,0,0,,Eight validation categories · quarantine and resolution history
+Dialogue: 0,0:00:16.00,0:00:20.00,Title,,0,0,0,,Review identity links responsibly
+Dialogue: 0,0:00:16.00,0:00:20.00,Body,,0,0,0,,Trusted IDs first · probabilistic evidence second
+Dialogue: 0,0:00:16.00,0:00:20.00,Accent,,0,0,0,,Auto-match · gray-zone review · no-match · conflict veto
+Dialogue: 0,0:00:20.00,0:00:24.00,Title,,0,0,0,,Publish governed data products
+Dialogue: 0,0:00:20.00,0:00:24.00,Body,,0,0,0,,Training · credential · quality marts
+Dialogue: 0,0:00:20.00,0:00:24.00,Accent,,0,0,0,,Documented fields · masking · lineage · checksums · retention
+Dialogue: 0,0:00:24.00,0:00:28.00,Title,,0,0,0,,Operate with evidence
+Dialogue: 0,0:00:24.00,0:00:28.00,Body,,0,0,0,,Assets · partitions · retries · watermarks · backfills
+Dialogue: 0,0:00:24.00,0:00:28.00,Accent,,0,0,0,,Safe telemetry · identity · permissions · audit events
+Dialogue: 0,0:00:28.00,0:00:32.00,Title,,0,0,0,,Verify the release
+Dialogue: 0,0:00:28.00,0:00:32.00,Body,,0,0,0,,Tests · coverage · benchmark · SBOMs · packages · checksums
+Dialogue: 0,0:00:28.00,0:00:32.00,Accent,,0,0,0,,Every claim tied to reproducible evidence and limitations
+Dialogue: 0,0:00:32.00,0:00:36.00,Title,,0,0,0,,Ready for bounded evaluation
+Dialogue: 0,0:00:32.00,0:00:36.00,Body,,0,0,0,,Configure one real workflow · preserve first-hand partner evidence
+Dialogue: 0,0:00:32.00,0:00:36.00,Accent,,0,0,0,,Pre-production until target-environment and partner checks pass

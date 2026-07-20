@@ -1,0 +1,8 @@
+flowchart LR
+  HRIS[HRIS / Workforce] --> DB[EduWork DataBridge]
+  LMS[LMS / Learning] --> DB
+  CRM[CRM / Training Ops] --> DB
+  ASSESS[Assessment / Credential] --> DB
+  DB --> META[(PostgreSQL Control Plane)]
+  DB --> REVIEW[Human Reviewer Console]
+  DB --> OUTPUT[Validated Canonical Data / APIs / Exports]

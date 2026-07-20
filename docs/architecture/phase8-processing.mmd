@@ -1,0 +1,12 @@
+flowchart LR
+  RAW[Immutable Raw Snapshot] --> PROFILE[Masked Profile]
+  PROFILE --> DRIFT[Baseline / Drift Comparison]
+  RAW --> MAP[Bounded Mapping DSL]
+  MAP --> MERR[Masked Mapping Errors]
+  MAP --> VALIDATE[Versioned Validation Rules]
+  VALIDATE --> RESULTS[Quality Dimensions / Results]
+  VALIDATE --> QUAR[Quarantine + Resolution History]
+  MAP --> MATCH[Deterministic Identity Rules]
+  MATCH --> LINKS[Auto Links]
+  MATCH --> CONFLICT[Trusted-ID Conflicts]
+  MATCH --> EVAL[Synthetic Precision / Recall / Coverage]

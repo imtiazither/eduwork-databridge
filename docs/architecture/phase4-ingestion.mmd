@@ -1,0 +1,14 @@
+sequenceDiagram
+  participant User as Operator/API
+  participant Svc as Ingestion Service
+  participant Conn as Connector
+  participant Store as Raw Snapshot Store
+  participant DB as PostgreSQL Control Plane
+  User->>Svc: extract(org, source, object, optional prior run)
+  Svc->>DB: verify registered source/object and resume scope
+  Svc->>Conn: extract(object, cursor)
+  Conn-->>Svc: records, raw bytes, content type, new cursor
+  Svc->>Store: atomic content-addressed write
+  Store-->>Svc: manifest, checksum, reuse status
+  Svc->>DB: insert/reuse RawSnapshot; complete IngestionRun
+  Svc-->>User: run ID, snapshot ID, checksum, row count, cursor

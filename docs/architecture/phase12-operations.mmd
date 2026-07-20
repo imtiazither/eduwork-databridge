@@ -1,0 +1,16 @@
+flowchart LR
+  MATCH[Probabilistic Matching] --> REVIEW[Gray-Zone Human Review]
+  VALID[Validated Data] --> MARTS[Governed Marts]
+  MARTS --> EXPORTS[Masked CSV / Parquet Exports]
+  RAW[Raw Snapshot] --> LINEAGE[Run + Field Lineage]
+  MARTS --> LINEAGE
+  EXPORTS --> LINEAGE
+  ASSETS[Asset Orchestrator] --> RAW
+  ASSETS --> VALID
+  ASSETS --> MARTS
+  ASSETS --> TELEMETRY[Safe Traces + Metrics]
+  ID[Demo / OIDC-ready Identity] --> AUTHZ[Organization + Permission Checks]
+  AUTHZ --> EXPORTS
+  AUTHZ --> REVIEW
+  AUTHZ --> AUDIT[Attributable Audit Events]
+  RETENTION[Retention Policies] --> EXPORTS

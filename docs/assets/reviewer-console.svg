@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" viewBox="0 0 1440 900" role="img" aria-labelledby="title desc">
+<title id="title">Synthetic EduWork DataBridge reviewer console</title><desc id="desc">A synthetic interface showing source health, quality metrics, review queue, and lineage status.</desc>
+<rect width="1440" height="900" fill="#f4f7fa"/><rect width="1440" height="82" fill="#0a2038"/>
+<text x="64" y="52" font-family="Arial,sans-serif" font-size="25" font-weight="700" fill="#ffffff">EduWork DataBridge</text>
+<text x="1180" y="50" font-family="Arial,sans-serif" font-size="16" fill="#a9c4d8">SYNTHETIC DEMO</text>
+<text x="64" y="137" font-family="Arial,sans-serif" font-size="36" font-weight="700" fill="#10233a">Operations overview</text>
+<text x="64" y="171" font-family="Arial,sans-serif" font-size="17" fill="#5a6c7d">Northstar Learning Labs · small preset · v0.14.0</text>
+<g font-family="Arial,sans-serif">
+<rect x="64" y="220" width="296" height="152" rx="16" fill="#ffffff" stroke="#d8e2ea"/><text x="88" y="255" font-size="15" font-weight="700" fill="#00769b">SOURCES</text><text x="88" y="310" font-size="42" font-weight="700" fill="#10233a">6</text><text x="88" y="342" font-size="15" fill="#597082">4 file · 1 REST · 1 PostgreSQL</text>
+<rect x="388" y="220" width="296" height="152" rx="16" fill="#ffffff" stroke="#d8e2ea"/><text x="412" y="255" font-size="15" font-weight="700" fill="#00769b">PROFILE STATUS</text><text x="412" y="310" font-size="42" font-weight="700" fill="#16845b">STABLE</text><text x="412" y="342" font-size="15" fill="#597082">Masked evidence · approved baseline</text>
+<rect x="712" y="220" width="296" height="152" rx="16" fill="#ffffff" stroke="#d8e2ea"/><text x="736" y="255" font-size="15" font-weight="700" fill="#00769b">QUARANTINE</text><text x="736" y="310" font-size="42" font-weight="700" fill="#b35a00">9</text><text x="736" y="342" font-size="15" fill="#597082">Expected synthetic missing-ID cases</text>
+<rect x="1036" y="220" width="340" height="152" rx="16" fill="#ffffff" stroke="#d8e2ea"/><text x="1060" y="255" font-size="15" font-weight="700" fill="#00769b">IDENTITY REVIEW</text><text x="1060" y="310" font-size="42" font-weight="700" fill="#10233a">29</text><text x="1060" y="342" font-size="15" fill="#597082">Gray-zone reviews · 235 conflicts blocked</text>
+<rect x="64" y="412" width="848" height="404" rx="16" fill="#ffffff" stroke="#d8e2ea"/><text x="88" y="452" font-size="20" font-weight="700" fill="#10233a">Recent governed runs</text>
+<g font-size="15"><text x="88" y="500" fill="#5a6c7d">ASSET</text><text x="420" y="500" fill="#5a6c7d">PARTITION</text><text x="610" y="500" fill="#5a6c7d">STATUS</text><text x="760" y="500" fill="#5a6c7d">EVIDENCE</text>
+<line x1="88" y1="516" x2="888" y2="516" stroke="#dce5ec"/><text x="88" y="556" fill="#10233a">raw_snapshot</text><text x="420" y="556" fill="#10233a">2026-07-20</text><text x="610" y="556" fill="#16845b">succeeded</text><text x="760" y="556" fill="#10233a">checksum + manifest</text>
+<line x1="88" y1="576" x2="888" y2="576" stroke="#eef2f5"/><text x="88" y="616" fill="#10233a">profile</text><text x="420" y="616" fill="#10233a">2026-07-20</text><text x="610" y="616" fill="#16845b">succeeded</text><text x="760" y="616" fill="#10233a">masked profile</text>
+<line x1="88" y1="636" x2="888" y2="636" stroke="#eef2f5"/><text x="88" y="676" fill="#10233a">validated</text><text x="420" y="676" fill="#10233a">2026-07-20</text><text x="610" y="676" fill="#16845b">succeeded</text><text x="760" y="676" fill="#10233a">rule results</text>
+<line x1="88" y1="696" x2="888" y2="696" stroke="#eef2f5"/><text x="88" y="736" fill="#10233a">training_mart</text><text x="420" y="736" fill="#10233a">2026-07-20</text><text x="610" y="736" fill="#738396">skipped</text><text x="760" y="736" fill="#10233a">unchanged hash</text></g>
+<rect x="940" y="412" width="436" height="404" rx="16" fill="#0f2b47"/><text x="968" y="452" font-size="20" font-weight="700" fill="#ffffff">Synthetic release evidence</text>
+<text x="968" y="506" font-size="16" fill="#b9cfdd">Python tests</text><text x="1304" y="506" text-anchor="end" font-size="22" font-weight="700" fill="#62d0e8">65</text>
+<text x="968" y="558" font-size="16" fill="#b9cfdd">Measured coverage</text><text x="1304" y="558" text-anchor="end" font-size="22" font-weight="700" fill="#62d0e8">89.79%</text>
+<text x="968" y="610" font-size="16" fill="#b9cfdd">Generated schemas</text><text x="1304" y="610" text-anchor="end" font-size="22" font-weight="700" fill="#62d0e8">11</text>
+<text x="968" y="662" font-size="16" fill="#b9cfdd">Auto-match precision</text><text x="1304" y="662" text-anchor="end" font-size="22" font-weight="700" fill="#62d0e8">1.0*</text>
+<rect x="968" y="705" width="380" height="78" rx="10" fill="#173d60"/><text x="988" y="737" font-size="14" font-weight="700" fill="#ffffff">* Synthetic evaluation only</text><text x="988" y="763" font-size="13" fill="#b9cfdd">Not a production SLA or partner result.</text>
+</g></svg>
