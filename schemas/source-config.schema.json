@@ -1,0 +1,261 @@
+{
+  "$defs": {
+    "RetryPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "attempts": {
+          "default": 3,
+          "maximum": 10,
+          "minimum": 1,
+          "title": "Attempts",
+          "type": "integer"
+        },
+        "initial_seconds": {
+          "default": 1.0,
+          "exclusiveMinimum": 0,
+          "maximum": 60,
+          "title": "Initial Seconds",
+          "type": "number"
+        },
+        "maximum_seconds": {
+          "default": 30.0,
+          "exclusiveMinimum": 0,
+          "maximum": 600,
+          "title": "Maximum Seconds",
+          "type": "number"
+        }
+      },
+      "title": "RetryPolicy",
+      "type": "object"
+    },
+    "SourceObjectConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "contract_version": {
+          "title": "Contract Version",
+          "type": "string"
+        },
+        "incremental_field": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Incremental Field"
+        },
+        "json_records_path": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Json Records Path"
+        },
+        "key": {
+          "title": "Key",
+          "type": "string"
+        },
+        "location": {
+          "title": "Location",
+          "type": "string"
+        },
+        "object_type": {
+          "enum": [
+            "file",
+            "table",
+            "api_resource"
+          ],
+          "title": "Object Type",
+          "type": "string"
+        },
+        "options": {
+          "additionalProperties": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              }
+            ]
+          },
+          "title": "Options",
+          "type": "object"
+        },
+        "primary_key": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Primary Key",
+          "type": "array"
+        },
+        "sheet_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Sheet Name"
+        }
+      },
+      "required": [
+        "key",
+        "object_type",
+        "location",
+        "contract_version"
+      ],
+      "title": "SourceObjectConfig",
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "allow_private_network": {
+      "default": false,
+      "title": "Allow Private Network",
+      "type": "boolean"
+    },
+    "allowed_roots": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Allowed Roots",
+      "type": "array"
+    },
+    "base_url": {
+      "anyOf": [
+        {
+          "format": "uri",
+          "maxLength": 2083,
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Base Url"
+    },
+    "connector": {
+      "enum": [
+        "csv",
+        "xlsx",
+        "json",
+        "parquet",
+        "rest",
+        "postgresql"
+      ],
+      "title": "Connector",
+      "type": "string"
+    },
+    "data_classification": {
+      "enum": [
+        "public",
+        "internal",
+        "confidential",
+        "restricted"
+      ],
+      "title": "Data Classification",
+      "type": "string"
+    },
+    "max_bytes": {
+      "default": 104857600,
+      "exclusiveMinimum": 0,
+      "maximum": 5368709120,
+      "title": "Max Bytes",
+      "type": "integer"
+    },
+    "name": {
+      "title": "Name",
+      "type": "string"
+    },
+    "objects": {
+      "items": {
+        "$ref": "#/$defs/SourceObjectConfig"
+      },
+      "minItems": 1,
+      "title": "Objects",
+      "type": "array"
+    },
+    "owner_role": {
+      "title": "Owner Role",
+      "type": "string"
+    },
+    "refresh_expectation": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Refresh Expectation"
+    },
+    "request_timeout_seconds": {
+      "default": 30.0,
+      "exclusiveMinimum": 0,
+      "maximum": 300,
+      "title": "Request Timeout Seconds",
+      "type": "number"
+    },
+    "retry": {
+      "$ref": "#/$defs/RetryPolicy"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "secret_reference": {
+      "anyOf": [
+        {
+          "format": "password",
+          "type": "string",
+          "writeOnly": true
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Secret Reference"
+    },
+    "source_id": {
+      "title": "Source Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "source_id",
+    "name",
+    "connector",
+    "owner_role",
+    "data_classification",
+    "objects"
+  ],
+  "title": "SourceConfig",
+  "type": "object"
+}

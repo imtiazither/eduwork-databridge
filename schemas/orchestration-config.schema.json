@@ -1,0 +1,72 @@
+{
+  "$defs": {
+    "AssetScheduleConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "asset_key": {
+          "title": "Asset Key",
+          "type": "string"
+        },
+        "cron": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cron"
+        },
+        "max_attempts": {
+          "default": 3,
+          "maximum": 10,
+          "minimum": 1,
+          "title": "Max Attempts",
+          "type": "integer"
+        },
+        "partitions": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Partitions",
+          "type": "array"
+        }
+      },
+      "required": [
+        "asset_key"
+      ],
+      "title": "AssetScheduleConfig",
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "assets": {
+      "items": {
+        "$ref": "#/$defs/AssetScheduleConfig"
+      },
+      "minItems": 1,
+      "title": "Assets",
+      "type": "array"
+    },
+    "orchestration_id": {
+      "title": "Orchestration Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "orchestration_id",
+    "assets"
+  ],
+  "title": "OrchestrationConfig",
+  "type": "object"
+}

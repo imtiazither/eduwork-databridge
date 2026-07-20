@@ -1,0 +1,158 @@
+{
+  "$defs": {
+    "BlockingRuleConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "fields": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Fields",
+          "type": "array"
+        },
+        "require_all": {
+          "default": true,
+          "title": "Require All",
+          "type": "boolean"
+        },
+        "rule_id": {
+          "title": "Rule Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "rule_id",
+        "fields"
+      ],
+      "title": "BlockingRuleConfig",
+      "type": "object"
+    },
+    "ComparisonFieldConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "agreement_probability": {
+          "default": 0.95,
+          "exclusiveMaximum": 1,
+          "exclusiveMinimum": 0,
+          "title": "Agreement Probability",
+          "type": "number"
+        },
+        "field": {
+          "title": "Field",
+          "type": "string"
+        },
+        "method": {
+          "enum": [
+            "exact",
+            "string_similarity",
+            "date_distance",
+            "numeric_distance"
+          ],
+          "title": "Method",
+          "type": "string"
+        },
+        "random_agreement_probability": {
+          "default": 0.1,
+          "exclusiveMaximum": 1,
+          "exclusiveMinimum": 0,
+          "title": "Random Agreement Probability",
+          "type": "number"
+        },
+        "tolerance": {
+          "default": 0.0,
+          "minimum": 0,
+          "title": "Tolerance",
+          "type": "number"
+        },
+        "weight": {
+          "default": 1.0,
+          "exclusiveMinimum": 0,
+          "title": "Weight",
+          "type": "number"
+        }
+      },
+      "required": [
+        "field",
+        "method"
+      ],
+      "title": "ComparisonFieldConfig",
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "auto_match": {
+      "default": 0.95,
+      "exclusiveMaximum": 1,
+      "exclusiveMinimum": 0,
+      "title": "Auto Match",
+      "type": "number"
+    },
+    "blocking_rules": {
+      "items": {
+        "$ref": "#/$defs/BlockingRuleConfig"
+      },
+      "minItems": 1,
+      "title": "Blocking Rules",
+      "type": "array"
+    },
+    "comparisons": {
+      "items": {
+        "$ref": "#/$defs/ComparisonFieldConfig"
+      },
+      "minItems": 1,
+      "title": "Comparisons",
+      "type": "array"
+    },
+    "max_candidates": {
+      "default": 500000,
+      "exclusiveMinimum": 0,
+      "maximum": 5000000,
+      "title": "Max Candidates",
+      "type": "integer"
+    },
+    "model_id": {
+      "title": "Model Id",
+      "type": "string"
+    },
+    "organization_field": {
+      "default": "organization_id",
+      "title": "Organization Field",
+      "type": "string"
+    },
+    "prior_match_probability": {
+      "default": 0.02,
+      "exclusiveMaximum": 1,
+      "exclusiveMinimum": 0,
+      "title": "Prior Match Probability",
+      "type": "number"
+    },
+    "record_key_field": {
+      "default": "record_key",
+      "title": "Record Key Field",
+      "type": "string"
+    },
+    "review_low": {
+      "default": 0.7,
+      "exclusiveMaximum": 1,
+      "exclusiveMinimum": 0,
+      "title": "Review Low",
+      "type": "number"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "model_id",
+    "blocking_rules",
+    "comparisons"
+  ],
+  "title": "ProbabilisticMatchConfig",
+  "type": "object"
+}

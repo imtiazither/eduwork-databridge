@@ -1,0 +1,72 @@
+site_name: EduWork DataBridge
+site_description: Blueprint-complete open-source reference for governed learning and workforce data interoperability
+site_author: Nafiz Imtiaz
+repo_url: https://github.com/imtiazither/eduwork-databridge
+repo_name: imtiazither/eduwork-databridge
+strict: true
+theme:
+  name: material
+  language: en
+  features:
+    - navigation.instant
+    - navigation.sections
+    - navigation.top
+    - content.code.copy
+    - content.tabs.link
+  palette:
+    - scheme: default
+      primary: blue grey
+      accent: cyan
+nav:
+  - Overview:
+      - Home: index.md
+      - Project overview: PROJECT_OVERVIEW.md
+  - Evaluate:
+      - 30-minute tour: evaluator/30-minute-tour.md
+      - Demo walkthrough: evaluator/demo-walkthrough.md
+  - Build:
+      - Developer setup: developer/getting-started.md
+      - Implementation path: developer/implementation-path.md
+      - Configuration: reference/configuration.md
+      - API: reference/api.md
+      - Data dictionary: reference/data-dictionary.md
+  - Concepts:
+      - Architecture: concepts/architecture.md
+      - Canonical model: concepts/core-model.md
+      - Synthetic data: guides/synthetic-data.md
+      - Connectors: guides/connectors.md
+      - Profiling and drift: guides/profiling-and-drift.md
+      - Mapping DSL: guides/mapping-dsl.md
+      - Validation and quarantine: guides/validation-and-quarantine.md
+      - Deterministic matching: guides/deterministic-matching.md
+      - Probabilistic matching: guides/probabilistic-matching.md
+      - Lineage, marts, and exports: guides/lineage-marts-exports.md
+      - Orchestration and telemetry: guides/orchestration-and-telemetry.md
+      - Identity and audit: guides/security-identity-audit.md
+  - Deploy:
+      - Local deployment: deployment/local.md
+      - Connector threat model: security/connector-threat-model.md
+      - Docker validation: release/docker-validation.md
+  - Operate:
+      - Troubleshooting: troubleshooting.md
+      - FAQ: faq.md
+  - Release:
+      - External review: release/external-review-checklist.md
+      - Release candidate: release/release-candidate-checklist.md
+      - Risk register: release/risk-register.md
+      - Claims and maturity: release/claim-boundaries.md
+      - Security policy: security/policy.md
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+plugins:
+  - search

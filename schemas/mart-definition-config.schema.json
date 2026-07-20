@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "definitions": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Definitions",
+      "type": "object"
+    },
+    "entity": {
+      "enum": [
+        "training_participation",
+        "credential_status",
+        "quality_trend"
+      ],
+      "title": "Entity",
+      "type": "string"
+    },
+    "fields": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Fields",
+      "type": "array"
+    },
+    "mart_id": {
+      "title": "Mart Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "version": {
+      "title": "Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "mart_id",
+    "version",
+    "entity",
+    "fields",
+    "definitions"
+  ],
+  "title": "MartDefinitionConfig",
+  "type": "object"
+}

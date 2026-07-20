@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "audit_days": {
+      "exclusiveMinimum": 0,
+      "maximum": 3650,
+      "title": "Audit Days",
+      "type": "integer"
+    },
+    "export_days": {
+      "exclusiveMinimum": 0,
+      "maximum": 3650,
+      "title": "Export Days",
+      "type": "integer"
+    },
+    "policy_id": {
+      "title": "Policy Id",
+      "type": "string"
+    },
+    "quarantine_days": {
+      "exclusiveMinimum": 0,
+      "maximum": 3650,
+      "title": "Quarantine Days",
+      "type": "integer"
+    },
+    "raw_days": {
+      "exclusiveMinimum": 0,
+      "maximum": 3650,
+      "title": "Raw Days",
+      "type": "integer"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "policy_id",
+    "raw_days",
+    "quarantine_days",
+    "export_days",
+    "audit_days"
+  ],
+  "title": "RetentionPolicyConfig",
+  "type": "object"
+}

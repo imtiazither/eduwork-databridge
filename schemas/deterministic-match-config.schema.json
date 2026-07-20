@@ -1,0 +1,81 @@
+{
+  "$defs": {
+    "DeterministicMatchRuleConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "fields": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Fields",
+          "type": "array"
+        },
+        "priority": {
+          "minimum": 1,
+          "title": "Priority",
+          "type": "integer"
+        },
+        "require_all": {
+          "default": true,
+          "title": "Require All",
+          "type": "boolean"
+        },
+        "rule_id": {
+          "title": "Rule Id",
+          "type": "string"
+        },
+        "trusted": {
+          "default": false,
+          "title": "Trusted",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "rule_id",
+        "priority",
+        "fields"
+      ],
+      "title": "DeterministicMatchRuleConfig",
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "organization_field": {
+      "default": "organization_id",
+      "title": "Organization Field",
+      "type": "string"
+    },
+    "record_key_field": {
+      "default": "record_key",
+      "title": "Record Key Field",
+      "type": "string"
+    },
+    "rule_set_id": {
+      "title": "Rule Set Id",
+      "type": "string"
+    },
+    "rules": {
+      "items": {
+        "$ref": "#/$defs/DeterministicMatchRuleConfig"
+      },
+      "minItems": 1,
+      "title": "Rules",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "rule_set_id",
+    "rules"
+  ],
+  "title": "DeterministicMatchConfig",
+  "type": "object"
+}

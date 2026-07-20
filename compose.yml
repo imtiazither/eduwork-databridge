@@ -1,0 +1,58 @@
+services:
+  postgres:
+    image: postgres:18-alpine
+    environment:
+      POSTGRES_DB: eduwork
+      POSTGRES_USER: eduwork
+      POSTGRES_PASSWORD: eduwork
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U eduwork -d eduwork"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  api:
+    build:
+      context: .
+      dockerfile: infra/docker/api.Dockerfile
+    environment:
+      EDUWORK_DATABASE_URL: postgresql+psycopg://eduwork:eduwork@postgres:5432/eduwork
+      EDUWORK_ENVIRONMENT: development
+      EDUWORK_DEMO_MODE: "true"
+      EDUWORK_RAW_STORE_ROOT: /app/var/raw
+    volumes:
+      - pipeline-data:/app/var
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+
+  worker:
+    build:
+      context: .
+      dockerfile: infra/docker/api.Dockerfile
+    command: ["uv", "run", "python", "-m", "eduwork_databridge.worker"]
+    environment:
+      EDUWORK_DATABASE_URL: postgresql+psycopg://eduwork:eduwork@postgres:5432/eduwork
+      EDUWORK_RAW_STORE_ROOT: /app/var/raw
+    volumes:
+      - pipeline-data:/app/var
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  reviewer-ui:
+    build:
+      context: .
+      dockerfile: infra/docker/ui.Dockerfile
+    depends_on:
+      - api
+    ports:
+      - "5173:80"
+
+volumes:
+  postgres-data:
+  pipeline-data:

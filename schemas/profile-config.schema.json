@@ -1,0 +1,79 @@
+{
+  "$defs": {
+    "DriftThresholdConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "distinct_rate_delta": {
+          "default": 0.1,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Distinct Rate Delta",
+          "type": "number"
+        },
+        "null_rate_delta": {
+          "default": 0.05,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Null Rate Delta",
+          "type": "number"
+        },
+        "numeric_mean_relative_delta": {
+          "default": 0.2,
+          "minimum": 0,
+          "title": "Numeric Mean Relative Delta",
+          "type": "number"
+        },
+        "top_value_share_delta": {
+          "default": 0.15,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Top Value Share Delta",
+          "type": "number"
+        }
+      },
+      "title": "DriftThresholdConfig",
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "mask_samples": {
+      "default": true,
+      "title": "Mask Samples",
+      "type": "boolean"
+    },
+    "profile_id": {
+      "title": "Profile Id",
+      "type": "string"
+    },
+    "sample_limit": {
+      "default": 100000,
+      "exclusiveMinimum": 0,
+      "maximum": 1000000,
+      "title": "Sample Limit",
+      "type": "integer"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "thresholds": {
+      "$ref": "#/$defs/DriftThresholdConfig"
+    },
+    "top_values_limit": {
+      "default": 10,
+      "exclusiveMinimum": 0,
+      "maximum": 100,
+      "title": "Top Values Limit",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "profile_id"
+  ],
+  "title": "ProfileConfig",
+  "type": "object"
+}

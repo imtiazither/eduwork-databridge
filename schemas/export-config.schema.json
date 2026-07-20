@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "export_id": {
+      "title": "Export Id",
+      "type": "string"
+    },
+    "fields": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Fields",
+      "type": "array"
+    },
+    "format": {
+      "enum": [
+        "csv",
+        "parquet"
+      ],
+      "title": "Format",
+      "type": "string"
+    },
+    "mart_id": {
+      "title": "Mart Id",
+      "type": "string"
+    },
+    "masked_fields": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Masked Fields",
+      "type": "array"
+    },
+    "retention_days": {
+      "default": 30,
+      "exclusiveMinimum": 0,
+      "maximum": 3650,
+      "title": "Retention Days",
+      "type": "integer"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "version": {
+      "title": "Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "export_id",
+    "version",
+    "mart_id",
+    "format",
+    "fields"
+  ],
+  "title": "ExportConfig",
+  "type": "object"
+}

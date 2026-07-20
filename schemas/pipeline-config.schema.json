@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "mapping_sets": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Mapping Sets",
+      "type": "array"
+    },
+    "organization_key": {
+      "title": "Organization Key",
+      "type": "string"
+    },
+    "pipeline_id": {
+      "title": "Pipeline Id",
+      "type": "string"
+    },
+    "publish_targets": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Publish Targets",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "sources": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Sources",
+      "type": "array"
+    },
+    "validation_sets": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Validation Sets",
+      "type": "array"
+    }
+  },
+  "required": [
+    "pipeline_id",
+    "organization_key",
+    "sources",
+    "mapping_sets",
+    "validation_sets"
+  ],
+  "title": "PipelineConfig",
+  "type": "object"
+}

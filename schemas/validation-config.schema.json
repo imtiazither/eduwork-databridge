@@ -1,0 +1,141 @@
+{
+  "$defs": {
+    "ValidationRuleConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "entity": {
+          "title": "Entity",
+          "type": "string"
+        },
+        "explanation": {
+          "title": "Explanation",
+          "type": "string"
+        },
+        "fields": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Fields",
+          "type": "array"
+        },
+        "parameters": {
+          "additionalProperties": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              }
+            ]
+          },
+          "title": "Parameters",
+          "type": "object"
+        },
+        "remediation": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Remediation"
+        },
+        "rule_id": {
+          "title": "Rule Id",
+          "type": "string"
+        },
+        "rule_type": {
+          "enum": [
+            "schema",
+            "required",
+            "allowed_values",
+            "unique",
+            "range",
+            "pattern",
+            "reference",
+            "temporal",
+            "cross_source",
+            "timeliness"
+          ],
+          "title": "Rule Type",
+          "type": "string"
+        },
+        "severity": {
+          "enum": [
+            "info",
+            "warning",
+            "error",
+            "blocking"
+          ],
+          "title": "Severity",
+          "type": "string"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "rule_id",
+        "title",
+        "entity",
+        "severity",
+        "rule_type",
+        "fields",
+        "explanation"
+      ],
+      "title": "ValidationRuleConfig",
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "entity": {
+      "title": "Entity",
+      "type": "string"
+    },
+    "rules": {
+      "items": {
+        "$ref": "#/$defs/ValidationRuleConfig"
+      },
+      "minItems": 1,
+      "title": "Rules",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "validation_set_id": {
+      "title": "Validation Set Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "validation_set_id",
+    "entity",
+    "rules"
+  ],
+  "title": "ValidationConfig",
+  "type": "object"
+}
