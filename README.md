@@ -4,15 +4,6 @@
 
 EduWork DataBridge is an industry-neutral, open-source reference framework for turning fragmented learning, training, skills, credential, and workforce records into documented, validated, traceable, analytics-ready data.
 
-## Current maturity
-
-This repository implements Blueprint **Phases 0–14**:
-
-- Phases 0–12: governed ingestion, profiling/drift, bounded mapping, validation/quarantine, deterministic and probabilistic identity review, lineage, marts/exports, orchestration/telemetry, identity, authorization, audit, and retention.
-- Phase 13: strict MkDocs documentation site, 30-minute evaluator path, developer path, architecture/configuration/API/security/deployment guides, troubleshooting/FAQ, synthetic screenshots, and a 36-second synthetic walkthrough video.
-- Phase 14: versioned reference benchmark and regression budgets, dependency audits, targeted secret scan, Python/frontend SBOMs, Python wheel/source distributions, release checksums, pinned CI actions, container scan/sign/attestation workflow hooks, and external-review/release/risk/claims checklists.
-
-The implementation blueprint is complete. The release remains a **pre-production release candidate** until target-environment Docker/PostgreSQL/OIDC/signing checks and a real bounded partner pilot are completed.
 
 ## What it helps you do
 
