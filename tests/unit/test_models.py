@@ -35,3 +35,4 @@ def test_metadata_creates_and_scopes_sources() -> None:
         assert session.scalar(
             select(Organization).where(Organization.id == uuid.UUID(str(left.id)))
         )
+    engine.dispose()

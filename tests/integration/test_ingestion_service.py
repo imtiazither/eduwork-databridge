@@ -16,6 +16,7 @@ from eduwork_databridge.ingestion.service import IngestionService
 from eduwork_databridge.settings import Settings
 from sqlalchemy import create_engine, func, select
 from sqlalchemy.orm import Session, sessionmaker
+from sqlalchemy.pool import NullPool
 
 
 def build_service(
@@ -41,7 +42,7 @@ objects:
 """,
         encoding="utf-8",
     )
-    engine = create_engine(f"sqlite+pysqlite:///{tmp_path / 'control.db'}")
+    engine = create_engine(f"sqlite+pysqlite:///{tmp_path / 'control.db'}", poolclass=NullPool)
     Base.metadata.create_all(engine)
     session_factory = sessionmaker(bind=engine, expire_on_commit=False, class_=Session)
     session = session_factory()

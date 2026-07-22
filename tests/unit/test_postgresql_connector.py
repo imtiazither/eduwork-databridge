@@ -24,6 +24,7 @@ def test_postgresql_connector_contract_with_sqlite_fixture(tmp_path: Path) -> No
                 "('A-1', 1, 'assigned'), ('A-2', 2, 'completed')"
             )
         )
+    engine.dispose()
     connector = PostgreSQLConnector(database_url, allow_test_sqlite=True)
     source_object = SourceObjectConfig(
         key="training_assignments",

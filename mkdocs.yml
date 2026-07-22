@@ -20,6 +20,9 @@ theme:
 nav:
   - Overview:
       - Home: index.md
+      - Project story: PROJECT_STORY.md
+      - Field guide source: EduWork_DataBridge_Field_Guide.md
+      - Plain-English explainer source: EduWork_DataBridge_Explanation_ELI5.md
       - Project overview: PROJECT_OVERVIEW.md
   - Evaluate:
       - 30-minute tour: evaluator/30-minute-tour.md

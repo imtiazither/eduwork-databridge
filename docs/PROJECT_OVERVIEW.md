@@ -4,6 +4,8 @@
 **Status:** Blueprint-complete, pre-production reference implementation  
 **License:** Apache-2.0
 
+For the human problem that motivated the reference design, read [the project story](PROJECT_STORY.md). The [five-page field guide](EduWork_DataBridge_Field_Guide.pdf) pairs that story with the current reviewer desk.
+
 ## What it is
 
 EduWork DataBridge is an open-source interoperability and data-governance foundation for organizations that need to work across fragmented learning, training, skills, credential, HRIS, LMS, CRM, assessment, and workforce records.
@@ -117,9 +119,9 @@ Use `docs/evaluator/30-minute-tour.md` to inspect the synthetic data, run the co
 
 The v0.14.0 release includes:
 
-- 68 Python tests with 89.79% measured coverage
+- 70 Python tests with 89.78% measured coverage
 - Ruff, format, and strict mypy checks across 81 Python source and script files
-- A frontend Vitest test and a TypeScript/Vite production build
+- Four frontend Vitest tests and a TypeScript/Vite production build
 - Eleven generated JSON Schemas and four Alembic migrations
 - A strict MkDocs documentation build
 - A versioned synthetic benchmark with regression budgets

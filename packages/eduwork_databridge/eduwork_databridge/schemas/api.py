@@ -25,6 +25,17 @@ class VersionResponse(APIModel):
     completed_phases: list[int]
 
 
+class DemoSummaryResponse(APIModel):
+    preset: str
+    seed: int
+    generated_at: datetime
+    synthetic: bool
+    privacy_notice: str
+    counts: dict[str, int]
+    defect_summary: dict[str, int]
+    defect_catalog: dict[str, str]
+
+
 class OrganizationRead(APIModel):
     id: uuid.UUID
     name: str

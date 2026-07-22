@@ -4,6 +4,8 @@
 
 EduWork DataBridge turns fragmented learning, training, skills, credential, HRIS, LMS, CRM, assessment, and workforce records into documented, validated, reviewable, and traceable data products.
 
+It began with a smaller problem: a training report assembled from four systems should not become impossible to explain after the spreadsheet is emailed. Read [the story behind the project](PROJECT_STORY.md) or download the [five-page field guide](EduWork_DataBridge_Field_Guide.pdf).
+
 ## What this release demonstrates
 
 - Safe read-only ingestion from CSV, XLSX, JSON, Parquet, REST, and PostgreSQL
@@ -18,7 +20,7 @@ EduWork DataBridge turns fragmented learning, training, skills, credential, HRIS
 - Demo/OIDC-ready identity contracts, authorization, audit, and retention
 - Reproducible tests, benchmark evidence, SBOMs, packaging, and release controls
 
-![Synthetic reviewer console](assets/reviewer-console.svg)
+![Synthetic reviewer desk](assets/reviewer-desk.jpg)
 
 <video controls width="100%" preload="metadata">
   <source src="assets/eduwork-databridge-walkthrough.mp4" type="video/mp4">

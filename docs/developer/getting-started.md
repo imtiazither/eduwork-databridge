@@ -29,6 +29,10 @@ make api
 make ui
 ```
 
+Use separate terminals for the two commands, then open `http://127.0.0.1:5173`. The Vite server proxies local `/api` requests to `http://127.0.0.1:8000`.
+
+To point the UI at another API, create `apps/reviewer-ui/.env.local` with `VITE_API_BASE_URL=<approved-origin>`. The API permits the origins configured by `EDUWORK_ALLOWED_ORIGINS`; review that list before exposing a non-local environment.
+
 ## Verify
 
 ```bash

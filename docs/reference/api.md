@@ -3,6 +3,7 @@
 - `GET /healthz` — process liveness
 - `GET /readyz` — database readiness
 - `GET /api/v1/version` — product maturity and completed phases
+- `GET /api/v1/demo/summary` — counts and planted defect evidence from the small public synthetic fixture
 - `GET /api/v1/organizations` — seeded metadata
 - `GET /api/v1/sources` — explicitly organization-scoped source inventory; requires `X-Organization-ID`
 - `POST /api/v1/sources/{source_id}/test` — safe connection/configuration check

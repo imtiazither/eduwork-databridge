@@ -2,6 +2,22 @@
 
 All notable changes will be documented here. The project follows Semantic Versioning after a public API is declared.
 
+## Unreleased
+
+### Added
+
+- A case-based reviewer desk with source checks, filterable synthetic exceptions, identity-review preview, lineage view, API status, and an explicit offline-preview boundary
+- `GET /api/v1/demo/summary`, backed by the committed small synthetic manifest
+- A project story, real reviewer screenshot, and five-page field guide focused on the problem, contribution, evidence, and pilot boundary
+- A rebuilt plain-English explainer (Markdown source in `docs/`, PDF at the repository root) grounded in the synthetic case file, the reviewer desk, and the project story
+- Frontend coverage for API-connected, API-offline, exception-review, and identity-decision states
+
+### Fixed
+
+- Direct local `make api` plus `make ui` connectivity through the Vite development proxy and configured CORS origins
+- Stale v0.12 values in the current release evidence manifest
+- SQLite connection cleanup in the test suite
+
 ## [0.14.0] - 2026-07-20
 
 ### Added

@@ -1,6 +1,6 @@
 {
   "project": "EduWork DataBridge",
-  "version": "0.12.0",
+  "version": "0.14.0",
   "completed_phases": [
     0,
     1,
@@ -14,15 +14,17 @@
     9,
     10,
     11,
-    12
+    12,
+    13,
+    14
   ],
-  "verified_at": "2026-07-20",
+  "verified_at": "2026-07-21",
   "application_tables": 52,
   "alembic_revisions": 4,
-  "python_source_files_checked": 73,
-  "python_tests_passed": 65,
-  "python_coverage_percent": 89.79,
-  "frontend_tests_passed": 1,
+  "python_source_files_checked": 81,
+  "python_tests_passed": 70,
+  "python_coverage_percent": 89.8,
+  "frontend_tests_passed": 4,
   "generated_json_schemas": 11,
   "synthetic_presets_committed": [
     "small",
@@ -42,6 +44,15 @@
     "audit_events",
     "retention_enforcement"
   ],
+  "reviewer_experience": [
+    "synthetic_manifest_summary_api",
+    "case_overview",
+    "source_inventory",
+    "filterable_exception_desk",
+    "identity_decision_preview",
+    "field_lineage_view",
+    "offline_preview_boundary"
+  ],
   "probabilistic_small_truth_metrics": {
     "auto_matches": 121,
     "gray_zone_reviews": 29,
@@ -50,7 +61,7 @@
     "potential_recall_with_review": 1.0,
     "false_negatives_after_review": 0
   },
-  "clean_clone_verification": "passed",
+  "local_verification": "passed",
   "compose_static_validation": "passed",
   "docker_runtime_validation": "not_run_no_daemon",
   "live_postgresql_connector_validation": "not_run_no_daemon",

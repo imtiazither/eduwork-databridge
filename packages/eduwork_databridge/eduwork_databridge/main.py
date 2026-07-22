@@ -1,3 +1,4 @@
+import json
 import uuid
 from collections.abc import Callable
 from dataclasses import asdict
@@ -5,6 +6,7 @@ from pathlib import Path
 from typing import Annotated, Any
 
 from fastapi import Depends, FastAPI, Header, HTTPException, Request
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from sqlalchemy import text
@@ -38,6 +40,7 @@ from eduwork_databridge.schemas.api import (
     AssetRunRequest,
     AssetRunResponse,
     AuditEventResponse,
+    DemoSummaryResponse,
     DeterministicMatchRequest,
     DeterministicMatchResponse,
     DiscoveredFieldRead,
@@ -157,6 +160,13 @@ app = FastAPI(
     version=settings.api_version,
     description="Phase 0–12 reference implementation for EduWork DataBridge.",
 )
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=settings.allowed_origins,
+    allow_credentials=False,
+    allow_methods=["GET", "POST"],
+    allow_headers=["Content-Type", "X-Demo-User", "X-Organization-ID"],
+)
 app.add_middleware(SecurityHeadersMiddleware)
 app.add_middleware(RequestSizeLimitMiddleware, max_bytes=settings.max_request_bytes)
 app.add_middleware(RateLimitMiddleware, requests_per_minute=settings.rate_limit_per_minute)
@@ -188,6 +198,28 @@ def version() -> VersionResponse:
     return VersionResponse(
         version=__version__, maturity="release-candidate", completed_phases=list(range(15))
     )
+
+
+@app.get("/api/v1/demo/summary", response_model=DemoSummaryResponse, tags=["metadata"])
+def demo_summary() -> DemoSummaryResponse:
+    """Return the public synthetic case-file summary used by the reviewer UI."""
+    manifest_path = Path("data/synthetic/small/dataset_manifest.json")
+    try:
+        manifest = json.loads(manifest_path.read_text())
+        return DemoSummaryResponse(
+            preset=manifest["preset"],
+            seed=manifest["seed"],
+            generated_at=manifest["generated_at"],
+            synthetic=manifest["synthetic"],
+            privacy_notice=manifest["privacy_notice"],
+            counts=manifest["counts"],
+            defect_summary=manifest["defect_summary"],
+            defect_catalog=manifest["defect_catalog"],
+        )
+    except (KeyError, OSError, ValueError) as exc:
+        raise HTTPException(
+            status_code=503, detail="Synthetic demo summary is unavailable"
+        ) from exc
 
 
 @app.get("/api/v1/organizations", response_model=list[OrganizationRead], tags=["metadata"])

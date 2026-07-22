@@ -4,6 +4,7 @@ from typing import Any
 from sqlalchemy import create_engine
 from sqlalchemy.engine import Engine
 from sqlalchemy.orm import Session, sessionmaker
+from sqlalchemy.pool import StaticPool
 
 from eduwork_databridge.settings import get_settings
 
@@ -13,6 +14,8 @@ def build_engine(database_url: str | None = None) -> Engine:
     kwargs: dict[str, Any] = {}
     if url.startswith("sqlite"):
         kwargs["connect_args"] = {"check_same_thread": False}
+        if ":memory:" in url:
+            kwargs["poolclass"] = StaticPool
     return create_engine(url, pool_pre_ping=True, **kwargs)
 
 

@@ -29,3 +29,4 @@ def test_seed_is_idempotent(monkeypatch) -> None:
         assert role_permission_count == sum(
             len(values) for values in seed_module.ROLE_PERMISSIONS.values()
         )
+    engine.dispose()

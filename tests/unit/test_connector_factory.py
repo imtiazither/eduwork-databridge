@@ -1,3 +1,4 @@
+import asyncio
 from pathlib import Path
 
 from eduwork_databridge.connectors.factory import build_connector
@@ -51,3 +52,4 @@ def test_factory_resolves_postgresql_secret(monkeypatch) -> None:
     config = SourceConfig.model_validate(values)
     connector = build_connector(config, Settings(environment="test"))
     assert isinstance(connector, PostgreSQLConnector)
+    asyncio.run(connector.close())

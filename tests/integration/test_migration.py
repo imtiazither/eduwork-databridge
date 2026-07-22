@@ -49,6 +49,9 @@ def test_baseline_upgrade_and_downgrade(tmp_path: Path, monkeypatch: pytest.Monk
         "supersedes_quarantine_id",
         "corrected_snapshot_id",
     } <= quarantine_columns
+    engine.dispose()
     command.downgrade(config, "base")
-    remaining = set(inspect(create_engine(url)).get_table_names())
+    downgraded_engine = create_engine(url)
+    remaining = set(inspect(downgraded_engine).get_table_names())
+    downgraded_engine.dispose()
     assert remaining <= {"alembic_version"}

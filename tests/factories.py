@@ -14,13 +14,14 @@ from eduwork_databridge.db.models.control import (
 from eduwork_databridge.db.models.core import Organization
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session, sessionmaker
+from sqlalchemy.pool import NullPool
 
 
 def build_snapshot_session(
     tmp_path: Path,
     records: list[dict],
 ) -> tuple[Session, uuid.UUID, uuid.UUID]:
-    engine = create_engine(f"sqlite+pysqlite:///{tmp_path / 'control.db'}")
+    engine = create_engine(f"sqlite+pysqlite:///{tmp_path / 'control.db'}", poolclass=NullPool)
     Base.metadata.create_all(engine)
     session_factory = sessionmaker(bind=engine, expire_on_commit=False, class_=Session)
     session = session_factory()

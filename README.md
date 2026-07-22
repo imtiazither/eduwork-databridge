@@ -2,7 +2,13 @@
 
 [![CI](https://github.com/imtiazither/eduwork-databridge/actions/workflows/ci.yml/badge.svg)](https://github.com/imtiazither/eduwork-databridge/actions/workflows/ci.yml)
 
-EduWork DataBridge is an industry-neutral, open-source reference framework for turning fragmented learning, training, skills, credential, and workforce records into documented, validated, traceable, analytics-ready data.
+One training report may need an employee roster from HR, completion records from an LMS, scores from an assessment file, and awards from a credential system. The joins usually happen in a spreadsheet. When an ID is missing or two accounts look alike, the reasoning can disappear inside the finished report.
+
+EduWork DataBridge is an open-source reference implementation for making that reconciliation inspectable. It keeps source evidence, checks the awkward records, separates uncertain identity matches from safe ones, and carries lineage into governed outputs.
+
+> The practical question: who completed the training, passed, and received the credential, and can we show where every part of that answer came from?
+
+Read [the story behind the project and its contribution](docs/PROJECT_STORY.md), the [plain-English explainer](EduWork_DataBridge_Explanation_ELI5.pdf), or the shorter [five-page field guide](docs/EduWork_DataBridge_Field_Guide.pdf).
 
 
 ## What it helps you do
@@ -12,6 +18,14 @@ EduWork DataBridge is an industry-neutral, open-source reference framework for t
 - Resolve identity candidates transparently, with conflict blocking and human-review boundaries
 - Publish documented, masked, lineage-aware marts and exports for approved internal uses
 - Start a bounded private partner workflow while keeping real data, credentials, proprietary mappings, and results outside this public repository
+
+## See the synthetic case file
+
+The reviewer desk uses a deterministic public fixture: 120 fictional people, 366 learning events, 120 assessment results, 25 credential awards, and 43 planted problem occurrences.
+
+![EduWork DataBridge reviewer desk showing the five-stop evidence path](docs/assets/reviewer-desk.jpg)
+
+The desk includes a source inventory, filterable exception types, an identity-review preview, and a field-lineage view. Its review decision is deliberately non-persistent; the backend services remain the authoritative path for recorded decisions.
 
 ## Why use it
 
@@ -89,6 +103,8 @@ cd apps/reviewer-ui
 npm ci
 npm run dev
 ```
+
+Run the API in another terminal first. The Vite development server proxies `/api` to `http://127.0.0.1:8000`, so the reviewer desk works with the documented `make api` and `make ui` commands without extra environment setup.
 
 ### Tests and generated artifacts
 
