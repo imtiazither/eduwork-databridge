@@ -29,9 +29,9 @@ jobs:
         run: |
           docker compose config
           docker compose build --pull
-          docker compose up -d
+          docker compose up -d || { docker compose logs; exit 1; }
           for i in {1..30}; do curl -fsS http://localhost:8000/readyz && break; sleep 2; done
-          curl -fsS http://localhost:8000/healthz
+          curl -fsS http://localhost:8000/healthz || { docker compose logs; exit 1; }
           docker compose down -v
       - name: Build and push API image by digest
         env:
