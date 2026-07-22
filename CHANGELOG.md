@@ -16,6 +16,7 @@ All notable changes will be documented here. The project follows Semantic Versio
 
 ### Fixed
 
+- First-boot Docker Compose race in which the api and worker containers seeded the shared pipeline volume concurrently; the worker now starts after the api container
 - Direct local `make api` plus `make ui` connectivity through the Vite development proxy and configured CORS origins
 - Stale v0.12 values in the current release evidence manifest
 - SQLite connection cleanup in the test suite

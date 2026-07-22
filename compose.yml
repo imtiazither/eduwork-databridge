@@ -43,6 +43,10 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+      # The api container must seed the shared pipeline-data volume alone;
+      # parallel first starts race in the daemon's volume copy-up.
+      api:
+        condition: service_started
 
   reviewer-ui:
     build:
