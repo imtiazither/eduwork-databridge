@@ -19,6 +19,7 @@ All notable changes will be documented here. The project follows Semantic Versio
 - First-boot Docker Compose race in which the api and worker containers seeded the shared pipeline volume concurrently; the worker now starts after the api container
 - PostgreSQL data volume mount updated to `/var/lib/postgresql` for the postgres:18 image layout, which relocated `PGDATA`; the release smoke test now dumps container logs on failure
 - Three foreign-key constraint names that exceeded PostgreSQL's 63-character identifier limit; they were invisible to the SQLite-based test suite and failed the first live PostgreSQL migration run
+- Release workflow cosign verification now pins the expected certificate identity and OIDC issuer, which keyless verification requires
 - Direct local `make api` plus `make ui` connectivity through the Vite development proxy and configured CORS origins
 - Stale v0.12 values in the current release evidence manifest
 - SQLite connection cleanup in the test suite

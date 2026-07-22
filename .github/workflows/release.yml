@@ -60,7 +60,10 @@ jobs:
         run: |
           cosign sign --yes "$IMAGE_DIGEST"
           cosign attest --yes --predicate release/sbom/api-image.cdx.json --type cyclonedx "$IMAGE_DIGEST"
-          cosign verify "$IMAGE_DIGEST"
+          cosign verify \
+            --certificate-oidc-issuer "https://token.actions.githubusercontent.com" \
+            --certificate-identity "https://github.com/${{ github.workflow_ref }}" \
+            "$IMAGE_DIGEST"
       - run: uv run python scripts/verify_release.py
       - run: make release-checksums
       - name: Create immutable GitHub release
