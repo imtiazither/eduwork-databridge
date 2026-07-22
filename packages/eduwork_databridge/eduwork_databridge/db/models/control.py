@@ -216,7 +216,11 @@ class QuarantineRecord(UUIDPrimaryKeyMixin, TimestampMixin, Base):
     resolution_note: Mapped[str | None] = mapped_column(Text, nullable=True)
     resolved_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
     supersedes_quarantine_id: Mapped[uuid.UUID | None] = mapped_column(
-        Uuid(as_uuid=True), ForeignKey("quarantine_records.id"), nullable=True
+        Uuid(as_uuid=True),
+        # Explicit name: the convention-derived one exceeds PostgreSQL's
+        # 63-character identifier limit.
+        ForeignKey("quarantine_records.id", name="fk_quarantine_records_supersedes_quarantine_id"),
+        nullable=True,
     )
     corrected_snapshot_id: Mapped[uuid.UUID | None] = mapped_column(
         Uuid(as_uuid=True), ForeignKey("raw_snapshots.id"), nullable=True

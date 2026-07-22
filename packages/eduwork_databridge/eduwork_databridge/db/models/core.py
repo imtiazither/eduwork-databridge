@@ -257,7 +257,13 @@ class CompetencyDefinition(UUIDPrimaryKeyMixin, TimestampMixin, Base):
     description: Mapped[str | None] = mapped_column(Text, nullable=True)
     framework_uri: Mapped[str | None] = mapped_column(String(1000), nullable=True)
     parent_competency_id: Mapped[uuid.UUID | None] = mapped_column(
-        Uuid(as_uuid=True), ForeignKey("competency_definitions.id"), nullable=True
+        Uuid(as_uuid=True),
+        # Explicit name: the convention-derived one exceeds PostgreSQL's
+        # 63-character identifier limit.
+        ForeignKey(
+            "competency_definitions.id", name="fk_competency_definitions_parent_competency_id"
+        ),
+        nullable=True,
     )
 
 
@@ -296,7 +302,14 @@ class CredentialAward(UUIDPrimaryKeyMixin, TimestampMixin, Base):
         Uuid(as_uuid=True), ForeignKey("organizations.id"), nullable=False, index=True
     )
     credential_definition_id: Mapped[uuid.UUID] = mapped_column(
-        Uuid(as_uuid=True), ForeignKey("credential_definitions.id"), nullable=False, index=True
+        Uuid(as_uuid=True),
+        # Explicit name: the convention-derived one exceeds PostgreSQL's
+        # 63-character identifier limit.
+        ForeignKey(
+            "credential_definitions.id", name="fk_credential_awards_credential_definition_id"
+        ),
+        nullable=False,
+        index=True,
     )
     person_id: Mapped[uuid.UUID] = mapped_column(
         Uuid(as_uuid=True), ForeignKey("persons.id"), nullable=False, index=True

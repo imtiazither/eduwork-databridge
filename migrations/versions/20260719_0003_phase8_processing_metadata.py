@@ -47,7 +47,7 @@ def upgrade() -> None:
         foreign_keys = {item["name"] for item in inspector.get_foreign_keys("quarantine_records")}
         definitions = [
             (
-                "fk_quarantine_records_supersedes_quarantine_id_quarantine_records",
+                "fk_quarantine_records_supersedes_quarantine_id",
                 "quarantine_records",
                 ["supersedes_quarantine_id"],
                 ["id"],
@@ -80,7 +80,7 @@ def downgrade() -> None:
         type_="foreignkey",
     )
     op.drop_constraint(
-        "fk_quarantine_records_supersedes_quarantine_id_quarantine_records",
+        "fk_quarantine_records_supersedes_quarantine_id",
         "quarantine_records",
         type_="foreignkey",
     )
