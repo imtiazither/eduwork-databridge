@@ -1,21 +1,21 @@
 {
   "status": "passed",
   "baseline": "benchmark-baseline/small-v0.14.0.json",
-  "current": "benchmark-results/current-v0.14.0.json",
+  "current": "benchmark-results/current-v0.15.0.json",
   "budgets": "benchmark-baseline/budgets.json",
   "duration_ratios": {
-    "csv_connector": 1.0642,
-    "deterministic_matching": 0.9856,
-    "json_connector": 1.0784,
-    "mapping": 0.9811,
-    "parquet_connector": 0.9544,
-    "parquet_export": 1.1271,
-    "probabilistic_matching": 1.0036,
-    "profiling": 0.9295,
-    "synthetic_generation": 0.8718,
-    "training_mart": 0.9549,
-    "validation": 0.9937,
-    "xlsx_connector": 1.0099
+    "csv_connector": 1.1221,
+    "deterministic_matching": 0.492,
+    "json_connector": 0.7925,
+    "mapping": 0.6265,
+    "parquet_connector": 7.4061,
+    "parquet_export": 0.9606,
+    "probabilistic_matching": 0.4507,
+    "profiling": 6.1277,
+    "synthetic_generation": 2.6965,
+    "training_mart": 0.3715,
+    "validation": 0.5748,
+    "xlsx_connector": 0.7901
   },
   "interpretation": "Shared-sandbox regression check only; not a production SLA."
 }

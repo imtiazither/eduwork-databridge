@@ -241,7 +241,7 @@ def run(preset: PresetName, seed: int, output_path: Path) -> dict[str, Any]:
 
     report = {
         "benchmark_version": "1.0",
-        "project_version": "0.14.0",
+        "project_version": "0.15.0",
         "preset": preset,
         "seed": seed,
         "environment": {

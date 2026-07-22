@@ -9,7 +9,7 @@ from typing import Any, cast
 from verify_benchmark import verify as verify_benchmark
 
 ROOT = Path(__file__).resolve().parents[1]
-VERSION = "0.14.0"
+VERSION = "0.15.0"
 
 
 def load_json(path: str) -> dict[str, Any]:

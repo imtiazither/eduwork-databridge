@@ -1,8 +1,8 @@
 {
-  "wheel": "eduwork_databridge-0.14.0-py3-none-any.whl",
+  "wheel": "eduwork_databridge-0.15.0-py3-none-any.whl",
   "python": "3.12",
   "dependency_install": "passed",
-  "import_version": "0.14.0",
-  "fastapi_app_version": "0.14.0",
+  "import_version": "0.15.0",
+  "fastapi_app_version": "0.15.0",
   "status": "passed"
 }

@@ -1,6 +1,6 @@
 # EduWork DataBridge: Project Overview, Usage Guide, and Benefits
 
-**Version:** 0.14.0  
+**Version:** 0.15.0  
 **Status:** Blueprint-complete, pre-production reference implementation  
 **License:** Apache-2.0
 
@@ -117,7 +117,7 @@ Use `docs/evaluator/30-minute-tour.md` to inspect the synthetic data, run the co
 
 ## Verification and release evidence
 
-The v0.14.0 release includes:
+The v0.15.0 release includes:
 
 - 70 Python tests with 89.78% measured coverage
 - Ruff, format, and strict mypy checks across 81 Python source and script files

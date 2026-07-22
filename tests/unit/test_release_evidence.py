@@ -9,7 +9,7 @@ from scripts.verify_benchmark import verify as verify_benchmark
 
 def test_benchmark_baseline_and_regression_budgets() -> None:
     verify_benchmark(
-        Path("benchmark-results/current-v0.14.0.json"),
+        Path("benchmark-results/current-v0.15.0.json"),
         Path("benchmark-baseline/small-v0.14.0.json"),
         Path("benchmark-baseline/budgets.json"),
     )

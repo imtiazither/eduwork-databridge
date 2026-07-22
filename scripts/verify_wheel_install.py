@@ -6,7 +6,7 @@ from pathlib import Path
 
 
 def verify() -> dict[str, str]:
-    wheel = next(Path("release/packages").glob("eduwork_databridge-0.14.0-*.whl"))
+    wheel = next(Path("release/packages").glob("eduwork_databridge-0.15.0-*.whl"))
     uv = shutil.which("uv")
     if uv is None:
         fallback = Path.home() / ".local/bin/uv"
@@ -27,8 +27,8 @@ def verify() -> dict[str, str]:
             (
                 "import eduwork_databridge; "
                 "from eduwork_databridge.main import app; "
-                "assert eduwork_databridge.__version__ == '0.14.0'; "
-                "assert app.version == '0.14.0'"
+                "assert eduwork_databridge.__version__ == '0.15.0'; "
+                "assert app.version == '0.15.0'"
             ),
         ],
         check=True,
@@ -37,8 +37,8 @@ def verify() -> dict[str, str]:
         "wheel": wheel.name,
         "python": "3.12",
         "dependency_install": "passed",
-        "import_version": "0.14.0",
-        "fastapi_app_version": "0.14.0",
+        "import_version": "0.15.0",
+        "fastapi_app_version": "0.15.0",
         "status": "passed",
     }
     output = Path("release/packages/wheel-install-verification.json")

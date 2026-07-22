@@ -18,7 +18,7 @@ class Settings(BaseSettings):
     log_level: str = "INFO"
     demo_mode: bool = True
     api_title: str = "EduWork DataBridge API"
-    api_version: str = "0.14.0"
+    api_version: str = "0.15.0"
     allowed_origins: list[str] = Field(default_factory=lambda: ["http://localhost:5173"])
     raw_store_root: Path = Path("var/raw")
     allowed_file_roots: list[Path] = Field(default_factory=lambda: [Path("data/synthetic")])

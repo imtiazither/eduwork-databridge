@@ -2,7 +2,7 @@
 
 ## Supported claims
 
-- Blueprint Phases 0–14 are implemented in the v0.14.0 reference release.
+- Blueprint Phases 0–14 are implemented in the v0.15.0 reference release.
 - Public examples use deterministic synthetic data.
 - The committed tests, benchmark, SBOMs, packages, documentation, and release evidence are reproducible under the recorded environment.
 - The framework can be configured and extended for learning/workforce data workflows.

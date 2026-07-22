@@ -1,6 +1,6 @@
 {
   "project": "EduWork DataBridge",
-  "version": "0.14.0",
+  "version": "0.15.0",
   "completed_phases": [
     0,
     1,
@@ -18,7 +18,7 @@
     13,
     14
   ],
-  "verified_at": "2026-07-21",
+  "verified_at": "2026-07-22",
   "application_tables": 52,
   "alembic_revisions": 4,
   "python_source_files_checked": 81,

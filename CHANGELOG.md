@@ -4,6 +4,8 @@ All notable changes will be documented here. The project follows Semantic Versio
 
 ## Unreleased
 
+## [0.15.0] - 2026-07-22
+
 ### Added
 
 - A case-based reviewer desk with source checks, filterable synthetic exceptions, identity-review preview, lineage view, API status, and an explicit offline-preview boundary
