@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390 80" role="img" aria-labelledby="title description">
+  <title id="title">EduWork DataBridge</title>
+  <desc id="description">A bridge mark followed by the EduWork DataBridge wordmark.</desc>
+  <g transform="translate(7 15)">
+    <path d="M10 30C10 12 18 6 28 6s18 6 18 24" fill="none" stroke="#13786f" stroke-linecap="round" stroke-width="3.5"/>
+    <path d="M5 34h46" fill="none" stroke="#df6249" stroke-linecap="round" stroke-width="3.5"/>
+    <circle cx="5" cy="34" r="3" fill="#df6249"/>
+    <circle cx="51" cy="34" r="3" fill="#df6249"/>
+  </g>
+  <text x="75" y="48" fill="#173235" font-family="Avenir Next, Avenir, Segoe UI, sans-serif" font-size="14" font-weight="800" letter-spacing="3.2">EDUWORK</text>
+  <text x="194" y="51" fill="#173235" font-family="Charter, Iowan Old Style, Georgia, serif" font-size="31" font-weight="700" letter-spacing="-0.7">DataBridge</text>
+</svg>

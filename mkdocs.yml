@@ -8,6 +8,8 @@ strict: true
 theme:
   name: material
   language: en
+  logo: assets/brand/databridge-mark-header.svg
+  favicon: assets/brand/databridge-mark.svg
   features:
     - navigation.instant
     - navigation.sections

@@ -17,8 +17,29 @@
   background: #173f41;
 }
 
+.md-header__button.md-logo {
+  padding: 0.3rem;
+}
+
+.md-header__button.md-logo img,
+.md-header__button.md-logo svg {
+  width: 2rem;
+  height: 2rem;
+}
+
 .md-tabs {
   background: #173f41;
+}
+
+.docs-brand-lockup {
+  max-width: 23rem;
+  margin: 0 0 1.5rem;
+}
+
+.docs-brand-lockup img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 .md-typeset h1,

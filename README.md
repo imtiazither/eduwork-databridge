@@ -1,5 +1,7 @@
 # EduWork DataBridge
 
+<img src="docs/assets/brand/databridge-logo.svg" alt="EduWork DataBridge" width="360">
+
 [![CI](https://github.com/imtiazither/eduwork-databridge/actions/workflows/ci.yml/badge.svg)](https://github.com/imtiazither/eduwork-databridge/actions/workflows/ci.yml)
 [![GitHub Pages](https://github.com/imtiazither/eduwork-databridge/actions/workflows/pages.yml/badge.svg)](https://github.com/imtiazither/eduwork-databridge/actions/workflows/pages.yml)
 

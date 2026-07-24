@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 48" role="img" aria-labelledby="title">
+  <title id="title">EduWork DataBridge bridge mark</title>
+  <path d="M12 34C12 14 21 8 32 8s20 6 20 26" fill="none" stroke="#13786f" stroke-linecap="round" stroke-width="4"/>
+  <path d="M6 38h52" fill="none" stroke="#df6249" stroke-linecap="round" stroke-width="4"/>
+  <circle cx="6" cy="38" r="3.5" fill="#df6249"/>
+  <circle cx="58" cy="38" r="3.5" fill="#df6249"/>
+</svg>
