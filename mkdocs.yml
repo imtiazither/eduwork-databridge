@@ -21,8 +21,19 @@ theme:
     - scheme: default
       primary: custom
       accent: custom
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - scheme: slate
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
 extra_css:
   - stylesheets/extra.css
+extra_javascript:
+  - javascripts/theme-sync.js
 extra:
   homepage: https://imtiazither.github.io/eduwork-databridge/
 nav:

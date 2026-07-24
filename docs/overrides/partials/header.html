@@ -20,6 +20,14 @@
       <span class="databridge-product-link__full">Back to product</span>
       <span class="databridge-product-link__short">Product</span>
     </a>
+    <button class="databridge-theme-toggle" type="button" aria-pressed="false" aria-label="Switch to dark mode">
+      <span class="databridge-theme-toggle-track" aria-hidden="true">
+        <span class="databridge-theme-toggle-stars"><i></i><i></i><i></i></span>
+        <span class="databridge-theme-toggle-cloud"></span>
+        <span class="databridge-theme-toggle-thumb"></span>
+      </span>
+      <span class="databridge-theme-toggle-label">Dark</span>
+    </button>
     {% if config.theme.palette %}
       {% if not config.theme.palette is mapping %}
         {% include "partials/palette.html" %}

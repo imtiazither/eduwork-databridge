@@ -13,6 +13,49 @@
   --md-code-bg-color: #ebe7dc;
 }
 
+[data-md-color-scheme="slate"] {
+  --md-accent-fg-color: #f18461;
+  --md-code-bg-color: #241a11;
+  --md-code-fg-color: #ead8c1;
+  --md-default-bg-color: #110e06;
+  --md-default-fg-color: #f5e7d4;
+  --md-default-fg-color--light: #c7b49a;
+  --md-default-fg-color--lighter: #8f7c66;
+  --md-default-fg-color--lightest: #4b3828;
+  --md-typeset-a-color: #83cbbb;
+}
+
+[data-md-color-scheme="default"] body {
+  background:
+    radial-gradient(circle at 7% 3%, rgba(226, 185, 79, 0.13), transparent 26rem),
+    radial-gradient(circle at 96% 28%, rgba(131, 203, 187, 0.12), transparent 30rem),
+    #f8f4eb;
+}
+
+[data-md-color-scheme="slate"] body {
+  background:
+    radial-gradient(circle at 7% 3%, rgba(241, 132, 97, 0.1), transparent 26rem),
+    radial-gradient(circle at 96% 28%, rgba(131, 203, 187, 0.08), transparent 30rem),
+    radial-gradient(circle at 48% 100%, rgba(255, 210, 102, 0.06), transparent 34rem),
+    #110e06;
+}
+
+body::before {
+  background-image: linear-gradient(rgba(23, 50, 53, 0.05) 1px, transparent 1px);
+  background-size: 100% 5rem;
+  content: "";
+  inset: 0;
+  opacity: 0.22;
+  pointer-events: none;
+  position: fixed;
+  z-index: -1;
+}
+
+[data-md-color-scheme="slate"] body::before {
+  background-image: linear-gradient(rgba(245, 231, 212, 0.05) 1px, transparent 1px);
+  opacity: 0.14;
+}
+
 .md-header {
   --md-primary-bg-color: #173235;
   --md-primary-bg-color--light: #52635f;
@@ -24,7 +67,9 @@
 }
 
 .md-header__inner {
-  min-height: 3.8rem;
+  max-width: 1540px;
+  min-height: 76px;
+  padding: 14px clamp(20px, 4vw, 68px);
 }
 
 .databridge-header-spacer {
@@ -48,14 +93,14 @@
 
 .databridge-wordmark-text small {
   font-family: "Avenir Next", Avenir, "Segoe UI", sans-serif;
-  font-size: 0.61rem;
+  font-size: 10px;
   font-weight: 900;
   letter-spacing: 0.18em;
 }
 
 .databridge-wordmark-text b {
   font-family: Charter, "Iowan Old Style", "Palatino Linotype", Georgia, serif;
-  font-size: 1.17rem;
+  font-size: 19px;
   letter-spacing: -0.02em;
 }
 
@@ -135,9 +180,220 @@
   display: none;
 }
 
+.md-header__option {
+  display: none;
+}
+
+.databridge-theme-toggle {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.58);
+  border: 1px solid rgba(23, 50, 53, 0.2);
+  border-radius: 999px;
+  color: #52635f;
+  cursor: pointer;
+  display: inline-flex;
+  flex-shrink: 0;
+  font-family: "Avenir Next", Avenir, "Segoe UI", sans-serif;
+  font-size: 11px;
+  font-weight: 850;
+  gap: 8px;
+  min-height: 40px;
+  padding: 5px 10px 5px 6px;
+  transition: transform 180ms ease, background-color 240ms ease, border-color 240ms ease;
+}
+
+.databridge-theme-toggle:hover {
+  transform: translateY(-2px);
+}
+
+.databridge-theme-toggle:focus-visible {
+  outline: 3px solid #e2b94f;
+  outline-offset: 2px;
+}
+
+.databridge-theme-toggle-track {
+  background: linear-gradient(180deg, #8fd9ff 0%, #ffe39e 100%);
+  border-radius: 999px;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.46),
+    inset 0 -4px 8px rgba(149, 73, 46, 0.12);
+  flex: 0 0 auto;
+  height: 25px;
+  overflow: hidden;
+  position: relative;
+  transition: background 320ms ease;
+  width: 45px;
+}
+
+.databridge-theme-toggle-thumb {
+  background: radial-gradient(circle at 34% 34%, #fff2a8 0%, #ffc971 48%, #ef8358 100%);
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.46),
+    0 3px 7px rgba(97, 52, 30, 0.26);
+  height: 19px;
+  left: 3px;
+  position: absolute;
+  top: 3px;
+  transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1), background 300ms ease, box-shadow 300ms ease;
+  width: 19px;
+  z-index: 2;
+}
+
+.databridge-theme-toggle-thumb::after {
+  background:
+    radial-gradient(circle at 67% 34%, rgba(91, 103, 137, 0.34) 0 1.5px, transparent 1.7px),
+    radial-gradient(circle at 39% 69%, rgba(91, 103, 137, 0.28) 0 2px, transparent 2.2px);
+  border-radius: 50%;
+  content: "";
+  inset: 0;
+  opacity: 0;
+  position: absolute;
+  transform: scale(0.8);
+  transition: opacity 300ms ease, transform 300ms ease;
+}
+
+.databridge-theme-toggle-stars {
+  inset: 0;
+  position: absolute;
+}
+
+.databridge-theme-toggle-stars i {
+  background: #fff6da;
+  border-radius: 50%;
+  box-shadow: 0 0 5px rgba(255, 246, 218, 0.7);
+  height: 2px;
+  opacity: 0;
+  position: absolute;
+  transform: scale(0.2);
+  transition: opacity 260ms ease, transform 320ms ease;
+  width: 2px;
+}
+
+.databridge-theme-toggle-stars i:nth-child(1) {
+  left: 8px;
+  top: 6px;
+}
+
+.databridge-theme-toggle-stars i:nth-child(2) {
+  left: 13px;
+  top: 14px;
+}
+
+.databridge-theme-toggle-stars i:nth-child(3) {
+  left: 20px;
+  top: 7px;
+}
+
+.databridge-theme-toggle-cloud {
+  background: rgba(255, 251, 244, 0.88);
+  border-radius: 999px;
+  bottom: 5px;
+  height: 6px;
+  position: absolute;
+  right: 5px;
+  transition: opacity 260ms ease, transform 320ms ease;
+  width: 16px;
+}
+
+.databridge-theme-toggle-cloud::before,
+.databridge-theme-toggle-cloud::after {
+  background: inherit;
+  border-radius: 50%;
+  bottom: 1px;
+  content: "";
+  position: absolute;
+}
+
+.databridge-theme-toggle-cloud::before {
+  height: 8px;
+  left: 2px;
+  width: 8px;
+}
+
+.databridge-theme-toggle-cloud::after {
+  height: 6px;
+  right: 2px;
+  width: 6px;
+}
+
+[data-md-color-scheme="slate"] .md-header {
+  --md-primary-bg-color: #f5e7d4;
+  --md-primary-bg-color--light: #c7b49a;
+  background: rgba(17, 14, 6, 0.91);
+  border-bottom-color: #4b3828;
+  color: #f5e7d4;
+}
+
+[data-md-color-scheme="slate"] .databridge-wordmark {
+  color: #f5e7d4;
+}
+
+[data-md-color-scheme="slate"] .databridge-bridge-mark {
+  border-bottom-color: #f18461;
+}
+
+[data-md-color-scheme="slate"] .databridge-bridge-mark::before {
+  border-color: #83cbbb;
+  border-bottom: 0;
+}
+
+[data-md-color-scheme="slate"] .databridge-bridge-mark span {
+  background: #f18461;
+}
+
+[data-md-color-scheme="slate"] .md-header__button.databridge-product-link {
+  border-color: rgba(245, 231, 212, 0.35);
+  color: #f5e7d4;
+}
+
+[data-md-color-scheme="slate"] .md-header__button.databridge-product-link:hover {
+  background: #ffd266;
+  border-color: #ffd266;
+  color: #110e06;
+}
+
+[data-md-color-scheme="slate"] .databridge-theme-toggle {
+  background: rgba(26, 19, 11, 0.88);
+  border-color: #4b3828;
+  color: #c7b49a;
+}
+
+[data-md-color-scheme="slate"] .databridge-theme-toggle-track {
+  background: linear-gradient(180deg, #263655 0%, #17213a 58%, #0d1322 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 244, 228, 0.09),
+    inset 0 -4px 8px rgba(0, 0, 0, 0.34);
+}
+
+[data-md-color-scheme="slate"] .databridge-theme-toggle-thumb {
+  background: radial-gradient(circle at 34% 34%, #fff9dc 0%, #e8eefb 52%, #b5c2df 100%);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.34),
+    0 3px 8px rgba(0, 0, 0, 0.4),
+    0 0 12px rgba(160, 182, 246, 0.22);
+  transform: translateX(20px) rotate(-18deg);
+}
+
+[data-md-color-scheme="slate"] .databridge-theme-toggle-thumb::after {
+  opacity: 1;
+  transform: scale(1);
+}
+
+[data-md-color-scheme="slate"] .databridge-theme-toggle-stars i {
+  opacity: 1;
+  transform: scale(1);
+}
+
+[data-md-color-scheme="slate"] .databridge-theme-toggle-cloud {
+  opacity: 0;
+  transform: translateY(4px) scale(0.7);
+}
+
 @media screen and (max-width: 44.984375em) {
   .md-header__inner {
-    min-height: 3.25rem;
+    min-height: 65px;
+    padding-block: 10px;
   }
 
   .databridge-wordmark {
@@ -154,6 +410,14 @@
     height: 1.7rem;
     padding: 0 0.48rem;
   }
+
+  .databridge-theme-toggle {
+    padding-right: 6px;
+  }
+
+  .databridge-theme-toggle-label {
+    display: none;
+  }
 }
 
 @media screen and (max-width: 32.5em) {
@@ -166,7 +430,7 @@
   }
 
   .databridge-wordmark-text b {
-    font-size: 1rem;
+    font-size: 16px;
   }
 }
 
@@ -203,4 +467,19 @@
 
 .md-typeset a:hover {
   color: #cb593e;
+}
+
+[data-md-color-scheme="slate"] .md-typeset h1,
+[data-md-color-scheme="slate"] .md-typeset h2,
+[data-md-color-scheme="slate"] .md-typeset h3 {
+  color: #f5e7d4;
+}
+
+[data-md-color-scheme="slate"] .md-typeset blockquote {
+  background: #241a11;
+  border-left-color: #ffd266;
+}
+
+[data-md-color-scheme="slate"] .md-typeset a:hover {
+  color: #f18461;
 }

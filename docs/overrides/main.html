@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block extrahead %}
+  {{ super() }}
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#f8f4eb">
+  <script>
+    (() => {
+      const storageKey = "eduwork-databridge-theme";
+      try {
+        const savedTheme = localStorage.getItem(storageKey);
+        const theme =
+          savedTheme === "light" || savedTheme === "dark"
+            ? savedTheme
+            : matchMedia("(prefers-color-scheme: dark)").matches
+              ? "dark"
+              : "light";
+        __md_set("__palette", {
+          color: {
+            media: "",
+            scheme: theme === "dark" ? "slate" : "default",
+            primary: "custom",
+            accent: "custom"
+          }
+        });
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.style.colorScheme = theme;
+      } catch {
+        document.documentElement.dataset.theme = "light";
+      }
+    })();
+  </script>
+{% endblock %}
