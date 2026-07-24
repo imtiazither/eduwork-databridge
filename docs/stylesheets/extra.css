@@ -14,24 +14,98 @@
 }
 
 .md-header {
-  background: #173f41;
+  --md-primary-bg-color: #173235;
+  --md-primary-bg-color--light: #52635f;
+  background: rgba(248, 244, 235, 0.96);
+  border-bottom: 1px solid #ddd4c5;
+  box-shadow: none;
+  color: #173235;
+  backdrop-filter: blur(18px);
 }
 
-.md-header__button.md-logo {
-  padding: 0.3rem;
+.md-header__inner {
+  min-height: 3.8rem;
 }
 
-.md-header__button.md-logo img,
-.md-header__button.md-logo svg {
-  width: 2rem;
-  height: 2rem;
+.databridge-header-spacer {
+  flex-grow: 1;
+}
+
+.databridge-wordmark {
+  align-items: center;
+  color: #173235;
+  display: inline-flex;
+  flex-shrink: 0;
+  gap: 12px;
+  text-decoration: none;
+}
+
+.databridge-wordmark-text {
+  align-items: baseline;
+  display: flex;
+  gap: 8px;
+}
+
+.databridge-wordmark-text small {
+  font-family: "Avenir Next", Avenir, "Segoe UI", sans-serif;
+  font-size: 0.61rem;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+}
+
+.databridge-wordmark-text b {
+  font-family: Charter, "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  font-size: 1.17rem;
+  letter-spacing: -0.02em;
+}
+
+.databridge-bridge-mark {
+  border-bottom: 3px solid #df6249;
+  display: inline-block;
+  height: 22px;
+  position: relative;
+  width: 31px;
+}
+
+.databridge-bridge-mark::before {
+  border: 2px solid #13786f;
+  border-bottom: 0;
+  border-radius: 20px 20px 0 0;
+  bottom: 2px;
+  content: "";
+  height: 11px;
+  left: 4px;
+  position: absolute;
+  right: 4px;
+}
+
+.databridge-bridge-mark span {
+  background: #df6249;
+  border-radius: 50%;
+  bottom: -4px;
+  height: 5px;
+  position: absolute;
+  width: 5px;
+}
+
+.databridge-bridge-mark span:first-child {
+  left: 0;
+}
+
+.databridge-bridge-mark span:last-child {
+  right: 0;
+}
+
+.databridge-wordmark:focus-visible {
+  outline: 3px solid #e2b94f;
+  outline-offset: 4px;
 }
 
 .md-header__button.databridge-product-link {
   align-items: center;
-  border: 1px solid rgba(255, 255, 255, 0.45);
+  border: 1px solid rgba(23, 50, 53, 0.35);
   border-radius: 999px;
-  color: #fff;
+  color: #173235;
   display: inline-flex;
   flex-shrink: 0;
   font-size: 0.62rem;
@@ -57,12 +131,42 @@
   outline-offset: 2px;
 }
 
+.databridge-product-link__short {
+  display: none;
+}
+
 @media screen and (max-width: 44.984375em) {
+  .md-header__inner {
+    min-height: 3.25rem;
+  }
+
+  .databridge-wordmark {
+    gap: 8px;
+  }
+
+  .databridge-wordmark-text small {
+    display: none;
+  }
+
   .md-header__button.databridge-product-link {
     font-size: 0.56rem;
     gap: 0.22rem;
     height: 1.7rem;
     padding: 0 0.48rem;
+  }
+}
+
+@media screen and (max-width: 32.5em) {
+  .databridge-product-link__full {
+    display: none;
+  }
+
+  .databridge-product-link__short {
+    display: inline;
+  }
+
+  .databridge-wordmark-text b {
+    font-size: 1rem;
   }
 }
 

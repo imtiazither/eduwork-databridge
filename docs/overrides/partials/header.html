@@ -7,34 +7,18 @@
 {% endif %}
 <header class="{{ class }}" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="{{ lang.t('header') }}">
-    <a href="{{ config.extra.homepage | d(nav.homepage.url, true) | url }}" title="Back to the EduWork DataBridge product site" class="md-header__button md-logo" aria-label="Back to the EduWork DataBridge product site" data-md-component="logo">
-      {% include "partials/logo.html" %}
+    <a href="{{ config.extra.homepage | d(nav.homepage.url, true) | url }}" title="Back to the EduWork DataBridge product site" class="databridge-wordmark" aria-label="Back to the EduWork DataBridge product site" data-md-component="logo">
+      {% include "partials/databridge-wordmark.html" %}
     </a>
     <label class="md-header__button md-icon" for="__drawer">
       {% set icon = config.theme.icon.menu or "material/menu" %}
       {% include ".icons/" ~ icon ~ ".svg" %}
     </label>
-    <div class="md-header__title" data-md-component="header-title">
-      <div class="md-header__ellipsis">
-        <div class="md-header__topic">
-          <span class="md-ellipsis">
-            {{ config.site_name }}
-          </span>
-        </div>
-        <div class="md-header__topic" data-md-component="header-topic">
-          <span class="md-ellipsis">
-            {% if page.meta and page.meta.title %}
-              {{ page.meta.title }}
-            {% else %}
-              {{ page.title }}
-            {% endif %}
-          </span>
-        </div>
-      </div>
-    </div>
+    <div class="databridge-header-spacer" aria-hidden="true"></div>
     <a href="{{ config.extra.homepage }}" class="md-header__button databridge-product-link" title="Back to the EduWork DataBridge product site" aria-label="Back to the EduWork DataBridge product site">
       <span aria-hidden="true">←</span>
-      <span>Back to product</span>
+      <span class="databridge-product-link__full">Back to product</span>
+      <span class="databridge-product-link__short">Product</span>
     </a>
     {% if config.theme.palette %}
       {% if not config.theme.palette is mapping %}
