@@ -1,9 +1,5 @@
 # EduWork DataBridge
 
-<p class="docs-brand-lockup">
-  <img src="assets/brand/databridge-logo.svg" alt="" aria-hidden="true">
-</p>
-
 **Blueprint-complete reference release v0.15.0**
 
 EduWork DataBridge turns fragmented learning, training, skills, credential, HRIS, LMS, CRM, assessment, and workforce records into documented, validated, reviewable, and traceable data products.

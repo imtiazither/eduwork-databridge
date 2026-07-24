@@ -31,17 +31,6 @@
   background: #173f41;
 }
 
-.docs-brand-lockup {
-  max-width: 23rem;
-  margin: 0 0 1.5rem;
-}
-
-.docs-brand-lockup img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
 .md-typeset h1,
 .md-typeset h2,
 .md-typeset h3 {
