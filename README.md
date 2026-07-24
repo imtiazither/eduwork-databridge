@@ -3,7 +3,9 @@
 [![CI](https://github.com/imtiazither/eduwork-databridge/actions/workflows/ci.yml/badge.svg)](https://github.com/imtiazither/eduwork-databridge/actions/workflows/ci.yml)
 [![GitHub Pages](https://github.com/imtiazither/eduwork-databridge/actions/workflows/pages.yml/badge.svg)](https://github.com/imtiazither/eduwork-databridge/actions/workflows/pages.yml)
 
-[Explore the product site](https://imtiazither.github.io/eduwork-databridge/) · [Browse the documentation](https://imtiazither.github.io/eduwork-databridge/docs/)
+## Live site
+
+[Open EduWork DataBridge on GitHub Pages](https://imtiazither.github.io/eduwork-databridge/) · [Browse the documentation](https://imtiazither.github.io/eduwork-databridge/docs/)
 
 One training report may need an employee roster from HR, completion records from an LMS, scores from an assessment file, and awards from a credential system. The joins usually happen in a spreadsheet. When an ID is missing or two accounts look alike, the reasoning can disappear inside the finished report.
 
