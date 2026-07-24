@@ -7,6 +7,7 @@ repo_name: imtiazither/eduwork-databridge
 strict: true
 theme:
   name: material
+  custom_dir: docs/overrides
   language: en
   logo: assets/brand/databridge-mark-header.svg
   favicon: assets/brand/databridge-mark.svg
@@ -22,6 +23,8 @@ theme:
       accent: custom
 extra_css:
   - stylesheets/extra.css
+extra:
+  homepage: https://imtiazither.github.io/eduwork-databridge/
 nav:
   - Overview:
       - Home: index.md
