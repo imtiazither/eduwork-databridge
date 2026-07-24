@@ -1896,6 +1896,28 @@ footer > div a {
   text-underline-offset: 4px;
 }
 
+@media (max-width: 1380px) {
+  .site-header {
+    gap: clamp(18px, 2.2vw, 34px);
+  }
+
+  .site-nav {
+    gap: 18px;
+  }
+
+  .header-actions {
+    gap: 12px;
+  }
+
+  .theme-toggle {
+    padding-right: 6px;
+  }
+
+  .theme-toggle-label {
+    display: none;
+  }
+}
+
 @media (max-width: 1180px) {
   .site-nav {
     display: none;
