@@ -4,7 +4,7 @@ All notable changes will be documented here. The project follows Semantic Versio
 
 ## Unreleased
 
-## [0.15.0] - 2026-07-22
+## [0.15.0] - 2026-07-23
 
 ### Added
 

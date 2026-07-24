@@ -32,7 +32,7 @@
   "seed": 20260719,
   "stages": [
     {
-      "duration_seconds": 0.07802,
+      "duration_seconds": 0.239896,
       "generated_counts": {
         "assessment_results": 120,
         "credential_awards": 25,
@@ -41,79 +41,79 @@
         "lms_courses": 6,
         "lms_participations": 366
       },
-      "max_rss_kb": 138656,
+      "max_rss_kb": 138096,
       "record_count": 1,
-      "records_per_second": 12.82,
-      "rss_increase_kb": 5120,
+      "records_per_second": 4.17,
+      "rss_increase_kb": 5104,
       "stage": "synthetic_generation"
     },
     {
-      "duration_seconds": 0.001048,
-      "max_rss_kb": 138720,
+      "duration_seconds": 0.004871,
+      "max_rss_kb": 138160,
       "record_count": 120,
-      "records_per_second": 114494.64,
+      "records_per_second": 24634.75,
       "rss_increase_kb": 64,
       "stage": "csv_connector"
     },
     {
-      "duration_seconds": 0.001062,
-      "max_rss_kb": 139392,
+      "duration_seconds": 0.002082,
+      "max_rss_kb": 138352,
       "record_count": 366,
-      "records_per_second": 344713.92,
-      "rss_increase_kb": 672,
+      "records_per_second": 175799.51,
+      "rss_increase_kb": 192,
       "stage": "json_connector"
     },
     {
-      "duration_seconds": 0.011916,
-      "max_rss_kb": 139744,
+      "duration_seconds": 0.008091,
+      "max_rss_kb": 138784,
       "record_count": 120,
-      "records_per_second": 10070.11,
-      "rss_increase_kb": 352,
+      "records_per_second": 14831.37,
+      "rss_increase_kb": 432,
       "stage": "xlsx_connector"
     },
     {
-      "duration_seconds": 0.269396,
-      "max_rss_kb": 152400,
+      "duration_seconds": 0.184866,
+      "max_rss_kb": 151232,
       "record_count": 25,
-      "records_per_second": 92.8,
-      "rss_increase_kb": 12656,
+      "records_per_second": 135.23,
+      "rss_increase_kb": 12448,
       "stage": "parquet_connector"
     },
     {
-      "duration_seconds": 0.026147,
-      "max_rss_kb": 163616,
+      "duration_seconds": 0.024135,
+      "max_rss_kb": 162400,
       "record_count": 366,
-      "records_per_second": 13997.89,
-      "rss_increase_kb": 11184,
+      "records_per_second": 15164.91,
+      "rss_increase_kb": 11152,
       "stage": "profiling"
     },
     {
-      "duration_seconds": 0.000431,
-      "max_rss_kb": 163664,
+      "duration_seconds": 0.00045,
+      "max_rss_kb": 162448,
       "record_count": 120,
-      "records_per_second": 278745.63,
+      "records_per_second": 266567.75,
       "rss_increase_kb": 16,
       "stage": "mapping"
     },
     {
-      "duration_seconds": 0.000457,
-      "max_rss_kb": 163760,
+      "duration_seconds": 0.000374,
+      "max_rss_kb": 162544,
       "record_count": 111,
-      "records_per_second": 242711.55,
+      "records_per_second": 296989.97,
       "rss_increase_kb": 16,
       "stage": "validation"
     },
     {
-      "duration_seconds": 0.001296,
-      "max_rss_kb": 164576,
+      "duration_seconds": 0.001188,
+      "max_rss_kb": 163216,
       "record_count": 246,
-      "records_per_second": 189820.97,
+      "records_per_second": 207019.82,
       "rss_increase_kb": 0,
       "stage": "deterministic_matching"
     },
     {
-      "duration_seconds": 0.165145,
-      "max_rss_kb": 167472,
+      "duration_seconds": 0.167054,
+      "max_rss_kb": 165984,
       "metrics": {
         "auto_false_positives": 0,
         "auto_match_pairs": 121,
@@ -126,25 +126,25 @@
         "total_truth_pairs": 132
       },
       "record_count": 246,
-      "records_per_second": 1489.6,
-      "rss_increase_kb": 2880,
+      "records_per_second": 1472.58,
+      "rss_increase_kb": 2768,
       "stage": "probabilistic_matching"
     },
     {
-      "duration_seconds": 0.000107,
-      "max_rss_kb": 167472,
+      "duration_seconds": 0.000126,
+      "max_rss_kb": 165984,
       "record_count": 366,
-      "records_per_second": 3405982.58,
+      "records_per_second": 2908617.62,
       "rss_increase_kb": 0,
       "stage": "training_mart"
     },
     {
       "bytes": 6001,
-      "duration_seconds": 0.001534,
-      "max_rss_kb": 167952,
+      "duration_seconds": 0.001852,
+      "max_rss_kb": 166416,
       "record_count": 366,
-      "records_per_second": 238559.57,
-      "rss_increase_kb": 480,
+      "records_per_second": 197597.51,
+      "rss_increase_kb": 432,
       "stage": "parquet_export"
     }
   ]

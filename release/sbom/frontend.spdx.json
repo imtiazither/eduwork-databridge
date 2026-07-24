@@ -3,9 +3,9 @@
   "dataLicense": "CC0-1.0",
   "SPDXID": "SPDXRef-DOCUMENT",
   "name": "eduwork-databridge-reviewer-ui@0.15.0",
-  "documentNamespace": "http://spdx.org/spdxdocs/eduwork-databridge-reviewer-ui-0.15.0-24a6deaf-226f-42e7-bab8-b11f285d44b3",
+  "documentNamespace": "http://spdx.org/spdxdocs/eduwork-databridge-reviewer-ui-0.15.0-80705fba-79b0-4e0d-9986-fea5418c60ad",
   "creationInfo": {
-    "created": "2026-07-22T05:52:48.999Z",
+    "created": "2026-07-24T02:00:20.547Z",
     "creators": [
       "Tool: npm/cli-10.9.3"
     ]

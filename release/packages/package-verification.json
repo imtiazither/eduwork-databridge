@@ -2,13 +2,13 @@
   "version": "0.15.0",
   "wheel": {
     "name": "eduwork_databridge-0.15.0-py3-none-any.whl",
-    "bytes": 93857,
-    "sha256": "7bd25332e41ec4d2793f189442cd6186df1e47ff862ea2d307e25cc42b76d03b"
+    "bytes": 95093,
+    "sha256": "0dc794ee9840df8a110526f009295c2fa3d149b6629838f0e01981707a354172"
   },
   "sdist": {
     "name": "eduwork_databridge-0.15.0.tar.gz",
-    "bytes": 72811,
-    "sha256": "c591b21bd196dd81da40ddabe12038c18454042b4360c64a703ea53c1bc729a9"
+    "bytes": 74159,
+    "sha256": "593c208fd5a4fb13e004ff648ce89817e8cc4a9b0bc505d24914e1ff0d938d6a"
   },
   "status": "passed"
 }

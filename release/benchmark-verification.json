@@ -4,18 +4,18 @@
   "current": "benchmark-results/current-v0.15.0.json",
   "budgets": "benchmark-baseline/budgets.json",
   "duration_ratios": {
-    "csv_connector": 1.1221,
-    "deterministic_matching": 0.492,
-    "json_connector": 0.7925,
-    "mapping": 0.6265,
-    "parquet_connector": 7.4061,
-    "parquet_export": 0.9606,
-    "probabilistic_matching": 0.4507,
-    "profiling": 6.1277,
-    "synthetic_generation": 2.6965,
-    "training_mart": 0.3715,
-    "validation": 0.5748,
-    "xlsx_connector": 0.7901
+    "csv_connector": 5.2152,
+    "deterministic_matching": 0.451,
+    "json_connector": 1.5537,
+    "mapping": 0.6541,
+    "parquet_connector": 5.0822,
+    "parquet_export": 1.1597,
+    "probabilistic_matching": 0.4559,
+    "profiling": 5.6562,
+    "synthetic_generation": 8.2911,
+    "training_mart": 0.4375,
+    "validation": 0.4704,
+    "xlsx_connector": 0.5365
   },
   "interpretation": "Shared-sandbox regression check only; not a production SLA."
 }
