@@ -4,6 +4,15 @@ All notable changes will be documented here. The project follows Semantic Versio
 
 ## Unreleased
 
+### Added
+
+- A visually redesigned product site built around the Monday-morning case story, interactive reviewer desk, project contribution, and evidence-first calls to action
+- A static GitHub Pages build mode, combined React and MkDocs artifact, pinned deployment workflow, custom documentation theme, responsive layout, 404 fallback, and social-preview card
+
+### Changed
+
+- The public Pages experience now uses an explicit synthetic-demo state instead of making unavailable backend requests
+
 ## [0.15.0] - 2026-07-23
 
 ### Added

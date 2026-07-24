@@ -57,3 +57,19 @@ test("makes the identity decision a reversible preview", () => {
   expect(screen.getAllByText("Keep separate").length).toBeGreaterThan(0);
   expect(screen.getByText(/resets on refresh/)).toBeInTheDocument();
 });
+
+test("connects the product story to the public resources", () => {
+  mockSuccessfulApi();
+  renderApp();
+  expect(
+    screen.getByRole("heading", { name: /answer spread across four systems/i }),
+  ).toBeInTheDocument();
+  expect(screen.getByRole("link", { name: /Open the field guide/i })).toHaveAttribute(
+    "href",
+    "/docs/EduWork_DataBridge_Field_Guide.pdf",
+  );
+  expect(screen.getAllByRole("link", { name: /Documentation/i })[0]).toHaveAttribute(
+    "href",
+    "/docs/",
+  );
+});

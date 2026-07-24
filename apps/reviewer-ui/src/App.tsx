@@ -11,6 +11,10 @@ import {
 } from "./demoData";
 
 const apiBase = import.meta.env.VITE_API_BASE_URL ?? "";
+const staticDemo = import.meta.env.VITE_STATIC_DEMO === "true";
+const siteBase = import.meta.env.BASE_URL;
+const docsHref = `${siteBase}docs/`;
+const fieldGuideHref = `${docsHref}EduWork_DataBridge_Field_Guide.pdf`;
 
 async function fetchJson<Response>(path: string): Promise<Response> {
   const response = await fetch(`${apiBase}${path}`);
@@ -249,11 +253,13 @@ export function App() {
     queryKey: ["version"],
     queryFn: () => fetchJson<VersionResponse>("/api/v1/version"),
     retry: false,
+    enabled: !staticDemo,
   });
   const summaryQuery = useQuery({
     queryKey: ["demo-summary"],
     queryFn: () => fetchJson<DemoSummaryResponse>("/api/v1/demo/summary"),
     retry: false,
+    enabled: !staticDemo,
   });
   const summary = summaryQuery.data ?? fallbackSummary;
   const issueTotal = useMemo(
@@ -273,26 +279,96 @@ export function App() {
     <>
       <a className="skip-link" href="#workspace">Skip to review workspace</a>
       <header className="site-header">
-        <a className="wordmark" href="#top" aria-label="EduWork DataBridge home"><span>EDUWORK</span><b>DataBridge</b></a>
-        <div className="api-state" role="status">
-          <span className={version.data ? "live" : version.isLoading ? "checking" : "offline"} />
-          {version.data ? `API ${version.data.version}` : version.isLoading ? "Checking local API" : "Preview data"}
+        <a className="wordmark" href="#top" aria-label="EduWork DataBridge home">
+          <i className="bridge-mark" aria-hidden="true"><span /><span /></i>
+          <span><small>EDUWORK</small><b>DataBridge</b></span>
+        </a>
+        <nav className="site-nav" aria-label="Product navigation">
+          <a href="#story">Why it exists</a>
+          <a href="#workspace">Reviewer desk</a>
+          <a href="#contribution">Contribution</a>
+          <a href={docsHref}>Documentation</a>
+        </nav>
+        <div className="header-actions">
+          <div className="api-state" role="status">
+            <span className={staticDemo ? "static" : version.data ? "live" : version.isLoading ? "checking" : "offline"} />
+            {staticDemo
+              ? "Synthetic demo"
+              : version.data
+                ? `API ${version.data.version}`
+                : version.isLoading
+                  ? "Checking local API"
+                  : "Preview data"}
+          </div>
+          <a className="header-cta" href="#workspace">Open the case</a>
         </div>
       </header>
 
       <main id="top">
         <section className="hero" aria-labelledby="page-title">
           <div className="hero-copy">
-            <p className="hero-kicker"><span>Synthetic case file</span> Northstar Learning Labs · July 2026</p>
-            <h1 id="page-title">Can we trust the training report?</h1>
-            <p className="hero-lede">The employee list lives in HR. Completions live in the LMS. Test scores and credentials arrive in two more files. DataBridge turns that hand-built reconciliation into a reviewable trail.</p>
-            <div className="hero-note"><span>Before anyone publishes a number</span><p>keep the source, show the rule, and make uncertainty visible.</p></div>
+            <p className="hero-kicker"><span>Open-source reference</span> Learning + workforce data</p>
+            <h1 id="page-title"><em>Can we trust</em> the training report?</h1>
+            <p className="hero-lede">The employee list lives in HR. Completions live in the LMS. Scores and credentials arrive in two more files. DataBridge turns that hand-built reconciliation into a trail people can inspect.</p>
+            <div className="hero-actions">
+              <a className="button primary" href="#workspace">Walk the evidence path <span aria-hidden="true">↘</span></a>
+              <a className="button text" href="#story">Read the Monday story <span aria-hidden="true">→</span></a>
+            </div>
+            <div className="hero-footnote">
+              <span>Public reference build · v0.15.0</span>
+              <p>No customer records. No hidden matches. No outcome claims.</p>
+            </div>
           </div>
-          <aside className="case-note" aria-label="Case question">
-            <p>THE QUESTION ON MONDAY MORNING</p>
-            <blockquote>“Who completed cybersecurity training, passed, and received the credential?”</blockquote>
-            <div><span>4</span> source systems <i /> <span>{issueTotal}</span> planted problems</div>
+          <aside className="evidence-board" aria-label="Synthetic case evidence path">
+            <div className="board-topline">
+              <span>CASE 07–26</span>
+              <b>Northstar Learning Labs</b>
+              <i>Synthetic</i>
+            </div>
+            <blockquote>“Who finished the training, passed, and received the credential?”</blockquote>
+            <div className="source-map" aria-label="Four source systems converge on one reviewed answer">
+              <div className="source-stack">
+                <span><b>HR</b><small>120 people</small></span>
+                <span><b>LMS</b><small>366 events</small></span>
+                <span><b>TEST</b><small>120 results</small></span>
+                <span><b>AWARD</b><small>25 records</small></span>
+              </div>
+              <div className="route-lines" aria-hidden="true"><i /><i /><i /><i /></div>
+              <div className="review-node">
+                <small>REVIEW FIRST</small>
+                <strong>{issueTotal}</strong>
+                <span>planted problems</span>
+              </div>
+            </div>
+            <div className="board-result"><span>?</span><p><b>The report is not the evidence.</b><small>The route to the answer is.</small></p></div>
           </aside>
+        </section>
+
+        <section className="story-section" id="story" aria-labelledby="story-title">
+          <div className="story-heading">
+            <p className="section-kicker">Monday · 9:07 a.m.</p>
+            <h2 id="story-title">A familiar request. An answer spread across four systems.</h2>
+          </div>
+          <div className="story-steps">
+            <article>
+              <span>01</span>
+              <p className="story-time">The request</p>
+              <h3>Leadership needs one defensible training list.</h3>
+              <p>The question sounds simple until HR, learning, assessment, and credential records disagree.</p>
+            </article>
+            <article>
+              <span>02</span>
+              <p className="story-time">The awkward middle</p>
+              <h3>Names drift. IDs disappear. Dates arrive out of order.</h3>
+              <p>Those records should not vanish into spreadsheet formulas or a silent fuzzy match.</p>
+            </article>
+            <article>
+              <span>03</span>
+              <p className="story-time">Before publishing</p>
+              <h3>Keep the source, show the rule, and surface uncertainty.</h3>
+              <p>DataBridge makes the reconciliation reviewable before anyone treats it as fact.</p>
+            </article>
+          </div>
         </section>
 
         <section className="metric-strip" aria-label="Synthetic fixture summary">
@@ -302,6 +378,14 @@ export function App() {
           <div><strong>{formatNumber(summary.counts.credential_awards)}</strong><span>credential awards</span></div>
           <p><b>SYNTHETIC</b> Safe to inspect. Not a customer outcome.</p>
         </section>
+
+        <div className="workspace-intro">
+          <div>
+            <p className="section-kicker">Interactive case file</p>
+            <h2>Follow one answer from raw source to governed output.</h2>
+          </div>
+          <p>Move through the five review stops. The examples are small enough to understand and concrete enough to challenge.</p>
+        </div>
 
         <div className="workspace-shell" id="workspace">
           <nav className="workspace-nav" aria-label="Reviewer console sections">
@@ -317,14 +401,38 @@ export function App() {
           <div className="workspace-content">{currentView}</div>
         </div>
 
-        <section className="contribution" aria-labelledby="contribution-title">
-          <p className="section-kicker">The contribution</p>
-          <h2 id="contribution-title">Data integration is easy to hide. DataBridge makes it inspectable.</h2>
-          <div><p>Most cross-system reporting still depends on a spreadsheet that only one person understands. The useful idea here is not another dashboard. It is a compact, reusable pattern for preserving evidence while data is cleaned, linked, checked, and released.</p><p>The project also draws a firm line around identity. A likely match can be suggested; a conflict cannot be wished away. That makes the framework useful for training and workforce data where a bad merge can follow a real person.</p></div>
+        <section className="contribution" id="contribution" aria-labelledby="contribution-title">
+          <div className="contribution-heading">
+            <p className="section-kicker">The contribution</p>
+            <h2 id="contribution-title">Data integration is easy to hide. DataBridge makes it inspectable.</h2>
+            <p>Not another dashboard—a reusable way to preserve evidence while records are cleaned, linked, checked, and released.</p>
+          </div>
+          <div className="principle-grid">
+            <article><span>01</span><h3>Evidence travels</h3><p>Checksums, source context, rules, and lineage stay attached to the answer.</p></article>
+            <article><span>02</span><h3>Bad rows have a path</h3><p>Material problems are explained and held for review instead of quietly disappearing.</p></article>
+            <article><span>03</span><h3>Identity stays conservative</h3><p>A likely match can be suggested. A trusted-ID conflict cannot be wished away.</p></article>
+          </div>
+        </section>
+
+        <section className="resource-cta" aria-labelledby="resource-title">
+          <div>
+            <p className="section-kicker">Inspect the work</p>
+            <h2 id="resource-title">Start with the story. Stay for the evidence.</h2>
+            <p>Read the five-page field guide, explore the technical documentation, or inspect the source and synthetic fixtures.</p>
+          </div>
+          <div className="resource-links">
+            <a className="button light" href={fieldGuideHref}>Open the field guide <span aria-hidden="true">↗</span></a>
+            <a className="button outline" href={docsHref}>Browse documentation <span aria-hidden="true">→</span></a>
+            <a className="quiet-link" href="https://github.com/imtiazither/eduwork-databridge">View the repository</a>
+          </div>
         </section>
       </main>
 
-      <footer><span>EduWork DataBridge</span><p>Open-source reference implementation · Apache-2.0 · public examples use synthetic data only</p><a href="https://github.com/imtiazither/eduwork-databridge">View source</a></footer>
+      <footer>
+        <a className="footer-mark" href="#top"><i className="bridge-mark" aria-hidden="true"><span /><span /></i><span>EduWork DataBridge</span></a>
+        <p>Open-source reference implementation · Apache-2.0 · public examples use synthetic data only</p>
+        <div><a href={docsHref}>Docs</a><a href={fieldGuideHref}>Field guide</a><a href="https://github.com/imtiazither/eduwork-databridge">GitHub</a></div>
+      </footer>
     </>
   );
 }

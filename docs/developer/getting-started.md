@@ -42,6 +42,17 @@ make benchmark-smoke
 make release-verify
 ```
 
+## Build the GitHub Pages artifact
+
+```bash
+npm --prefix apps/reviewer-ui run build:pages
+uv run mkdocs build --strict --site-dir apps/reviewer-ui/dist/docs
+cp apps/reviewer-ui/dist/index.html apps/reviewer-ui/dist/404.html
+touch apps/reviewer-ui/dist/.nojekyll
+```
+
+The Pages build is a static synthetic case file. It deliberately skips API requests and labels itself as a demo. The normal development and deployment builds keep the live API integration.
+
 ## Working rules
 
 - Add or update tests and documentation with behavior changes.

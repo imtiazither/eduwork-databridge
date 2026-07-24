@@ -1,6 +1,9 @@
 # EduWork DataBridge
 
 [![CI](https://github.com/imtiazither/eduwork-databridge/actions/workflows/ci.yml/badge.svg)](https://github.com/imtiazither/eduwork-databridge/actions/workflows/ci.yml)
+[![GitHub Pages](https://github.com/imtiazither/eduwork-databridge/actions/workflows/pages.yml/badge.svg)](https://github.com/imtiazither/eduwork-databridge/actions/workflows/pages.yml)
+
+[Explore the product site](https://imtiazither.github.io/eduwork-databridge/) · [Browse the documentation](https://imtiazither.github.io/eduwork-databridge/docs/)
 
 One training report may need an employee roster from HR, completion records from an LMS, scores from an assessment file, and awards from a credential system. The joins usually happen in a spreadsheet. When an ID is missing or two accounts look alike, the reasoning can disappear inside the finished report.
 
@@ -105,6 +108,8 @@ npm run dev
 ```
 
 Run the API in another terminal first. The Vite development server proxies `/api` to `http://127.0.0.1:8000`, so the reviewer desk works with the documented `make api` and `make ui` commands without extra environment setup.
+
+The GitHub Pages build uses `npm run build:pages`. It publishes an explicitly labeled static synthetic demo at the repository subpath and bundles the MkDocs site under `/docs/`; it does not imply that the FastAPI service is hosted by GitHub Pages.
 
 ### Tests and generated artifacts
 

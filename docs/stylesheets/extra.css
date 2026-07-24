@@ -1,0 +1,53 @@
+:root {
+  --md-primary-fg-color: #175f59;
+  --md-primary-fg-color--light: #4a9589;
+  --md-primary-fg-color--dark: #173f41;
+  --md-accent-fg-color: #cb593e;
+  --md-typeset-a-color: #12665f;
+}
+
+[data-md-color-scheme="default"] {
+  --md-default-bg-color: #f8f4eb;
+  --md-default-fg-color: #173235;
+  --md-default-fg-color--light: #52635f;
+  --md-code-bg-color: #ebe7dc;
+}
+
+.md-header {
+  background: #173f41;
+}
+
+.md-tabs {
+  background: #173f41;
+}
+
+.md-typeset h1,
+.md-typeset h2,
+.md-typeset h3 {
+  color: #173235;
+  font-family: Charter, "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+}
+
+.md-typeset h1 {
+  font-size: 2.7rem;
+}
+
+.md-typeset blockquote {
+  border-left-color: #e2b94f;
+  background: #f2ead4;
+}
+
+.md-typeset .admonition,
+.md-typeset details {
+  border-radius: 0;
+}
+
+.md-typeset code {
+  border-radius: 2px;
+}
+
+.md-typeset a:hover {
+  color: #cb593e;
+}

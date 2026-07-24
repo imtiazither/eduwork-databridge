@@ -1,6 +1,7 @@
 site_name: EduWork DataBridge
 site_description: Blueprint-complete open-source reference for governed learning and workforce data interoperability
 site_author: Nafiz Imtiaz
+site_url: https://imtiazither.github.io/eduwork-databridge/docs/
 repo_url: https://github.com/imtiazither/eduwork-databridge
 repo_name: imtiazither/eduwork-databridge
 strict: true
@@ -15,8 +16,10 @@ theme:
     - content.tabs.link
   palette:
     - scheme: default
-      primary: blue grey
-      accent: cyan
+      primary: custom
+      accent: custom
+extra_css:
+  - stylesheets/extra.css
 nav:
   - Overview:
       - Home: index.md
