@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="EduWork DataBridge makes learning and workforce data reconciliation inspectable—from source evidence to governed output." />
     <meta name="theme-color" content="#16373a" />
-    <meta name="color-scheme" content="light" />
+    <meta name="color-scheme" content="light dark" />
     <link rel="canonical" href="https://imtiazither.github.io/eduwork-databridge/" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="EduWork DataBridge · Make the answer inspectable" />
@@ -18,6 +18,23 @@
     <meta name="twitter:description" content="A human-centered reference implementation for learning and workforce data reconciliation." />
     <meta name="twitter:image" content="https://imtiazither.github.io/eduwork-databridge/og.png" />
     <title>EduWork DataBridge · Make the answer inspectable</title>
+    <script>
+      (() => {
+        try {
+          const savedTheme = localStorage.getItem("eduwork-databridge-theme");
+          const theme =
+            savedTheme === "light" || savedTheme === "dark"
+              ? savedTheme
+              : matchMedia("(prefers-color-scheme: dark)").matches
+                ? "dark"
+                : "light";
+          document.documentElement.dataset.theme = theme;
+          document.documentElement.style.colorScheme = theme;
+        } catch {
+          document.documentElement.dataset.theme = "light";
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   fallbackSummary,
   issueDefinitions,
@@ -15,6 +15,25 @@ const staticDemo = import.meta.env.VITE_STATIC_DEMO === "true";
 const siteBase = import.meta.env.BASE_URL;
 const docsHref = `${siteBase}docs/`;
 const fieldGuideHref = `${docsHref}EduWork_DataBridge_Field_Guide.pdf`;
+const themeStorageKey = "eduwork-databridge-theme";
+
+type Theme = "light" | "dark";
+
+function getInitialTheme(): Theme {
+  if (typeof window === "undefined") return "light";
+
+  try {
+    const savedTheme = window.localStorage.getItem(themeStorageKey);
+    if (savedTheme === "light" || savedTheme === "dark") return savedTheme;
+  } catch {
+    // A private browsing policy may make storage unavailable. The system preference still works.
+  }
+
+  return typeof window.matchMedia === "function" &&
+    window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
+}
 
 async function fetchJson<Response>(path: string): Promise<Response> {
   const response = await fetch(`${apiBase}${path}`);
@@ -249,6 +268,7 @@ function Evidence() {
 
 export function App() {
   const [view, setView] = useState<ViewKey>("overview");
+  const [theme, setTheme] = useState<Theme>(getInitialTheme);
   const version = useQuery({
     queryKey: ["version"],
     queryFn: () => fetchJson<VersionResponse>("/api/v1/version"),
@@ -266,6 +286,20 @@ export function App() {
     () => Object.values(summary.defect_summary).reduce((total, count) => total + count, 0),
     [summary],
   );
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+    document.documentElement.style.colorScheme = theme;
+    document
+      .querySelector('meta[name="theme-color"]')
+      ?.setAttribute("content", theme === "dark" ? "#110e06" : "#16373a");
+
+    try {
+      window.localStorage.setItem(themeStorageKey, theme);
+    } catch {
+      // Theme switching should remain usable even when storage is blocked.
+    }
+  }, [theme]);
 
   const currentView = {
     overview: <Overview issueTotal={issueTotal} />,
@@ -300,6 +334,20 @@ export function App() {
                   ? "Checking local API"
                   : "Preview data"}
           </div>
+          <button
+            className="theme-toggle"
+            type="button"
+            aria-pressed={theme === "dark"}
+            aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+            onClick={() => setTheme((current) => (current === "dark" ? "light" : "dark"))}
+          >
+            <span className="theme-toggle-track" aria-hidden="true">
+              <span className="theme-toggle-stars"><i /><i /><i /></span>
+              <span className="theme-toggle-cloud" />
+              <span className="theme-toggle-thumb" />
+            </span>
+            <span className="theme-toggle-label">{theme === "dark" ? "Light" : "Dark"}</span>
+          </button>
           <a className="header-cta" href="#workspace">Open the case</a>
         </div>
       </header>

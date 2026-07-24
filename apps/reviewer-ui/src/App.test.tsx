@@ -22,6 +22,9 @@ function mockSuccessfulApi() {
 afterEach(() => {
   cleanup();
   vi.unstubAllGlobals();
+  window.localStorage.clear();
+  document.documentElement.removeAttribute("data-theme");
+  document.documentElement.style.removeProperty("color-scheme");
 });
 
 test("renders the case story and live API version", async () => {
@@ -72,4 +75,21 @@ test("connects the product story to the public resources", () => {
     "href",
     "/docs/",
   );
+});
+
+test("switches themes and remembers the visitor's choice", () => {
+  mockSuccessfulApi();
+  renderApp();
+
+  const toggle = screen.getByRole("button", { name: "Switch to dark mode" });
+  expect(document.documentElement).toHaveAttribute("data-theme", "light");
+
+  fireEvent.click(toggle);
+
+  expect(document.documentElement).toHaveAttribute("data-theme", "dark");
+  expect(screen.getByRole("button", { name: "Switch to light mode" })).toHaveAttribute(
+    "aria-pressed",
+    "true",
+  );
+  expect(window.localStorage.getItem("eduwork-databridge-theme")).toBe("dark");
 });
