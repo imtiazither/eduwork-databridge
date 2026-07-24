@@ -13,6 +13,9 @@ All notable changes will be documented here. The project follows Semantic Versio
 - A project story, real reviewer screenshot, and five-page field guide focused on the problem, contribution, evidence, and pilot boundary
 - A rebuilt plain-English explainer (Markdown source in `docs/`, PDF at the repository root) grounded in the synthetic case file, the reviewer desk, and the project story
 - Frontend coverage for API-connected, API-offline, exception-review, and identity-decision states
+- A mapped validation path: `POST /api/v1/validations` accepts an optional `mapping_id` and `lookup_ids`, validates the canonical records a mapping produces, and labels every response with its `record_source`
+- Automatic lineage registration across mapping preview, mart build (with optional source provenance), and export publish, with traces that resolve snapshot, mart, and export identifiers directly
+- API-level integration coverage for the governed flow: extraction, mapped validation, matching, mart, export, lineage trace, audit, and viewer-role rejection
 
 ### Fixed
 
@@ -20,6 +23,8 @@ All notable changes will be documented here. The project follows Semantic Versio
 - PostgreSQL data volume mount updated to `/var/lib/postgresql` for the postgres:18 image layout, which relocated `PGDATA`; the release smoke test now dumps container logs on failure
 - Three foreign-key constraint names that exceeded PostgreSQL's 63-character identifier limit; they were invisible to the SQLite-based test suite and failed the first live PostgreSQL migration run
 - Release workflow cosign verification now pins the expected certificate identity and OIDC issuer, which keyless verification requires
+- Extraction, mapping preview, validation, and deterministic matching now require authentication with the matching permissions and emit audit events, closing the unaudited write paths
+- Mart and export storage now honor `EDUWORK_MART_ROOT` and `EDUWORK_EXPORT_ROOT` instead of hardcoded `var/` paths, and lineage events honor `EDUWORK_LINEAGE_ROOT`
 - Direct local `make api` plus `make ui` connectivity through the Vite development proxy and configured CORS origins
 - Stale v0.12 values in the current release evidence manifest
 - SQLite connection cleanup in the test suite

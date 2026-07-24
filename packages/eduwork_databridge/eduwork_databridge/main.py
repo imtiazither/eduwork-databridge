@@ -155,6 +155,23 @@ def _source_object(config: SourceConfig, object_key: str) -> SourceObjectConfig:
     )
 
 
+def _load_lookups(lookup_ids: list[str]) -> dict[str, dict[str, object]]:
+    lookups: dict[str, dict[str, object]] = {}
+    for lookup_id in lookup_ids:
+        loaded_id, _, values = load_lookup(named_config_path(CONFIG_ROOT, "lookups", lookup_id))
+        if loaded_id != lookup_id:
+            raise HTTPException(status_code=400, detail="Lookup identifier mismatch")
+        lookups[lookup_id] = values
+    return lookups
+
+
+def _mapping_rules(config: MappingConfig) -> list[dict[str, Any]]:
+    return [
+        {"target": rule.target, "source": rule.source, "transform": rule.transform}
+        for rule in config.rules
+    ]
+
+
 app = FastAPI(
     title=settings.api_title,
     version=settings.api_version,
@@ -294,14 +311,16 @@ async def extract_source(
     source_id: str,
     request: IngestionRequest,
     session: SessionDep,
+    actor: ActorDep,
     x_organization_id: OrganizationHeader = None,
 ) -> IngestionResponse:
-    if x_organization_id is None:
-        raise HTTPException(status_code=400, detail="X-Organization-ID is required")
+    organization_id = _required_organization(x_organization_id)
+    require_organization(actor, organization_id)
+    require_permission(actor, "ingestion:write")
     service = IngestionService(session, settings, CONFIG_ROOT)
     try:
         outcome = await service.extract(
-            organization_id=x_organization_id,
+            organization_id=organization_id,
             source_id=source_id,
             object_key=request.object_key,
             resume_from_run_id=request.resume_from_run_id,
@@ -311,6 +330,19 @@ async def extract_source(
             status_code=400,
             detail={"code": exc.code, "message": exc.safe_message},
         ) from exc
+    AuditService(session).record(
+        actor,
+        "ingestion.completed",
+        "ingestion_run",
+        str(outcome.run_id),
+        organization_id,
+        details={
+            "source_id": source_id,
+            "object_key": request.object_key,
+            "row_count": outcome.row_count,
+            "reused_snapshot": outcome.reused_snapshot,
+        },
+    )
     return IngestionResponse(
         run_id=outcome.run_id,
         snapshot_id=outcome.snapshot_id,
@@ -361,19 +393,17 @@ def create_profile(
 def preview_mapping(
     request: MappingPreviewRequest,
     session: SessionDep,
+    actor: ActorDep,
     x_organization_id: OrganizationHeader = None,
 ) -> MappingResponse:
     organization_id = _required_organization(x_organization_id)
+    require_organization(actor, organization_id)
+    require_permission(actor, "mappings:write")
     config = _named_config("mappings", request.mapping_id, MappingConfig)
     snapshot = session.get(RawSnapshot, request.snapshot_id)
     if snapshot is None:
         raise HTTPException(status_code=404, detail="Raw snapshot was not found")
-    lookups: dict[str, dict[str, object]] = {}
-    for lookup_id in request.lookup_ids:
-        loaded_id, _, values = load_lookup(named_config_path(CONFIG_ROOT, "lookups", lookup_id))
-        if loaded_id != lookup_id:
-            raise HTTPException(status_code=400, detail="Lookup identifier mismatch")
-        lookups[lookup_id] = values
+    lookups = _load_lookups(request.lookup_ids)
     try:
         outcome = MappingService(session).execute(
             organization_id=organization_id,
@@ -388,6 +418,21 @@ def preview_mapping(
     except (ConnectorError, MappingCompileError) as exc:
         message = exc.safe_message if isinstance(exc, ConnectorError) else "Mapping cannot compile"
         raise HTTPException(status_code=400, detail=message) from exc
+    LineageService(session, settings.lineage_root).record_mapping(
+        organization_id,
+        request.snapshot_id,
+        config.mapping_id,
+        config.source_contract,
+        _mapping_rules(config),
+    )
+    AuditService(session).record(
+        actor,
+        "mapping.previewed",
+        "mapping_execution",
+        str(outcome.execution_id),
+        organization_id,
+        details={"mapping_id": config.mapping_id, "output_count": outcome.output_count},
+    )
     return MappingResponse(
         execution_id=outcome.execution_id,
         status=outcome.status,
@@ -404,29 +449,76 @@ def preview_mapping(
 def validate_snapshot(
     request: ValidationRequest,
     session: SessionDep,
+    actor: ActorDep,
     x_organization_id: OrganizationHeader = None,
 ) -> ValidationResponse:
     organization_id = _required_organization(x_organization_id)
+    require_organization(actor, organization_id)
+    require_permission(actor, "validation:write")
     config = _named_config("validations", request.validation_set_id, ValidationConfig)
     snapshot = session.get(RawSnapshot, request.snapshot_id)
     if snapshot is None:
         raise HTTPException(status_code=404, detail="Raw snapshot was not found")
+    records = read_snapshot_records(snapshot)
+    record_source = "raw"
+    if request.mapping_id is not None:
+        mapping_config = _named_config("mappings", request.mapping_id, MappingConfig)
+        try:
+            mapped = MappingService(session).execute(
+                organization_id=organization_id,
+                snapshot_id=request.snapshot_id,
+                records=records,
+                config=mapping_config,
+                lookups=_load_lookups(request.lookup_ids),
+                context={"output_defaults": {"organization_id": str(organization_id)}},
+                dry_run=True,
+            )
+        except (ConnectorError, MappingCompileError) as exc:
+            message = (
+                exc.safe_message if isinstance(exc, ConnectorError) else "Mapping cannot compile"
+            )
+            raise HTTPException(status_code=400, detail=message) from exc
+        records = mapped.outputs
+        record_source = "mapped"
+        LineageService(session, settings.lineage_root).record_mapping(
+            organization_id,
+            request.snapshot_id,
+            mapping_config.mapping_id,
+            mapping_config.source_contract,
+            _mapping_rules(mapping_config),
+        )
     try:
         outcome = ValidationService(session).validate(
             organization_id=organization_id,
             snapshot_id=request.snapshot_id,
-            records=read_snapshot_records(snapshot),
+            records=records,
             config=config,
             reference_sets={key: set(values) for key, values in request.reference_sets.items()},
         )
     except ConnectorError as exc:
         raise HTTPException(status_code=400, detail=exc.safe_message) from exc
+    AuditService(session).record(
+        actor,
+        "validation.completed",
+        "raw_snapshot",
+        str(request.snapshot_id),
+        organization_id,
+        details={
+            "validation_set_id": request.validation_set_id,
+            "record_source": record_source,
+            "issue_count": len(outcome.result.issues),
+            "blocking_failures": outcome.result.blocking_failures,
+            "quarantine_count": len(outcome.quarantine_ids),
+        },
+    )
     return ValidationResponse(
         issue_count=len(outcome.result.issues),
         blocking_failures=outcome.result.blocking_failures,
         quality_dimensions=outcome.result.quality_dimensions,
         persisted_result_ids=outcome.persisted_result_ids,
         quarantine_ids=outcome.quarantine_ids,
+        validated_record_count=len(records),
+        record_source=record_source,
     )
 
 
@@ -460,9 +552,12 @@ def resolve_quarantine(
 def deterministic_synthetic_match(
     request: DeterministicMatchRequest,
     session: SessionDep,
+    actor: ActorDep,
     x_organization_id: OrganizationHeader = None,
 ) -> DeterministicMatchResponse:
     organization_id = _required_organization(x_organization_id)
+    require_organization(actor, organization_id)
+    require_permission(actor, "matching:write")
     if request.dataset_preset not in {"small", "medium"}:
         raise HTTPException(status_code=400, detail="Dataset preset must be small or medium")
     config = _named_config("matching", request.match_config_id, DeterministicMatchConfig)
@@ -483,6 +578,18 @@ def deterministic_synthetic_match(
             exc.safe_message if isinstance(exc, ConnectorError) else "Matching input is invalid"
         )
         raise HTTPException(status_code=400, detail=message) from exc
+    AuditService(session).record(
+        actor,
+        "matching.deterministic.completed",
+        "match_evaluation",
+        str(outcome.evaluation_id) if outcome.evaluation_id else "synthetic-run",
+        organization_id,
+        details={
+            "candidate_count": len(outcome.candidate_ids),
+            "link_count": len(outcome.result.links),
+            "conflict_count": len(outcome.result.conflicts),
+        },
+    )
     return DeterministicMatchResponse(
         candidate_ids=outcome.candidate_ids,
         evaluation_id=outcome.evaluation_id,
@@ -570,11 +677,25 @@ def build_mart(
     require_organization(actor, organization_id)
     require_permission(actor, "marts:write")
     config = _named_config("marts", request.mart_config_id, MartDefinitionConfig)
-    outcome = MartService(session).build(
+    mapping_config: MappingConfig | None = None
+    if request.mapping_id is not None:
+        mapping_config = _named_config("mappings", request.mapping_id, MappingConfig)
+    if request.source_snapshot_id is not None and (
+        session.get(RawSnapshot, request.source_snapshot_id) is None
+    ):
+        raise HTTPException(status_code=404, detail="Source snapshot was not found")
+    outcome = MartService(session, settings.mart_root).build(
         organization_id,
         [dict(record) for record in request.records],
         config,
         dict(request.lineage),
+    )
+    LineageService(session, settings.lineage_root).record_mart(
+        organization_id,
+        outcome.snapshot_id,
+        source_snapshot_id=request.source_snapshot_id,
+        mapping_id=mapping_config.mapping_id if mapping_config else None,
+        mapping_version=mapping_config.source_contract if mapping_config else None,
     )
     AuditService(session).record(
         actor,
@@ -607,7 +728,11 @@ def publish_export(
     if mart is None or mart.organization_id != organization_id:
         raise HTTPException(status_code=404, detail="Mart snapshot was not found")
     config = _named_config("exports", request.export_config_id, ExportConfig)
-    outcome = ExportService(session).publish(
+    outcome = ExportService(
+        session,
+        settings.export_root,
+        LineageService(session, settings.lineage_root),
+    ).publish(
         organization_id,
         mart.id,
         read_mart_records(mart),

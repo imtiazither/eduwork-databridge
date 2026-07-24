@@ -60,15 +60,24 @@ class LineageService:
         relation_type: str,
         field_mapping: dict[str, Any] | None = None,
     ) -> LineageEdge:
-        edge = LineageEdge(
-            organization_id=organization_id,
-            from_node_id=from_node.id,
-            to_node_id=to_node.id,
-            relation_type=relation_type,
-            field_mapping_json=field_mapping or {},
+        edge = self.session.scalar(
+            select(LineageEdge).where(
+                LineageEdge.organization_id == organization_id,
+                LineageEdge.from_node_id == from_node.id,
+                LineageEdge.to_node_id == to_node.id,
+                LineageEdge.relation_type == relation_type,
+            )
         )
-        self.session.add(edge)
-        self.session.flush()
+        if edge is None:
+            edge = LineageEdge(
+                organization_id=organization_id,
+                from_node_id=from_node.id,
+                to_node_id=to_node.id,
+                relation_type=relation_type,
+                field_mapping_json=field_mapping or {},
+            )
+            self.session.add(edge)
+            self.session.flush()
         return edge
 
     def record_mapping(
@@ -116,6 +125,49 @@ class LineageService:
                 },
             )
             node_ids.append(target.id)
+        self.session.commit()
+        return node_ids
+
+    def record_mart(
+        self,
+        organization_id: uuid.UUID,
+        mart_snapshot_id: uuid.UUID,
+        source_snapshot_id: uuid.UUID | None = None,
+        mapping_id: str | None = None,
+        mapping_version: str | None = None,
+    ) -> list[uuid.UUID]:
+        mart = self._node(
+            organization_id,
+            "dataset",
+            "eduwork.mart",
+            str(mart_snapshot_id),
+            {"mart_snapshot_id": str(mart_snapshot_id)},
+        )
+        node_ids = [mart.id]
+        upstream: LineageNode | None = None
+        if source_snapshot_id is not None:
+            upstream = self._node(
+                organization_id,
+                "dataset",
+                "eduwork.raw",
+                str(source_snapshot_id),
+                {"snapshot_id": str(source_snapshot_id)},
+            )
+            node_ids.append(upstream.id)
+        if mapping_id is not None:
+            job = self._node(
+                organization_id,
+                "job",
+                "eduwork.mapping",
+                f"{mapping_id}:{mapping_version or 'unversioned'}",
+                {"mapping_id": mapping_id, "version": mapping_version},
+            )
+            if upstream is not None:
+                self.connect(organization_id, upstream, job, "used")
+            upstream = job
+            node_ids.append(job.id)
+        if upstream is not None:
+            self.connect(organization_id, upstream, mart, "produced")
         self.session.commit()
         return node_ids
 
@@ -189,7 +241,13 @@ class LineageService:
                 select(LineageEdge).where(LineageEdge.organization_id == organization_id)
             )
         )
-        relevant_ids = {node_id}
+        # Resolve the starting point by internal node id or by business name,
+        # so callers can trace with the snapshot, mart, or export id they hold.
+        relevant_ids = {
+            node.id for node in nodes if node.id == node_id or node.name == str(node_id)
+        }
+        if not relevant_ids:
+            return LineageTrace(nodes=[], edges=[])
         changed = True
         while changed:
             changed = False

@@ -22,8 +22,8 @@
   "application_tables": 52,
   "alembic_revisions": 4,
   "python_source_files_checked": 81,
-  "python_tests_passed": 70,
-  "python_coverage_percent": 89.8,
+  "python_tests_passed": 75,
+  "python_coverage_percent": 90.1,
   "frontend_tests_passed": 4,
   "generated_json_schemas": 11,
   "synthetic_presets_committed": [

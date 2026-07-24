@@ -129,6 +129,8 @@ class ValidationRequest(APIModel):
     snapshot_id: uuid.UUID
     validation_set_id: str
     reference_sets: dict[str, list[str]] = Field(default_factory=dict)
+    mapping_id: str | None = None
+    lookup_ids: list[str] = Field(default_factory=list)
 
 
 class ValidationResponse(APIModel):
@@ -137,6 +139,8 @@ class ValidationResponse(APIModel):
     quality_dimensions: dict[str, dict[str, int | float]]
     persisted_result_ids: list[uuid.UUID]
     quarantine_ids: list[uuid.UUID]
+    validated_record_count: int
+    record_source: str
 
 
 class QuarantineResolveRequest(APIModel):
@@ -177,6 +181,8 @@ class MartBuildRequest(APIModel):
     mart_config_id: str
     records: list[dict[str, object]]
     lineage: dict[str, object] = Field(default_factory=dict)
+    source_snapshot_id: uuid.UUID | None = None
+    mapping_id: str | None = None
 
 
 class MartBuildResponse(APIModel):

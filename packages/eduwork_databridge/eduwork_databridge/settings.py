@@ -27,6 +27,7 @@ class Settings(BaseSettings):
     allow_private_network_sources: bool = False
     http_timeout_seconds: float = 30.0
     export_root: Path = Path("var/exports")
+    mart_root: Path = Path("var/marts")
     lineage_root: Path = Path("var/lineage")
     telemetry_enabled: bool = True
     telemetry_service_name: str = "eduwork-databridge"
