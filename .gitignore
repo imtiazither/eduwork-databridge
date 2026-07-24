@@ -17,6 +17,7 @@ apps/reviewer-ui/dist/
 .DS_Store
 .idea/
 .vscode/
+.claude/
 site/
 build/
 dist/
