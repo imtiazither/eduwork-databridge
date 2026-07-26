@@ -322,6 +322,7 @@ export function App() {
           <a href="#workspace">Reviewer desk</a>
           <a href="#contribution">Contribution</a>
           <a href={docsHref}>Documentation</a>
+          <a href="https://github.com/imtiazither/eduwork-databridge">Repository</a>
         </nav>
         <div className="header-actions">
           <div className="api-state" role="status">
@@ -453,7 +454,7 @@ export function App() {
           <div className="contribution-heading">
             <p className="section-kicker">The contribution</p>
             <h2 id="contribution-title">Data integration is easy to hide. DataBridge makes it inspectable.</h2>
-            <p>Not another dashboard—a reusable way to preserve evidence while records are cleaned, linked, checked, and released.</p>
+            <p>A dashboard shows the answer and hides the work. DataBridge keeps the evidence, so you can see how a record was cleaned, linked, checked, and released.</p>
           </div>
           <div className="principle-grid">
             <article><span>01</span><h3>Evidence travels</h3><p>Checksums, source context, rules, and lineage stay attached to the answer.</p></article>
