@@ -31,7 +31,7 @@ dependencies = [
   "psycopg[binary]>=3.2,<4",
   "pyyaml>=6.0,<7",
   "sqlalchemy>=2.0.41,<3",
-  "structlog>=25,<26",
+  "structlog>=25,<27",
   "uvicorn[standard]>=0.35,<1",
 ]
 
