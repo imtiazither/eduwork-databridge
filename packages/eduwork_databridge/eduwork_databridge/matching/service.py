@@ -156,3 +156,19 @@ class DeterministicMatchService:
         candidate.status = decision
         self.session.commit()
         return row
+
+    def list_decisions(
+        self,
+        organization_id: uuid.UUID,
+        candidate_id: uuid.UUID,
+    ) -> list[MatchDecision]:
+        candidate = self.session.get(MatchCandidate, candidate_id)
+        if candidate is None or candidate.organization_id != organization_id:
+            raise ConnectorError("candidate_not_found", "Match candidate was not found")
+        return list(
+            self.session.scalars(
+                select(MatchDecision)
+                .where(MatchDecision.candidate_id == candidate.id)
+                .order_by(MatchDecision.decided_at.desc(), MatchDecision.id.desc())
+            )
+        )

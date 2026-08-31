@@ -4,11 +4,11 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "eduwork-databridge"
-version = "0.15.0"
+version = "0.16.0"
 description = "Industry-neutral learning and workforce data interoperability foundation"
 readme = "README.md"
 requires-python = ">=3.12,<3.14"
-license = "Apache-2.0"
+license = "MIT"
 authors = [{name = "Nafiz Imtiaz"}]
 classifiers = [
   "Development Status :: 3 - Alpha",
@@ -49,6 +49,7 @@ dev = [
   "mkdocs>=1.6,<2",
   "mkdocs-material>=9.6,<10",
   "mypy>=1.16,<2",
+  "pip>=26.2,<27",
   "pip-audit>=2.7,<3",
   "pytest>=9.0.3,<10",
   "pytest-cov>=6.2,<7",

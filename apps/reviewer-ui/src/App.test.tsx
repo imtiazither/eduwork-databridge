@@ -13,7 +13,7 @@ function mockSuccessfulApi() {
   vi.stubGlobal("fetch", vi.fn((input: RequestInfo | URL) => {
     const url = String(input);
     const body = url.endsWith("/api/v1/version")
-      ? { version: "0.14.0", maturity: "release-candidate", completed_phases: Array.from({ length: 15 }, (_, index) => index) }
+      ? { version: "0.16.0", maturity: "release-candidate", completed_phases: Array.from({ length: 15 }, (_, index) => index) }
       : fallbackSummary;
     return Promise.resolve({ ok: true, json: async () => body } as Response);
   }));
@@ -31,7 +31,7 @@ test("renders the case story and live API version", async () => {
   mockSuccessfulApi();
   renderApp();
   expect(screen.getByRole("heading", { name: "Can we trust the training report?" })).toBeInTheDocument();
-  expect(await screen.findByText("API 0.14.0")).toBeInTheDocument();
+  expect(await screen.findByText("API 0.16.0")).toBeInTheDocument();
   expect(screen.getByText("366")).toBeInTheDocument();
 });
 
@@ -52,13 +52,13 @@ test("lets a reviewer inspect exceptions", async () => {
   expect(screen.getByRole("heading", { name: /Hiro Johnson/ })).toBeInTheDocument();
 });
 
-test("makes the identity decision a reversible preview", () => {
+test("labels the public identity interaction as a static preview", () => {
   mockSuccessfulApi();
   renderApp();
   fireEvent.click(screen.getByRole("button", { name: /Identity review/ }));
   fireEvent.click(screen.getByRole("button", { name: "Keep separate" }));
   expect(screen.getAllByText("Keep separate").length).toBeGreaterThan(0);
-  expect(screen.getByText(/resets on refresh/)).toBeInTheDocument();
+  expect(screen.getByText(/static preview and resets on refresh/)).toBeInTheDocument();
 });
 
 test("connects the product story to the public resources", () => {

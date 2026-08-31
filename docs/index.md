@@ -1,6 +1,6 @@
 # EduWork DataBridge
 
-**Blueprint-complete reference release v0.15.0**
+**v0.16.0 pre-production reference release**
 
 EduWork DataBridge turns fragmented learning, training, skills, credential, HRIS, LMS, CRM, assessment, and workforce records into documented, validated, reviewable, and traceable data products.
 
@@ -14,6 +14,7 @@ It began with a smaller problem: a training report assembled from four systems s
 - Bounded mapping DSL and governed lookup tables
 - Eight validation categories and immutable quarantine history
 - Deterministic and probabilistic identity-linkage evidence with human review
+- Reasoned, reversible match decisions with protected API and audit evidence
 - Run and field lineage plus OpenLineage-compatible events
 - Governed marts and masked CSV/Parquet exports
 - Asset orchestration, partitions, retries, watermarks, backfills, and telemetry

@@ -2,11 +2,14 @@ import json
 import shutil
 import subprocess
 import tempfile
+import tomllib
 from pathlib import Path
 
 
 def verify() -> dict[str, str]:
-    wheel = next(Path("release/packages").glob("eduwork_databridge-0.15.0-*.whl"))
+    project = tomllib.loads(Path("pyproject.toml").read_text(encoding="utf-8"))
+    version = str(project["project"]["version"])
+    wheel = next(Path("release/packages").glob(f"eduwork_databridge-{version}-*.whl"))
     uv = shutil.which("uv")
     if uv is None:
         fallback = Path.home() / ".local/bin/uv"
@@ -27,8 +30,8 @@ def verify() -> dict[str, str]:
             (
                 "import eduwork_databridge; "
                 "from eduwork_databridge.main import app; "
-                "assert eduwork_databridge.__version__ == '0.15.0'; "
-                "assert app.version == '0.15.0'"
+                f"assert eduwork_databridge.__version__ == {version!r}; "
+                f"assert app.version == {version!r}"
             ),
         ],
         check=True,
@@ -37,8 +40,8 @@ def verify() -> dict[str, str]:
         "wheel": wheel.name,
         "python": "3.12",
         "dependency_install": "passed",
-        "import_version": "0.15.0",
-        "fastapi_app_version": "0.15.0",
+        "import_version": version,
+        "fastapi_app_version": version,
         "status": "passed",
     }
     output = Path("release/packages/wheel-install-verification.json")

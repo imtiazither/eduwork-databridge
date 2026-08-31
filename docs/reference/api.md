@@ -1,4 +1,4 @@
-# Phase 12 API
+# API Reference
 
 - `GET /healthz` — process liveness
 - `GET /readyz` — database readiness
@@ -14,6 +14,8 @@
 - `POST /api/v1/validations` — multi-category validation, quality dimensions, persisted results, and quarantine IDs; optional `mapping_id` and `lookup_ids` validate the mapped canonical records instead of the raw snapshot, and the response labels its `record_source`
 - `POST /api/v1/quarantine/{quarantine_id}/resolve` — attributable resolution/waiver/correction metadata
 - `POST /api/v1/matches/deterministic/synthetic` — organization-scoped deterministic linkage and synthetic truth evaluation
+- `POST /api/v1/matches/{candidate_id}/decisions` — permission-gated reasoned match, no-match, defer, or escalation decision
+- `GET /api/v1/matches/{candidate_id}/decisions` — organization-scoped decision history, newest first
 - `POST /api/v1/matches/probabilistic/synthetic` — explicit synthetic estimation, probabilities, gray-zone candidates, and model/run evidence
 - `POST /api/v1/marts` — permission-gated governed mart build; optional `source_snapshot_id` and `mapping_id` register lineage back to the raw snapshot
 - `POST /api/v1/exports` — permission-gated documented masked export with automatic mart-to-export lineage
@@ -23,4 +25,4 @@
 - `GET /api/v1/me` — current demo/OIDC-adapted actor
 - `GET /api/v1/audit` — permission-gated organization audit events covering extraction, mapping previews, validation, matching, marts, exports, orchestration, and retention
 
-Extraction returns run ID, snapshot ID, checksum, storage URI, row count, reuse flag, and cursor. Processing endpoints require an organization header and versioned configuration. In non-production demo mode, `X-Demo-User` selects `demo-admin` or `demo-viewer`; production must replace demo identity with verified OIDC infrastructure. Authorization is still enforced after authentication.
+Extraction returns run ID, snapshot ID, checksum, storage URI, row count, reuse flag, and cursor. Match decisions require `matching:write`, a non-empty reason, and a decision of `match`, `no_match`, `defer`, or `escalate`. A later decision supersedes the prior decision and emits `matching.decision.recorded` in the organization audit trail. Processing endpoints require an organization header and versioned configuration. In non-production demo mode, `X-Demo-User` selects `demo-admin` or `demo-viewer`; production must replace demo identity with verified OIDC infrastructure. Authorization is still enforced after authentication.

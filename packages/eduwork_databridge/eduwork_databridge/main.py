@@ -54,6 +54,8 @@ from eduwork_databridge.schemas.api import (
     MappingResponse,
     MartBuildRequest,
     MartBuildResponse,
+    MatchDecisionRequest,
+    MatchDecisionResponse,
     OrganizationRead,
     ProbabilisticMatchRequest,
     ProbabilisticMatchResponse,
@@ -598,6 +600,69 @@ def deterministic_synthetic_match(
         conflict_count=len(outcome.result.conflicts),
         metrics=asdict(outcome.metrics) if outcome.metrics else None,
     )
+
+
+@app.post(
+    "/api/v1/matches/{candidate_id}/decisions",
+    response_model=MatchDecisionResponse,
+    tags=["matching"],
+)
+def record_match_decision(
+    candidate_id: uuid.UUID,
+    request: MatchDecisionRequest,
+    session: SessionDep,
+    actor: ActorDep,
+    x_organization_id: OrganizationHeader = None,
+) -> MatchDecisionResponse:
+    organization_id = _required_organization(x_organization_id)
+    require_organization(actor, organization_id)
+    require_permission(actor, "matching:write")
+    try:
+        row = DeterministicMatchService(session).record_decision(
+            organization_id=organization_id,
+            candidate_id=candidate_id,
+            decision=request.decision,
+            reason=request.reason,
+            reviewer_id=actor.actor_id,
+        )
+    except ConnectorError as exc:
+        raise HTTPException(status_code=400, detail=exc.safe_message) from exc
+    AuditService(session).record(
+        actor,
+        "matching.decision.recorded",
+        "match_decision",
+        str(row.id),
+        organization_id,
+        details={
+            "candidate_id": str(candidate_id),
+            "decision": row.decision,
+            "supersedes_decision_id": str(row.supersedes_decision_id)
+            if row.supersedes_decision_id
+            else None,
+        },
+    )
+    return MatchDecisionResponse.model_validate(row)
+
+
+@app.get(
+    "/api/v1/matches/{candidate_id}/decisions",
+    response_model=list[MatchDecisionResponse],
+    tags=["matching"],
+)
+def list_match_decisions(
+    candidate_id: uuid.UUID,
+    session: SessionDep,
+    actor: ActorDep,
+    x_organization_id: OrganizationHeader = None,
+) -> list[MatchDecisionResponse]:
+    organization_id = _required_organization(x_organization_id)
+    require_organization(actor, organization_id)
+    require_permission(actor, "matching:write")
+    try:
+        rows = DeterministicMatchService(session).list_decisions(organization_id, candidate_id)
+    except ConnectorError as exc:
+        raise HTTPException(status_code=400, detail=exc.safe_message) from exc
+    return [MatchDecisionResponse.model_validate(row) for row in rows]
 
 
 @app.get("/api/v1/me", response_model=ActorResponse, tags=["security"])

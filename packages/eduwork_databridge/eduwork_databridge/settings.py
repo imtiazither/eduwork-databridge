@@ -5,6 +5,8 @@ from typing import Literal
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+from eduwork_databridge import __version__
+
 
 class Settings(BaseSettings):
     """Runtime settings loaded from EDUWORK_* environment variables."""
@@ -18,7 +20,7 @@ class Settings(BaseSettings):
     log_level: str = "INFO"
     demo_mode: bool = True
     api_title: str = "EduWork DataBridge API"
-    api_version: str = "0.15.0"
+    api_version: str = __version__
     allowed_origins: list[str] = Field(default_factory=lambda: ["http://localhost:5173"])
     raw_store_root: Path = Path("var/raw")
     allowed_file_roots: list[Path] = Field(default_factory=lambda: [Path("data/synthetic")])

@@ -1,8 +1,8 @@
 # EduWork DataBridge: Project Overview, Usage Guide, and Benefits
 
-**Version:** 0.15.0  
+**Version:** 0.16.0
 **Status:** Blueprint-complete, pre-production reference implementation  
-**License:** Apache-2.0
+**License:** MIT
 
 For the human problem that motivated the reference design, read [the project story](PROJECT_STORY.md). The [five-page field guide](EduWork_DataBridge_Field_Guide.pdf) pairs that story with the current reviewer desk.
 
@@ -45,10 +45,11 @@ Typical uses include:
 ### Identity review
 
 - Organization-scoped deterministic matching using trusted identifiers and approved composite keys
-- Trusted-ID conflict blocking and reversible decisions
+- Trusted-ID conflict blocking and reasoned, reversible decisions through a protected API
 - Probabilistic candidate blocking and comparison evidence for a synthetic demonstration fixture
 - Explicit auto-match, review, no-match, and conflict states
 - Gray-zone review evidence and model/run attribution
+- Audit events that identify the decision, candidate, and superseded decision without duplicating the review reason
 
 ### Governed products and operations
 
@@ -66,6 +67,10 @@ Typical uses include:
 4. **Governance by design.** Organization scope, permissions, masking, audit records, checksums, and retention controls are part of the implementation rather than afterthoughts.
 5. **Faster evaluation and extension.** Synthetic fixtures, a 30-minute evaluator tour, developer instructions, JSON Schemas, docs, tests, and reproducible evidence make the project inspectable and extendable.
 6. **Lower pilot risk.** A real organization can begin with one authorized, bounded workflow while keeping proprietary data, credentials, mappings, endpoints, and results private.
+
+## v0.16.0: Auditable match decisions
+
+v0.16.0 exposes the existing reversible match-decision model through a protected API. An authorized reviewer can record `match`, `no_match`, `defer`, or `escalate` with a required reason. A later decision preserves the prior decision through a supersession link, and the API records an audit event with the decision metadata. The public GitHub Pages reviewer desk remains a static synthetic preview and does not submit decisions.
 
 ## How to use it
 
@@ -117,12 +122,13 @@ Use `docs/evaluator/30-minute-tour.md` to inspect the synthetic data, run the co
 
 ## Verification and release evidence
 
-The v0.15.0 release includes:
+The v0.16.0 release includes:
 
-- 70 Python tests with 89.78% measured coverage
+- 76 Python tests with 90.10% measured coverage
 - Ruff, format, and strict mypy checks across 81 Python source and script files
-- Four frontend Vitest tests and a TypeScript/Vite production build
-- Eleven generated JSON Schemas and four Alembic migrations
+- Six frontend Vitest tests and a TypeScript/Vite production build
+- Generated JSON Schema contracts and four Alembic migrations
+- Protected, organization-scoped match-decision endpoints with reversible history and audit events
 - A strict MkDocs documentation build
 - A versioned synthetic benchmark with regression budgets
 - Python CycloneDX plus frontend CycloneDX and SPDX SBOMs

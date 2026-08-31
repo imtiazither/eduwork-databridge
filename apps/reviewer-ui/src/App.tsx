@@ -212,7 +212,7 @@ function IdentityReview() {
           <p className="section-kicker">Identity review</p>
           <h2 id="identity-title">A likely match still deserves a reason.</h2>
         </div>
-        <p className="view-intro">This interaction is a UI preview. It does not write a decision to the API, and it resets on refresh.</p>
+        <p className="view-intro">This public interaction is a static preview and resets on refresh. The local API records reasoned match decisions with organization, permission, and audit controls.</p>
       </div>
       <div className="identity-layout">
         <article className="record-card">
@@ -364,7 +364,7 @@ export function App() {
               <a className="button text" href="#story">Read the Monday story <span aria-hidden="true">→</span></a>
             </div>
             <div className="hero-footnote">
-              <span>Public reference build · v0.15.0</span>
+              <span>Public reference build · v0.16.0</span>
               <p>No customer records. No hidden matches. No outcome claims.</p>
             </div>
           </div>
@@ -479,7 +479,7 @@ export function App() {
 
       <footer>
         <a className="footer-mark" href="#top"><i className="bridge-mark" aria-hidden="true"><span /><span /></i><span>EduWork DataBridge</span></a>
-        <p>Open-source reference implementation · Apache-2.0 · public examples use synthetic data only</p>
+        <p>Open-source reference implementation · MIT License · public examples use synthetic data only</p>
         <div><a href={docsHref}>Docs</a><a href={fieldGuideHref}>Field guide</a><a href="https://github.com/imtiazither/eduwork-databridge">GitHub</a></div>
       </footer>
     </>

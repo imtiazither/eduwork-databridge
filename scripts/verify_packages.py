@@ -1,6 +1,7 @@
 import hashlib
 import json
 import tarfile
+import tomllib
 import zipfile
 from pathlib import Path
 
@@ -9,28 +10,35 @@ def sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def project_version() -> str:
+    project = tomllib.loads(Path("pyproject.toml").read_text(encoding="utf-8"))
+    return str(project["project"]["version"])
+
+
 def verify(directory: Path, output: Path) -> None:
-    wheels = sorted(directory.glob("eduwork_databridge-0.15.0-*.whl"))
-    sdists = sorted(directory.glob("eduwork_databridge-0.15.0.tar.gz"))
+    version = project_version()
+    wheels = sorted(directory.glob(f"eduwork_databridge-{version}-*.whl"))
+    sdists = sorted(directory.glob(f"eduwork_databridge-{version}.tar.gz"))
     if len(wheels) != 1 or len(sdists) != 1:
-        raise SystemExit("Expected one v0.15.0 wheel and one source distribution")
+        raise SystemExit(f"Expected one v{version} wheel and one source distribution")
     wheel, sdist = wheels[0], sdists[0]
+    distribution = f"eduwork_databridge-{version}.dist-info"
     with zipfile.ZipFile(wheel) as archive:
         names = set(archive.namelist())
         required_wheel = {
             "eduwork_databridge/__init__.py",
             "eduwork_databridge/main.py",
-            "eduwork_databridge-0.15.0.dist-info/METADATA",
-            "eduwork_databridge-0.15.0.dist-info/licenses/LICENSE",
+            f"{distribution}/METADATA",
+            f"{distribution}/licenses/LICENSE",
         }
         if not required_wheel <= names:
             raise SystemExit("Wheel is missing required files")
-        metadata = archive.read("eduwork_databridge-0.15.0.dist-info/METADATA").decode()
-        if "Version: 0.15.0" not in metadata or "Requires-Python: <3.14,>=3.12" not in metadata:
+        metadata = archive.read(f"{distribution}/METADATA").decode()
+        if f"Version: {version}" not in metadata or "Requires-Python: <3.14,>=3.12" not in metadata:
             raise SystemExit("Wheel metadata version or Python range is invalid")
     with tarfile.open(sdist, "r:gz") as archive:
         names = set(archive.getnames())
-        prefix = "eduwork_databridge-0.15.0/"
+        prefix = f"eduwork_databridge-{version}/"
         required_sdist = {
             prefix + "pyproject.toml",
             prefix + "README.md",
@@ -40,7 +48,7 @@ def verify(directory: Path, output: Path) -> None:
         if not required_sdist <= names:
             raise SystemExit("Source distribution is missing required files")
     result = {
-        "version": "0.15.0",
+        "version": version,
         "wheel": {"name": wheel.name, "bytes": wheel.stat().st_size, "sha256": sha256(wheel)},
         "sdist": {"name": sdist.name, "bytes": sdist.stat().st_size, "sha256": sha256(sdist)},
         "status": "passed",

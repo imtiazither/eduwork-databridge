@@ -9,7 +9,6 @@ from typing import Any, cast
 from verify_benchmark import verify as verify_benchmark
 
 ROOT = Path(__file__).resolve().parents[1]
-VERSION = "0.15.0"
 
 
 def load_json(path: str) -> dict[str, Any]:
@@ -19,6 +18,7 @@ def load_json(path: str) -> dict[str, Any]:
 def verify() -> dict[str, Any]:
     checks: dict[str, str] = {}
     project = tomllib.loads((ROOT / "pyproject.toml").read_text(encoding="utf-8"))
+    version = str(project["project"]["version"])
     package = load_json("apps/reviewer-ui/package.json")
     init_text = (ROOT / "packages/eduwork_databridge/eduwork_databridge/__init__.py").read_text(
         encoding="utf-8"
@@ -28,7 +28,7 @@ def verify() -> dict[str, Any]:
         str(package["version"]),
         re.search(r'__version__ = "([^"]+)"', init_text).group(1),  # type: ignore[union-attr]
     }
-    if versions != {VERSION}:
+    if versions != {version}:
         raise SystemExit(f"Version mismatch: {versions}")
     checks["version_consistency"] = "passed"
 
@@ -139,7 +139,7 @@ def verify() -> dict[str, Any]:
 
     result = {
         "project": "EduWork DataBridge",
-        "version": VERSION,
+        "version": version,
         "status": "passed_with_documented_environment_gaps",
         "checks": checks,
         "checksums": "generated_after_verification",

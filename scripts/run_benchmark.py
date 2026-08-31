@@ -15,6 +15,7 @@ from typing import Any, cast
 
 import pyarrow as pa
 import pyarrow.parquet as pq
+from eduwork_databridge import __version__
 from eduwork_databridge.config_loader import load_yaml_model
 from eduwork_databridge.connectors.base import Connector, ExtractionBatch
 from eduwork_databridge.connectors.files import (
@@ -241,7 +242,7 @@ def run(preset: PresetName, seed: int, output_path: Path) -> dict[str, Any]:
 
     report = {
         "benchmark_version": "1.0",
-        "project_version": "0.15.0",
+        "project_version": __version__,
         "preset": preset,
         "seed": seed,
         "environment": {

@@ -73,6 +73,7 @@ nav:
       - Troubleshooting: troubleshooting.md
       - FAQ: faq.md
   - Release:
+      - v0.16.0: release/v0.16.0.md
       - External review: release/external-review-checklist.md
       - Release candidate: release/release-candidate-checklist.md
       - Risk register: release/risk-register.md

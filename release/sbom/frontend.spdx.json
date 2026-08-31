@@ -2,22 +2,22 @@
   "spdxVersion": "SPDX-2.3",
   "dataLicense": "CC0-1.0",
   "SPDXID": "SPDXRef-DOCUMENT",
-  "name": "eduwork-databridge-reviewer-ui@0.15.0",
-  "documentNamespace": "http://spdx.org/spdxdocs/eduwork-databridge-reviewer-ui-0.15.0-80705fba-79b0-4e0d-9986-fea5418c60ad",
+  "name": "eduwork-databridge-reviewer-ui@0.16.0",
+  "documentNamespace": "http://spdx.org/spdxdocs/eduwork-databridge-reviewer-ui-0.16.0-6a3d4959-934e-4c74-8fa8-52272443f43a",
   "creationInfo": {
-    "created": "2026-07-24T02:00:20.547Z",
+    "created": "2026-08-31T00:46:17.378Z",
     "creators": [
-      "Tool: npm/cli-10.9.3"
+      "Tool: npm/cli-11.17.0"
     ]
   },
   "documentDescribes": [
-    "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.15.0"
+    "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.16.0"
   ],
   "packages": [
     {
       "name": "eduwork-databridge-reviewer-ui",
-      "SPDXID": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.15.0",
-      "versionInfo": "0.15.0",
+      "SPDXID": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.16.0",
+      "versionInfo": "0.16.0",
       "packageFileName": "",
       "primaryPackagePurpose": "LIBRARY",
       "downloadLocation": "NOASSERTION",
@@ -28,7 +28,7 @@
         {
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
-          "referenceLocator": "pkg:npm/eduwork-databridge-reviewer-ui@0.15.0"
+          "referenceLocator": "pkg:npm/eduwork-databridge-reviewer-ui@0.16.0"
         }
       ]
     },
@@ -3622,10 +3622,10 @@
     },
     {
       "name": "nanoid",
-      "SPDXID": "SPDXRef-Package-nanoid-3.3.16",
-      "versionInfo": "3.3.16",
+      "SPDXID": "SPDXRef-Package-nanoid-3.3.18",
+      "versionInfo": "3.3.18",
       "packageFileName": "node_modules/nanoid",
-      "downloadLocation": "https://registry.npmjs.org/nanoid/-/nanoid-3.3.16.tgz",
+      "downloadLocation": "https://registry.npmjs.org/nanoid/-/nanoid-3.3.18.tgz",
       "filesAnalyzed": false,
       "homepage": "NOASSERTION",
       "licenseDeclared": "MIT",
@@ -3633,13 +3633,13 @@
         {
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
-          "referenceLocator": "pkg:npm/nanoid@3.3.16"
+          "referenceLocator": "pkg:npm/nanoid@3.3.18"
         }
       ],
       "checksums": [
         {
           "algorithm": "SHA512",
-          "checksumValue": "6f394a4f2349efe2dd188230cbc8a316922a11022f69f6a157b798ca427c0af878d8474978e0e827a814257a5026f7a3d4175d1fc3aa4d764d13f29f6d602ef1"
+          "checksumValue": "0d38383096c631691f8ba55915d36ddbf71a31b432e0ebbe3a9fe1250bc611672755fa00d5003ec7344a033c3d8c3ebe19538e798aff98872e0d276e83a17afb"
         }
       ]
     },
@@ -3806,10 +3806,10 @@
     },
     {
       "name": "postcss",
-      "SPDXID": "SPDXRef-Package-postcss-8.5.20",
-      "versionInfo": "8.5.20",
+      "SPDXID": "SPDXRef-Package-postcss-8.5.26",
+      "versionInfo": "8.5.26",
       "packageFileName": "node_modules/postcss",
-      "downloadLocation": "https://registry.npmjs.org/postcss/-/postcss-8.5.20.tgz",
+      "downloadLocation": "https://registry.npmjs.org/postcss/-/postcss-8.5.26.tgz",
       "filesAnalyzed": false,
       "homepage": "NOASSERTION",
       "licenseDeclared": "MIT",
@@ -3817,13 +3817,13 @@
         {
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
-          "referenceLocator": "pkg:npm/postcss@8.5.20"
+          "referenceLocator": "pkg:npm/postcss@8.5.26"
         }
       ],
       "checksums": [
         {
           "algorithm": "SHA512",
-          "checksumValue": "956eb5ea5f39b9c2102fe16870c98bee94053ea066c1e8eb08c83e88fc7222696b00d3491bd347abf464c82668a4385df02dcb034dcf1d12438e46c6bbcbefba"
+          "checksumValue": "bbcd8def82c5cc6f1c6be743f29b8f9e99535e8187e1f4cfa551ae21bb77e86deabcd964bdf0f49440194b16a5cb7297f134bf2f503582c0849af2a605c55b91"
         }
       ]
     },
@@ -4889,67 +4889,67 @@
   "relationships": [
     {
       "spdxElementId": "SPDXRef-DOCUMENT",
-      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.15.0",
+      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.16.0",
       "relationshipType": "DESCRIBES"
     },
     {
       "spdxElementId": "SPDXRef-Package-tanstack.react-query-5.101.2",
-      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.15.0",
+      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.16.0",
       "relationshipType": "DEPENDENCY_OF"
     },
     {
       "spdxElementId": "SPDXRef-Package-react-19.2.7",
-      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.15.0",
+      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.16.0",
       "relationshipType": "DEPENDENCY_OF"
     },
     {
       "spdxElementId": "SPDXRef-Package-react-dom-19.2.7",
-      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.15.0",
+      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.16.0",
       "relationshipType": "DEPENDENCY_OF"
     },
     {
       "spdxElementId": "SPDXRef-Package-testing-library.jest-dom-6.9.1",
-      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.15.0",
+      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.16.0",
       "relationshipType": "DEV_DEPENDENCY_OF"
     },
     {
       "spdxElementId": "SPDXRef-Package-testing-library.react-16.3.2",
-      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.15.0",
+      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.16.0",
       "relationshipType": "DEV_DEPENDENCY_OF"
     },
     {
       "spdxElementId": "SPDXRef-Package-types.react-19.2.17",
-      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.15.0",
+      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.16.0",
       "relationshipType": "DEV_DEPENDENCY_OF"
     },
     {
       "spdxElementId": "SPDXRef-Package-types.react-dom-19.2.3",
-      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.15.0",
+      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.16.0",
       "relationshipType": "DEV_DEPENDENCY_OF"
     },
     {
       "spdxElementId": "SPDXRef-Package-vitejs.plugin-react-4.7.0",
-      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.15.0",
+      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.16.0",
       "relationshipType": "DEV_DEPENDENCY_OF"
     },
     {
       "spdxElementId": "SPDXRef-Package-jsdom-26.1.0",
-      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.15.0",
+      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.16.0",
       "relationshipType": "DEV_DEPENDENCY_OF"
     },
     {
       "spdxElementId": "SPDXRef-Package-typescript-5.9.3",
-      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.15.0",
+      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.16.0",
       "relationshipType": "DEV_DEPENDENCY_OF"
     },
     {
       "spdxElementId": "SPDXRef-Package-vite-7.3.6",
-      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.15.0",
+      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.16.0",
       "relationshipType": "DEV_DEPENDENCY_OF"
     },
     {
       "spdxElementId": "SPDXRef-Package-vitest-3.2.7",
-      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.15.0",
+      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.16.0",
       "relationshipType": "DEV_DEPENDENCY_OF"
     },
     {
@@ -5983,18 +5983,18 @@
       "relationshipType": "DEPENDENCY_OF"
     },
     {
-      "spdxElementId": "SPDXRef-Package-nanoid-3.3.16",
-      "relatedSpdxElement": "SPDXRef-Package-postcss-8.5.20",
+      "spdxElementId": "SPDXRef-Package-nanoid-3.3.18",
+      "relatedSpdxElement": "SPDXRef-Package-postcss-8.5.26",
       "relationshipType": "DEPENDENCY_OF"
     },
     {
       "spdxElementId": "SPDXRef-Package-picocolors-1.1.1",
-      "relatedSpdxElement": "SPDXRef-Package-postcss-8.5.20",
+      "relatedSpdxElement": "SPDXRef-Package-postcss-8.5.26",
       "relationshipType": "DEPENDENCY_OF"
     },
     {
       "spdxElementId": "SPDXRef-Package-source-map-js-1.2.1",
-      "relatedSpdxElement": "SPDXRef-Package-postcss-8.5.20",
+      "relatedSpdxElement": "SPDXRef-Package-postcss-8.5.26",
       "relationshipType": "DEPENDENCY_OF"
     },
     {
@@ -6238,7 +6238,7 @@
       "relationshipType": "DEPENDENCY_OF"
     },
     {
-      "spdxElementId": "SPDXRef-Package-postcss-8.5.20",
+      "spdxElementId": "SPDXRef-Package-postcss-8.5.26",
       "relatedSpdxElement": "SPDXRef-Package-vite-7.3.6",
       "relationshipType": "DEPENDENCY_OF"
     },

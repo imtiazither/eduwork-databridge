@@ -9,6 +9,10 @@
 
 [Open EduWork DataBridge on GitHub Pages](https://imtiazither.github.io/eduwork-databridge/) · [Browse the documentation](https://imtiazither.github.io/eduwork-databridge/docs/)
 
+## Current release: v0.16.0
+
+v0.16.0 exposes reasoned, reversible identity-match decisions through a protected API. Each decision is organization-scoped, permission-gated, linked to its superseded predecessor when revised, and recorded in the audit trail. The public reviewer desk remains a non-persistent synthetic preview.
+
 One training report may need an employee roster from HR, completion records from an LMS, scores from an assessment file, and awards from a credential system. The joins usually happen in a spreadsheet. When an ID is missing or two accounts look alike, the reasoning can disappear inside the finished report.
 
 EduWork DataBridge is an open-source reference implementation for making that reconciliation inspectable. It keeps source evidence, checks the awkward records, separates uncertain identity matches from safe ones, and carries lineage into governed outputs.
@@ -32,7 +36,7 @@ The reviewer desk uses a deterministic public fixture: 120 fictional people, 366
 
 ![EduWork DataBridge reviewer desk showing the five-stop evidence path](docs/assets/reviewer-desk.jpg)
 
-The desk includes a source inventory, filterable exception types, an identity-review preview, and a field-lineage view. Its review decision is deliberately non-persistent; the backend services remain the authoritative path for recorded decisions.
+The desk includes a source inventory, filterable exception types, an identity-review preview, and a field-lineage view. The public preview deliberately remains non-persistent; the local API records reasoned match decisions and their audit evidence.
 
 ## Why use it
 
@@ -92,6 +96,8 @@ The public API surface includes source processing, matching, marts, exports, lin
 - `POST /api/v1/validations`
 - `POST /api/v1/quarantine/{quarantine_id}/resolve`
 - `POST /api/v1/matches/deterministic/synthetic`
+- `POST /api/v1/matches/{candidate_id}/decisions`
+- `GET /api/v1/matches/{candidate_id}/decisions`
 - `POST /api/v1/matches/probabilistic/synthetic`
 - `POST /api/v1/marts`
 - `POST /api/v1/exports`
@@ -153,4 +159,4 @@ Public assets use synthetic data and generic configuration. Never commit partner
 
 ## License
 
-Apache License 2.0. See [LICENSE](LICENSE) and [NOTICE](NOTICE).
+MIT License. See [LICENSE](LICENSE) and [NOTICE](NOTICE).

@@ -1,5 +1,6 @@
 import uuid
 from datetime import datetime
+from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -162,6 +163,21 @@ class DeterministicMatchResponse(APIModel):
     link_count: int
     conflict_count: int
     metrics: dict[str, int | float] | None
+
+
+class MatchDecisionRequest(APIModel):
+    decision: Literal["match", "no_match", "defer", "escalate"]
+    reason: str = Field(min_length=1, max_length=2000)
+
+
+class MatchDecisionResponse(APIModel):
+    id: uuid.UUID
+    candidate_id: uuid.UUID
+    decision: str
+    reason: str
+    reviewer_id: uuid.UUID
+    decided_at: datetime
+    supersedes_decision_id: uuid.UUID | None
 
 
 class ProbabilisticMatchRequest(APIModel):
