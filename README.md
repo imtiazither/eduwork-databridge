@@ -17,7 +17,7 @@ One training report may need an employee roster from HR, completion records from
 
 EduWork DataBridge is an open-source reference implementation for making that reconciliation inspectable. It keeps source evidence, checks the awkward records, separates uncertain identity matches from safe ones, and carries lineage into governed outputs.
 
-> The practical question: who completed the training, passed, and received the credential, and can we show where every part of that answer came from?
+
 
 Read [the story behind the project and its contribution](docs/PROJECT_STORY.md), the [plain-English explainer](EduWork_DataBridge_Explanation_ELI5.pdf), or the shorter [five-page field guide](docs/EduWork_DataBridge_Field_Guide.pdf).
 
