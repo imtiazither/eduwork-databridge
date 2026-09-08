@@ -52,7 +52,7 @@ def verify() -> dict[str, Any]:
         "release/benchmark-verification.json",
         "release/environment-gaps.json",
         "docs/release/external-review-checklist.md",
-        "docs/release/release-candidate-checklist.md",
+        "docs/release/release-checklist.md",
         "docs/release/risk-register.md",
         "docs/release/claim-boundaries.md",
     ]
