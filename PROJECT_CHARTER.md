@@ -10,7 +10,7 @@ Build a reusable, governance-ready data foundation that makes source meaning, tr
 
 ## Initial demonstration
 
-The first vertical slice will eventually combine fictional HRIS employee records, LMS participation, and assessment/credential results. Phases 0–2 establish the charter, toolchain, canonical model, contracts, and database foundation for that slice.
+The first vertical slice combines fictional HRIS employee records, LMS participation, and assessment/credential results on a documented toolchain, canonical model, contract, and database foundation.
 
 ## Primary users
 
@@ -26,6 +26,6 @@ Data engineers, learning-operations teams, training providers, EdTech implementa
 - Testable API and plugin contracts
 - No real PII or invented company result
 
-## Non-goals through Phase 2
+## Initial non-goals
 
-Production connectors, automated profiling, executable mapping, data-quality scoring, entity resolution, reviewer workflow, and real partner deployment are future phases.
+Automatic source-system writes, unreviewed consequential decisions, and publishing real partner data in this repository remain out of scope.

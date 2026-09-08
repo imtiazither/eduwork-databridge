@@ -1,4 +1,4 @@
-"""Phase 2 canonical and control-plane baseline.
+"""Canonical and control-plane baseline.
 
 Revision ID: 20260719_0001
 Revises:

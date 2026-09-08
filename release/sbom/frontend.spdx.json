@@ -2,22 +2,22 @@
   "spdxVersion": "SPDX-2.3",
   "dataLicense": "CC0-1.0",
   "SPDXID": "SPDXRef-DOCUMENT",
-  "name": "eduwork-databridge-reviewer-ui@0.16.0",
-  "documentNamespace": "http://spdx.org/spdxdocs/eduwork-databridge-reviewer-ui-0.16.0-6a3d4959-934e-4c74-8fa8-52272443f43a",
+  "name": "eduwork-databridge-reviewer-ui@0.20.0",
+  "documentNamespace": "http://spdx.org/spdxdocs/eduwork-databridge-reviewer-ui-0.20.0-***",
   "creationInfo": {
-    "created": "2026-08-31T00:46:17.378Z",
+    "created": "2026-09-08T17:47:43.379Z",
     "creators": [
-      "Tool: npm/cli-11.17.0"
+      "Tool: npm/cli-11.6.0"
     ]
   },
   "documentDescribes": [
-    "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.16.0"
+    "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.20.0"
   ],
   "packages": [
     {
       "name": "eduwork-databridge-reviewer-ui",
-      "SPDXID": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.16.0",
-      "versionInfo": "0.16.0",
+      "SPDXID": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.20.0",
+      "versionInfo": "0.20.0",
       "packageFileName": "",
       "primaryPackagePurpose": "LIBRARY",
       "downloadLocation": "NOASSERTION",
@@ -28,7 +28,7 @@
         {
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
-          "referenceLocator": "pkg:npm/eduwork-databridge-reviewer-ui@0.16.0"
+          "referenceLocator": "pkg:npm/eduwork-databridge-reviewer-ui@0.20.0"
         }
       ]
     },
@@ -2656,10 +2656,10 @@
     },
     {
       "name": "baseline-browser-mapping",
-      "SPDXID": "SPDXRef-Package-baseline-browser-mapping-2.10.43",
-      "versionInfo": "2.10.43",
+      "SPDXID": "SPDXRef-Package-baseline-browser-mapping-2.11.21",
+      "versionInfo": "2.11.21",
       "packageFileName": "node_modules/baseline-browser-mapping",
-      "downloadLocation": "https://registry.npmjs.org/baseline-browser-mapping/-/baseline-browser-mapping-2.10.43.tgz",
+      "downloadLocation": "https://registry.npmjs.org/baseline-browser-mapping/-/baseline-browser-mapping-2.11.21.tgz",
       "filesAnalyzed": false,
       "homepage": "NOASSERTION",
       "licenseDeclared": "Apache-2.0",
@@ -2667,22 +2667,22 @@
         {
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
-          "referenceLocator": "pkg:npm/baseline-browser-mapping@2.10.43"
+          "referenceLocator": "pkg:npm/baseline-browser-mapping@2.11.21"
         }
       ],
       "checksums": [
         {
           "algorithm": "SHA512",
-          "checksumValue": "02362947bf240d6018dc47e3f9c0d3147f6df520a82fb3a84e9d4139bd26415ed2fba0a22f09d6337172c6126d74fb9f0c52b3982485a149dc2a35a024465309"
+          "checksumValue": "ba1f2fa58ff5fd8c8592e9c80c51ffd76a7bffb55d3ca03585e8cc5446dd9046969d4cf41deb2fc7911b894e97c63c876483a3bbe64c6d0264461f9eb37feca5"
         }
       ]
     },
     {
       "name": "browserslist",
-      "SPDXID": "SPDXRef-Package-browserslist-4.28.6",
-      "versionInfo": "4.28.6",
+      "SPDXID": "SPDXRef-Package-browserslist-4.28.9",
+      "versionInfo": "4.28.9",
       "packageFileName": "node_modules/browserslist",
-      "downloadLocation": "https://registry.npmjs.org/browserslist/-/browserslist-4.28.6.tgz",
+      "downloadLocation": "https://registry.npmjs.org/browserslist/-/browserslist-4.28.9.tgz",
       "filesAnalyzed": false,
       "homepage": "NOASSERTION",
       "licenseDeclared": "MIT",
@@ -2690,13 +2690,13 @@
         {
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
-          "referenceLocator": "pkg:npm/browserslist@4.28.6"
+          "referenceLocator": "pkg:npm/browserslist@4.28.9"
         }
       ],
       "checksums": [
         {
           "algorithm": "SHA512",
-          "checksumValue": "15005834ad7954cb2584b1e903bfa7fa7d463a5175908776c5c0a0eff8fde5fdb800e17a54360c347e2617117b2ae69376feb6edf69ace93808c5cccadf24e53"
+          "checksumValue": "1166b339b945614be519971f1a13d43e6621de78a45310556fecbd309ba7e5fde1062f35d97fbc312413ba32c1b602b771fe757c959b59f3a3c9e3bde7877e12"
         }
       ]
     },
@@ -2725,10 +2725,10 @@
     },
     {
       "name": "caniuse-lite",
-      "SPDXID": "SPDXRef-Package-caniuse-lite-1.0.30001806",
-      "versionInfo": "1.0.30001806",
+      "SPDXID": "SPDXRef-Package-caniuse-lite-1.0.30001810",
+      "versionInfo": "1.0.30001810",
       "packageFileName": "node_modules/caniuse-lite",
-      "downloadLocation": "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001806.tgz",
+      "downloadLocation": "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001810.tgz",
       "filesAnalyzed": false,
       "homepage": "NOASSERTION",
       "licenseDeclared": "CC-BY-4.0",
@@ -2736,13 +2736,13 @@
         {
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
-          "referenceLocator": "pkg:npm/caniuse-lite@1.0.30001806"
+          "referenceLocator": "pkg:npm/caniuse-lite@1.0.30001810"
         }
       ],
       "checksums": [
         {
           "algorithm": "SHA512",
-          "checksumValue": "ef60aebddf79cdb4983caaba16183c7832519738160dfeff9ada19bfa41efc360d08405d371a00dfead9014d998460a96659ecdc4b2c15abda66899c913e54bb"
+          "checksumValue": "4c84d03d491acfe69593918be8d84e77093568468d4d20cfb06156ad3ba1286b634c5ef48cbfce86dd96e1ceab5d47b97eeec87b5f5521a8405c720889658d7a"
         }
       ]
     },
@@ -3024,10 +3024,10 @@
     },
     {
       "name": "electron-to-chromium",
-      "SPDXID": "SPDXRef-Package-electron-to-chromium-1.5.393",
-      "versionInfo": "1.5.393",
+      "SPDXID": "SPDXRef-Package-electron-to-chromium-1.5.423",
+      "versionInfo": "1.5.423",
       "packageFileName": "node_modules/electron-to-chromium",
-      "downloadLocation": "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.5.393.tgz",
+      "downloadLocation": "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.5.423.tgz",
       "filesAnalyzed": false,
       "homepage": "NOASSERTION",
       "licenseDeclared": "ISC",
@@ -3035,13 +3035,13 @@
         {
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
-          "referenceLocator": "pkg:npm/electron-to-chromium@1.5.393"
+          "referenceLocator": "pkg:npm/electron-to-chromium@1.5.423"
         }
       ],
       "checksums": [
         {
           "algorithm": "SHA512",
-          "checksumValue": "9220c974851ac2e108729f57a0808aa7589360311b820b883eae76e8dd50ee32100de4370aaa0cc7bd74db93c8ffb138f0376dc361ee5ac56363b69f1203719a"
+          "checksumValue": "ad165f4d263ca6d1d8310c5afae2327093052a66354f418802934c5c96067a182e4d96b9e93104975f6928f0a806a9391a97fb422cd99ff8edef1babf836316a"
         }
       ]
     },
@@ -3645,10 +3645,10 @@
     },
     {
       "name": "node-releases",
-      "SPDXID": "SPDXRef-Package-node-releases-2.0.51",
-      "versionInfo": "2.0.51",
+      "SPDXID": "SPDXRef-Package-node-releases-2.0.54",
+      "versionInfo": "2.0.54",
       "packageFileName": "node_modules/node-releases",
-      "downloadLocation": "https://registry.npmjs.org/node-releases/-/node-releases-2.0.51.tgz",
+      "downloadLocation": "https://registry.npmjs.org/node-releases/-/node-releases-2.0.54.tgz",
       "filesAnalyzed": false,
       "homepage": "NOASSERTION",
       "licenseDeclared": "MIT",
@@ -3656,13 +3656,13 @@
         {
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
-          "referenceLocator": "pkg:npm/node-releases@2.0.51"
+          "referenceLocator": "pkg:npm/node-releases@2.0.54"
         }
       ],
       "checksums": [
         {
           "algorithm": "SHA512",
-          "checksumValue": "c11348af0e039952ca4256e038c764331dbb5aba737acda187926d6e2d9b8cf77ee3026cb5622a3f903e96c727a9b9b4c71993e41a60f0b79ce48b44070c7a05"
+          "checksumValue": "607b3b06699cb1d008e4ecee7fc259a3a3d3d26bf6188582f6f31fbd40b7769eb933c867ed4c7c08f2feda8048ee3b8dba3f5dd277614dcce7ab6383069b3d71"
         }
       ]
     },
@@ -4565,10 +4565,10 @@
     },
     {
       "name": "update-browserslist-db",
-      "SPDXID": "SPDXRef-Package-update-browserslist-db-1.2.3",
-      "versionInfo": "1.2.3",
+      "SPDXID": "SPDXRef-Package-update-browserslist-db-1.3.2",
+      "versionInfo": "1.3.2",
       "packageFileName": "node_modules/update-browserslist-db",
-      "downloadLocation": "https://registry.npmjs.org/update-browserslist-db/-/update-browserslist-db-1.2.3.tgz",
+      "downloadLocation": "https://registry.npmjs.org/update-browserslist-db/-/update-browserslist-db-1.3.2.tgz",
       "filesAnalyzed": false,
       "homepage": "NOASSERTION",
       "licenseDeclared": "MIT",
@@ -4576,13 +4576,13 @@
         {
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
-          "referenceLocator": "pkg:npm/update-browserslist-db@1.2.3"
+          "referenceLocator": "pkg:npm/update-browserslist-db@1.3.2"
         }
       ],
       "checksums": [
         {
           "algorithm": "SHA512",
-          "checksumValue": "26cd26f5cc7ea8e803c68d1e32214612e796cedcfe778f8cdeb1a598a3d3f93e084bf8cfe32970dcdc29bba7294d33fc4753000b5905e156dd2eddc045fdb4f7"
+          "checksumValue": "510f8c4b1961466d5bce3854f8372e5df8c53b517336daa12b9fbd62f969f7422d0cb939bd3f77d80d2b16eeb5f677fb4554be63f55e6945b58da443a99f1527"
         }
       ]
     },
@@ -4889,67 +4889,67 @@
   "relationships": [
     {
       "spdxElementId": "SPDXRef-DOCUMENT",
-      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.16.0",
+      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.20.0",
       "relationshipType": "DESCRIBES"
     },
     {
       "spdxElementId": "SPDXRef-Package-tanstack.react-query-5.101.2",
-      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.16.0",
+      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.20.0",
       "relationshipType": "DEPENDENCY_OF"
     },
     {
       "spdxElementId": "SPDXRef-Package-react-19.2.7",
-      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.16.0",
+      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.20.0",
       "relationshipType": "DEPENDENCY_OF"
     },
     {
       "spdxElementId": "SPDXRef-Package-react-dom-19.2.7",
-      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.16.0",
+      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.20.0",
       "relationshipType": "DEPENDENCY_OF"
     },
     {
       "spdxElementId": "SPDXRef-Package-testing-library.jest-dom-6.9.1",
-      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.16.0",
+      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.20.0",
       "relationshipType": "DEV_DEPENDENCY_OF"
     },
     {
       "spdxElementId": "SPDXRef-Package-testing-library.react-16.3.2",
-      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.16.0",
+      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.20.0",
       "relationshipType": "DEV_DEPENDENCY_OF"
     },
     {
       "spdxElementId": "SPDXRef-Package-types.react-19.2.17",
-      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.16.0",
+      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.20.0",
       "relationshipType": "DEV_DEPENDENCY_OF"
     },
     {
       "spdxElementId": "SPDXRef-Package-types.react-dom-19.2.3",
-      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.16.0",
+      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.20.0",
       "relationshipType": "DEV_DEPENDENCY_OF"
     },
     {
       "spdxElementId": "SPDXRef-Package-vitejs.plugin-react-4.7.0",
-      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.16.0",
+      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.20.0",
       "relationshipType": "DEV_DEPENDENCY_OF"
     },
     {
       "spdxElementId": "SPDXRef-Package-jsdom-26.1.0",
-      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.16.0",
+      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.20.0",
       "relationshipType": "DEV_DEPENDENCY_OF"
     },
     {
       "spdxElementId": "SPDXRef-Package-typescript-5.9.3",
-      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.16.0",
+      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.20.0",
       "relationshipType": "DEV_DEPENDENCY_OF"
     },
     {
       "spdxElementId": "SPDXRef-Package-vite-7.3.6",
-      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.16.0",
+      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.20.0",
       "relationshipType": "DEV_DEPENDENCY_OF"
     },
     {
       "spdxElementId": "SPDXRef-Package-vitest-3.2.7",
-      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.16.0",
+      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.20.0",
       "relationshipType": "DEV_DEPENDENCY_OF"
     },
     {
@@ -5103,7 +5103,7 @@
       "relationshipType": "DEPENDENCY_OF"
     },
     {
-      "spdxElementId": "SPDXRef-Package-browserslist-4.28.6",
+      "spdxElementId": "SPDXRef-Package-browserslist-4.28.9",
       "relatedSpdxElement": "SPDXRef-Package-babel.helper-compilation-targets-7.29.7",
       "relationshipType": "DEPENDENCY_OF"
     },
@@ -5623,28 +5623,28 @@
       "relationshipType": "DEPENDENCY_OF"
     },
     {
-      "spdxElementId": "SPDXRef-Package-baseline-browser-mapping-2.10.43",
-      "relatedSpdxElement": "SPDXRef-Package-browserslist-4.28.6",
+      "spdxElementId": "SPDXRef-Package-baseline-browser-mapping-2.11.21",
+      "relatedSpdxElement": "SPDXRef-Package-browserslist-4.28.9",
       "relationshipType": "DEPENDENCY_OF"
     },
     {
-      "spdxElementId": "SPDXRef-Package-caniuse-lite-1.0.30001806",
-      "relatedSpdxElement": "SPDXRef-Package-browserslist-4.28.6",
+      "spdxElementId": "SPDXRef-Package-caniuse-lite-1.0.30001810",
+      "relatedSpdxElement": "SPDXRef-Package-browserslist-4.28.9",
       "relationshipType": "DEPENDENCY_OF"
     },
     {
-      "spdxElementId": "SPDXRef-Package-electron-to-chromium-1.5.393",
-      "relatedSpdxElement": "SPDXRef-Package-browserslist-4.28.6",
+      "spdxElementId": "SPDXRef-Package-electron-to-chromium-1.5.423",
+      "relatedSpdxElement": "SPDXRef-Package-browserslist-4.28.9",
       "relationshipType": "DEPENDENCY_OF"
     },
     {
-      "spdxElementId": "SPDXRef-Package-node-releases-2.0.51",
-      "relatedSpdxElement": "SPDXRef-Package-browserslist-4.28.6",
+      "spdxElementId": "SPDXRef-Package-node-releases-2.0.54",
+      "relatedSpdxElement": "SPDXRef-Package-browserslist-4.28.9",
       "relationshipType": "DEPENDENCY_OF"
     },
     {
-      "spdxElementId": "SPDXRef-Package-update-browserslist-db-1.2.3",
-      "relatedSpdxElement": "SPDXRef-Package-browserslist-4.28.6",
+      "spdxElementId": "SPDXRef-Package-update-browserslist-db-1.3.2",
+      "relatedSpdxElement": "SPDXRef-Package-browserslist-4.28.9",
       "relationshipType": "DEPENDENCY_OF"
     },
     {
@@ -6208,18 +6208,18 @@
       "relationshipType": "DEPENDENCY_OF"
     },
     {
-      "spdxElementId": "SPDXRef-Package-browserslist-4.28.6",
-      "relatedSpdxElement": "SPDXRef-Package-update-browserslist-db-1.2.3",
+      "spdxElementId": "SPDXRef-Package-browserslist-4.28.9",
+      "relatedSpdxElement": "SPDXRef-Package-update-browserslist-db-1.3.2",
       "relationshipType": "PREREQUISITE_FOR"
     },
     {
       "spdxElementId": "SPDXRef-Package-escalade-3.2.0",
-      "relatedSpdxElement": "SPDXRef-Package-update-browserslist-db-1.2.3",
+      "relatedSpdxElement": "SPDXRef-Package-update-browserslist-db-1.3.2",
       "relationshipType": "DEPENDENCY_OF"
     },
     {
       "spdxElementId": "SPDXRef-Package-picocolors-1.1.1",
-      "relatedSpdxElement": "SPDXRef-Package-update-browserslist-db-1.2.3",
+      "relatedSpdxElement": "SPDXRef-Package-update-browserslist-db-1.3.2",
       "relationshipType": "DEPENDENCY_OF"
     },
     {

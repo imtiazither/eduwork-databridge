@@ -1,6 +1,6 @@
 # Docker and Registry Validation
 
-The execution sandbox used for the reference release had no Docker daemon. Run this checklist on a Docker-enabled machine.
+The recorded execution environment had no Docker daemon. Run this checklist on a Docker-enabled machine.
 
 ```bash
 docker compose config

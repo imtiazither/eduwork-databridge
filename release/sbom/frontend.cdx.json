@@ -2,10 +2,10 @@
   "$schema": "http://cyclonedx.org/schema/bom-1.5.schema.json",
   "bomFormat": "CycloneDX",
   "specVersion": "1.5",
-  "serialNumber": "urn:uuid:c98b575b-976f-43dd-9a77-c08e327c8abc",
+  "serialNumber": "urn:uuid:***",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-08-31T00:46:17.135Z",
+    "timestamp": "2026-09-08T17:47:43.045Z",
     "lifecycles": [
       {
         "phase": "pre-build"
@@ -15,16 +15,16 @@
       {
         "vendor": "npm",
         "name": "cli",
-        "version": "11.17.0"
+        "version": "11.6.0"
       }
     ],
     "component": {
-      "bom-ref": "eduwork-databridge-reviewer-ui@0.16.0",
+      "bom-ref": "eduwork-databridge-reviewer-ui@0.20.0",
       "type": "library",
       "name": "reviewer-ui",
-      "version": "0.16.0",
+      "version": "0.20.0",
       "scope": "required",
-      "purl": "pkg:npm/eduwork-databridge-reviewer-ui@0.16.0",
+      "purl": "pkg:npm/eduwork-databridge-reviewer-ui@0.20.0",
       "properties": [
         {
           "name": "cdx:npm:package:private",
@@ -3788,12 +3788,12 @@
       ]
     },
     {
-      "bom-ref": "baseline-browser-mapping@2.10.43",
+      "bom-ref": "baseline-browser-mapping@2.11.21",
       "type": "library",
       "name": "baseline-browser-mapping",
-      "version": "2.10.43",
+      "version": "2.11.21",
       "scope": "optional",
-      "purl": "pkg:npm/baseline-browser-mapping@2.10.43",
+      "purl": "pkg:npm/baseline-browser-mapping@2.11.21",
       "properties": [
         {
           "name": "cdx:npm:package:development",
@@ -3803,13 +3803,13 @@
       "externalReferences": [
         {
           "type": "distribution",
-          "url": "https://registry.npmjs.org/baseline-browser-mapping/-/baseline-browser-mapping-2.10.43.tgz"
+          "url": "https://registry.npmjs.org/baseline-browser-mapping/-/baseline-browser-mapping-2.11.21.tgz"
         }
       ],
       "hashes": [
         {
           "alg": "SHA-512",
-          "content": "02362947bf240d6018dc47e3f9c0d3147f6df520a82fb3a84e9d4139bd26415ed2fba0a22f09d6337172c6126d74fb9f0c52b3982485a149dc2a35a024465309"
+          "content": "ba1f2fa58ff5fd8c8592e9c80c51ffd76a7bffb55d3ca03585e8cc5446dd9046969d4cf41deb2fc7911b894e97c63c876483a3bbe64c6d0264461f9eb37feca5"
         }
       ],
       "licenses": [
@@ -3821,12 +3821,12 @@
       ]
     },
     {
-      "bom-ref": "browserslist@4.28.6",
+      "bom-ref": "browserslist@4.28.9",
       "type": "library",
       "name": "browserslist",
-      "version": "4.28.6",
+      "version": "4.28.9",
       "scope": "optional",
-      "purl": "pkg:npm/browserslist@4.28.6",
+      "purl": "pkg:npm/browserslist@4.28.9",
       "properties": [
         {
           "name": "cdx:npm:package:development",
@@ -3836,13 +3836,13 @@
       "externalReferences": [
         {
           "type": "distribution",
-          "url": "https://registry.npmjs.org/browserslist/-/browserslist-4.28.6.tgz"
+          "url": "https://registry.npmjs.org/browserslist/-/browserslist-4.28.9.tgz"
         }
       ],
       "hashes": [
         {
           "alg": "SHA-512",
-          "content": "15005834ad7954cb2584b1e903bfa7fa7d463a5175908776c5c0a0eff8fde5fdb800e17a54360c347e2617117b2ae69376feb6edf69ace93808c5cccadf24e53"
+          "content": "1166b339b945614be519971f1a13d43e6621de78a45310556fecbd309ba7e5fde1062f35d97fbc312413ba32c1b602b771fe757c959b59f3a3c9e3bde7877e12"
         }
       ],
       "licenses": [
@@ -3887,12 +3887,12 @@
       ]
     },
     {
-      "bom-ref": "caniuse-lite@1.0.30001806",
+      "bom-ref": "caniuse-lite@1.0.30001810",
       "type": "library",
       "name": "caniuse-lite",
-      "version": "1.0.30001806",
+      "version": "1.0.30001810",
       "scope": "optional",
-      "purl": "pkg:npm/caniuse-lite@1.0.30001806",
+      "purl": "pkg:npm/caniuse-lite@1.0.30001810",
       "properties": [
         {
           "name": "cdx:npm:package:development",
@@ -3902,13 +3902,13 @@
       "externalReferences": [
         {
           "type": "distribution",
-          "url": "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001806.tgz"
+          "url": "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001810.tgz"
         }
       ],
       "hashes": [
         {
           "alg": "SHA-512",
-          "content": "ef60aebddf79cdb4983caaba16183c7832519738160dfeff9ada19bfa41efc360d08405d371a00dfead9014d998460a96659ecdc4b2c15abda66899c913e54bb"
+          "content": "4c84d03d491acfe69593918be8d84e77093568468d4d20cfb06156ad3ba1286b634c5ef48cbfce86dd96e1ceab5d47b97eeec87b5f5521a8405c720889658d7a"
         }
       ],
       "licenses": [
@@ -4316,12 +4316,12 @@
       ]
     },
     {
-      "bom-ref": "electron-to-chromium@1.5.393",
+      "bom-ref": "electron-to-chromium@1.5.423",
       "type": "library",
       "name": "electron-to-chromium",
-      "version": "1.5.393",
+      "version": "1.5.423",
       "scope": "optional",
-      "purl": "pkg:npm/electron-to-chromium@1.5.393",
+      "purl": "pkg:npm/electron-to-chromium@1.5.423",
       "properties": [
         {
           "name": "cdx:npm:package:development",
@@ -4331,13 +4331,13 @@
       "externalReferences": [
         {
           "type": "distribution",
-          "url": "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.5.393.tgz"
+          "url": "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.5.423.tgz"
         }
       ],
       "hashes": [
         {
           "alg": "SHA-512",
-          "content": "9220c974851ac2e108729f57a0808aa7589360311b820b883eae76e8dd50ee32100de4370aaa0cc7bd74db93c8ffb138f0376dc361ee5ac56363b69f1203719a"
+          "content": "ad165f4d263ca6d1d8310c5afae2327093052a66354f418802934c5c96067a182e4d96b9e93104975f6928f0a806a9391a97fb422cd99ff8edef1babf836316a"
         }
       ],
       "licenses": [
@@ -5207,12 +5207,12 @@
       ]
     },
     {
-      "bom-ref": "node-releases@2.0.51",
+      "bom-ref": "node-releases@2.0.54",
       "type": "library",
       "name": "node-releases",
-      "version": "2.0.51",
+      "version": "2.0.54",
       "scope": "optional",
-      "purl": "pkg:npm/node-releases@2.0.51",
+      "purl": "pkg:npm/node-releases@2.0.54",
       "properties": [
         {
           "name": "cdx:npm:package:development",
@@ -5222,13 +5222,13 @@
       "externalReferences": [
         {
           "type": "distribution",
-          "url": "https://registry.npmjs.org/node-releases/-/node-releases-2.0.51.tgz"
+          "url": "https://registry.npmjs.org/node-releases/-/node-releases-2.0.54.tgz"
         }
       ],
       "hashes": [
         {
           "alg": "SHA-512",
-          "content": "c11348af0e039952ca4256e038c764331dbb5aba737acda187926d6e2d9b8cf77ee3026cb5622a3f903e96c727a9b9b4c71993e41a60f0b79ce48b44070c7a05"
+          "content": "607b3b06699cb1d008e4ecee7fc259a3a3d3d26bf6188582f6f31fbd40b7769eb933c867ed4c7c08f2feda8048ee3b8dba3f5dd277614dcce7ab6383069b3d71"
         }
       ],
       "licenses": [
@@ -6512,12 +6512,12 @@
       ]
     },
     {
-      "bom-ref": "update-browserslist-db@1.2.3",
+      "bom-ref": "update-browserslist-db@1.3.2",
       "type": "library",
       "name": "update-browserslist-db",
-      "version": "1.2.3",
+      "version": "1.3.2",
       "scope": "optional",
-      "purl": "pkg:npm/update-browserslist-db@1.2.3",
+      "purl": "pkg:npm/update-browserslist-db@1.3.2",
       "properties": [
         {
           "name": "cdx:npm:package:development",
@@ -6527,13 +6527,13 @@
       "externalReferences": [
         {
           "type": "distribution",
-          "url": "https://registry.npmjs.org/update-browserslist-db/-/update-browserslist-db-1.2.3.tgz"
+          "url": "https://registry.npmjs.org/update-browserslist-db/-/update-browserslist-db-1.3.2.tgz"
         }
       ],
       "hashes": [
         {
           "alg": "SHA-512",
-          "content": "26cd26f5cc7ea8e803c68d1e32214612e796cedcfe778f8cdeb1a598a3d3f93e084bf8cfe32970dcdc29bba7294d33fc4753000b5905e156dd2eddc045fdb4f7"
+          "content": "510f8c4b1961466d5bce3854f8372e5df8c53b517336daa12b9fbd62f969f7422d0cb939bd3f77d80d2b16eeb5f677fb4554be63f55e6945b58da443a99f1527"
         }
       ],
       "licenses": [
@@ -6976,7 +6976,7 @@
   ],
   "dependencies": [
     {
-      "ref": "eduwork-databridge-reviewer-ui@0.16.0",
+      "ref": "eduwork-databridge-reviewer-ui@0.20.0",
       "dependsOn": [
         "@tanstack/react-query@5.101.2",
         "react@19.2.7",
@@ -7057,7 +7057,7 @@
       "dependsOn": [
         "@babel/compat-data@7.29.7",
         "@babel/helper-validator-option@7.29.7",
-        "browserslist@4.28.6",
+        "browserslist@4.28.9",
         "lru-cache@5.1.1",
         "semver@6.3.1"
       ]
@@ -7623,17 +7623,17 @@
       "dependsOn": []
     },
     {
-      "ref": "baseline-browser-mapping@2.10.43",
+      "ref": "baseline-browser-mapping@2.11.21",
       "dependsOn": []
     },
     {
-      "ref": "browserslist@4.28.6",
+      "ref": "browserslist@4.28.9",
       "dependsOn": [
-        "baseline-browser-mapping@2.10.43",
-        "caniuse-lite@1.0.30001806",
-        "electron-to-chromium@1.5.393",
-        "node-releases@2.0.51",
-        "update-browserslist-db@1.2.3"
+        "baseline-browser-mapping@2.11.21",
+        "caniuse-lite@1.0.30001810",
+        "electron-to-chromium@1.5.423",
+        "node-releases@2.0.54",
+        "update-browserslist-db@1.3.2"
       ]
     },
     {
@@ -7641,7 +7641,7 @@
       "dependsOn": []
     },
     {
-      "ref": "caniuse-lite@1.0.30001806",
+      "ref": "caniuse-lite@1.0.30001810",
       "dependsOn": []
     },
     {
@@ -7707,7 +7707,7 @@
       "dependsOn": []
     },
     {
-      "ref": "electron-to-chromium@1.5.393",
+      "ref": "electron-to-chromium@1.5.423",
       "dependsOn": []
     },
     {
@@ -7881,7 +7881,7 @@
       "dependsOn": []
     },
     {
-      "ref": "node-releases@2.0.51",
+      "ref": "node-releases@2.0.54",
       "dependsOn": []
     },
     {
@@ -8100,9 +8100,9 @@
       "dependsOn": []
     },
     {
-      "ref": "update-browserslist-db@1.2.3",
+      "ref": "update-browserslist-db@1.3.2",
       "dependsOn": [
-        "browserslist@4.28.6",
+        "browserslist@4.28.9",
         "escalade@3.2.0",
         "picocolors@1.1.1"
       ]

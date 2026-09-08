@@ -44,6 +44,33 @@ def test_match_decisions_are_reasoned_reversible_and_audited(tmp_path) -> None:
         )
         assert match.status_code == 200, match.text
         candidate_id = match.json()["candidate_ids"][0]
+        candidate_count = len(match.json()["candidate_ids"])
+
+        queue = asyncio.run(
+            request("GET", "/api/v1/matches/review-queue?limit=1", str(organization_id))
+        )
+        assert queue.status_code == 200, queue.text
+        assert len(queue.json()) == 1
+        assert queue.json()[0]["decision_count"] == 0
+        assert queue.json()[0]["latest_decision"] is None
+        assert set(queue.json()[0]["evidence"]) == {"rule_id", "fingerprints"}
+
+        summary = asyncio.run(
+            request("GET", "/api/v1/matches/review-queue/summary", str(organization_id))
+        )
+        assert summary.status_code == 200, summary.text
+        assert summary.json()["total_candidates"] == candidate_count
+        assert summary.json()["unreviewed_candidates"] == candidate_count
+
+        viewer_queue = asyncio.run(
+            request(
+                "GET",
+                "/api/v1/matches/review-queue",
+                str(organization_id),
+                user="demo-viewer",
+            )
+        )
+        assert viewer_queue.status_code == 403
 
         missing_reason = asyncio.run(
             request(
@@ -95,6 +122,26 @@ def test_match_decisions_are_reasoned_reversible_and_audited(tmp_path) -> None:
         )
         assert second.status_code == 200, second.text
         assert second.json()["supersedes_decision_id"] == first_body["id"]
+
+        decided_queue = asyncio.run(
+            request(
+                "GET",
+                "/api/v1/matches/review-queue?status=no_match",
+                str(organization_id),
+            )
+        )
+        assert decided_queue.status_code == 200, decided_queue.text
+        assert len(decided_queue.json()) == 1
+        assert decided_queue.json()[0]["candidate_id"] == candidate_id
+        assert decided_queue.json()[0]["decision_count"] == 2
+        assert decided_queue.json()[0]["latest_decision"]["decision"] == "no_match"
+
+        updated_summary = asyncio.run(
+            request("GET", "/api/v1/matches/review-queue/summary", str(organization_id))
+        )
+        assert updated_summary.status_code == 200, updated_summary.text
+        assert updated_summary.json()["unreviewed_candidates"] == candidate_count - 1
+        assert updated_summary.json()["by_status"]["no_match"] == 1
 
         history = asyncio.run(
             request("GET", f"/api/v1/matches/{candidate_id}/decisions", str(organization_id))

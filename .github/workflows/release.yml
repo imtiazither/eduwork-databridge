@@ -1,4 +1,4 @@
-name: Release Candidate
+name: Release
 on:
   push:
     tags: ["v*"]

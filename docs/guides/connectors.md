@@ -13,7 +13,7 @@ Each connector implements connection testing, schema discovery, extraction, curs
 
 ## Source configuration
 
-Source YAML is strict and versioned. It contains a connector type, owner, classification, secret reference, limits, allowed roots or base URL, retry policy, and one or more objects. Literal secrets are rejected; the reference implementation resolves `env://VARIABLE_NAME` only.
+Source YAML is strict and versioned. It contains a connector type, owner, classification, secret reference, limits, allowed roots or base URL, retry policy, and one or more objects. Literal secrets are rejected; the included resolver accepts `env://VARIABLE_NAME` only.
 
 ## Raw snapshots
 

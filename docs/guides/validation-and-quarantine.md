@@ -1,6 +1,6 @@
 # Validation and Quarantine Guide
 
-Phase 7 supports structural, completeness, validity, uniqueness, referential, temporal, cross-source, and timeliness rules. Every rule carries a stable ID, severity, explanation, and remediation guidance.
+Validation supports structural, completeness, validity, uniqueness, referential, temporal, cross-source, and timeliness rules. Every rule carries a stable ID, severity, explanation, and remediation guidance.
 
 Validation persists one aggregate result per rule and one quarantine row per failed record/rule. Evidence is masked. Quality dimensions report evaluated, failed, and pass-rate counts; no combined score is presented as universal truth.
 

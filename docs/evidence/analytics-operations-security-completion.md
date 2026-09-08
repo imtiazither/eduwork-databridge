@@ -1,9 +1,9 @@
-# Phase 9–12 Completion Record
+# Analytics, Operations, and Security Completion Record
 
 Date: July 20, 2026
 Version: 0.12.0
 
-## Phase 9 completed
+## Probabilistic matching completed
 
 - Governed candidate blocking, exact/string/date/numeric comparison features, weighted evidence, and illustrative probabilities.
 - Explicit synthetic parameter estimation with named truth-set provenance; no automatic learning from reviewer decisions.
@@ -11,7 +11,7 @@ Version: 0.12.0
 - Persisted probabilistic model, thresholds, run counts, candidates, evidence, and metrics.
 - Small synthetic demonstration: 121 auto matches, 29 gray-zone reviews, 235 blocked trusted-ID conflicts, auto-match precision 1.0, potential recall with review 1.0, and zero false negatives after review.
 
-## Phase 10 completed
+## Lineage and publishing completed
 
 - Dataset/job/field/mart/export lineage nodes and edges plus trace queries.
 - OpenLineage-compatible run-event JSON without raw sensitive values.
@@ -19,13 +19,13 @@ Version: 0.12.0
 - Content-addressed Parquet mart snapshots with checksums, data dictionaries, and lineage metadata.
 - Permission-gated CSV/Parquet exports with documented-field enforcement, fingerprint masking, spreadsheet-formula protection, checksums, sidecar dictionaries, export lineage, and retention metadata.
 
-## Phase 11 completed
+## Orchestration completed
 
 - Dagster asset topology and daily schedule definitions.
 - Local-first asset engine with dependencies, partitions, retries, failure hooks, watermarks, change hashes, unchanged-input skip, backfill links, attributable run status, and safe metadata.
 - OpenTelemetry-compatible spans, counters, and duration histograms with sensitive-attribute filtering.
 
-## Phase 12 completed
+## Identity, authorization, and audit completed
 
 - Isolated demo administrator/viewer identities that refuse production mode.
 - OIDC-ready claims adapter for already signature-verified claims with issuer, audience, expiry, and subject checks.

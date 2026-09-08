@@ -30,6 +30,20 @@ class MatchOutcome:
     metrics: MatchMetrics | None
 
 
+@dataclass(frozen=True)
+class MatchQueueItem:
+    candidate: MatchCandidate
+    latest_decision: MatchDecision | None
+    decision_count: int
+
+
+@dataclass(frozen=True)
+class MatchQueueSummary:
+    total_candidates: int
+    unreviewed_candidates: int
+    by_status: dict[str, int]
+
+
 class DeterministicMatchService:
     def __init__(self, session: Session) -> None:
         self.session = session
@@ -171,4 +185,71 @@ class DeterministicMatchService:
                 .where(MatchDecision.candidate_id == candidate.id)
                 .order_by(MatchDecision.decided_at.desc(), MatchDecision.id.desc())
             )
+        )
+
+    def list_review_queue(
+        self,
+        organization_id: uuid.UUID,
+        status: str | None = None,
+        limit: int = 50,
+        offset: int = 0,
+    ) -> list[MatchQueueItem]:
+        query = select(MatchCandidate).where(MatchCandidate.organization_id == organization_id)
+        if status is not None:
+            query = query.where(MatchCandidate.status == status)
+        candidates = list(
+            self.session.scalars(
+                query.order_by(MatchCandidate.created_at.asc(), MatchCandidate.id.asc())
+                .offset(offset)
+                .limit(limit)
+            )
+        )
+        if not candidates:
+            return []
+
+        candidate_ids = [candidate.id for candidate in candidates]
+        decisions = list(
+            self.session.scalars(
+                select(MatchDecision)
+                .where(MatchDecision.candidate_id.in_(candidate_ids))
+                .order_by(MatchDecision.decided_at.desc(), MatchDecision.id.desc())
+            )
+        )
+        decisions_by_candidate: dict[uuid.UUID, list[MatchDecision]] = {}
+        for decision in decisions:
+            decisions_by_candidate.setdefault(decision.candidate_id, []).append(decision)
+        items: list[MatchQueueItem] = []
+        for candidate in candidates:
+            candidate_decisions = decisions_by_candidate.get(candidate.id, [])
+            items.append(
+                MatchQueueItem(
+                    candidate=candidate,
+                    latest_decision=candidate_decisions[0] if candidate_decisions else None,
+                    decision_count=len(candidate_decisions),
+                )
+            )
+        return items
+
+    def review_queue_summary(self, organization_id: uuid.UUID) -> MatchQueueSummary:
+        candidates = list(
+            self.session.scalars(
+                select(MatchCandidate).where(MatchCandidate.organization_id == organization_id)
+            )
+        )
+        reviewed_candidate_ids = set(
+            self.session.scalars(
+                select(MatchDecision.candidate_id)
+                .where(MatchDecision.organization_id == organization_id)
+                .distinct()
+            )
+        )
+        by_status: dict[str, int] = {}
+        for candidate in candidates:
+            by_status[candidate.status] = by_status.get(candidate.status, 0) + 1
+        return MatchQueueSummary(
+            total_candidates=len(candidates),
+            unreviewed_candidates=sum(
+                candidate.id not in reviewed_candidate_ids for candidate in candidates
+            ),
+            by_status=dict(sorted(by_status.items())),
         )

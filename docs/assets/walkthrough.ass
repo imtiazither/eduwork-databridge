@@ -16,7 +16,7 @@ Style: Footer,Arial,20,&H009CB6C8,&H000000FF,&H00112233,&H40000000,0,0,0,0,100,1
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 Dialogue: 0,0:00:00.00,0:00:04.00,Title,,0,0,0,,EduWork DataBridge
-Dialogue: 0,0:00:00.00,0:00:04.00,Body,,0,0,0,,Blueprint-complete v0.14.0 reference release
+Dialogue: 0,0:00:00.00,0:00:04.00,Body,,0,0,0,,EduWork DataBridge open-source platform
 Dialogue: 0,0:00:00.00,0:00:36.00,Footer,,0,0,0,,SYNTHETIC DEMO · NO COMPANY DATA OR OUTCOME CLAIM
 Dialogue: 0,0:00:04.00,0:00:08.00,Title,,0,0,0,,Connect fragmented systems
 Dialogue: 0,0:00:04.00,0:00:08.00,Body,,0,0,0,,HRIS · LMS · CRM · assessment · credential · workforce data
@@ -41,4 +41,4 @@ Dialogue: 0,0:00:28.00,0:00:32.00,Body,,0,0,0,,Tests · coverage · benchmark ·
 Dialogue: 0,0:00:28.00,0:00:32.00,Accent,,0,0,0,,Every claim tied to reproducible evidence and limitations
 Dialogue: 0,0:00:32.00,0:00:36.00,Title,,0,0,0,,Ready for bounded evaluation
 Dialogue: 0,0:00:32.00,0:00:36.00,Body,,0,0,0,,Configure one real workflow · preserve first-hand partner evidence
-Dialogue: 0,0:00:32.00,0:00:36.00,Accent,,0,0,0,,Pre-production until target-environment and partner checks pass
+Dialogue: 0,0:00:32.00,0:00:36.00,Accent,,0,0,0,,Synthetic examples. Human review stays central.

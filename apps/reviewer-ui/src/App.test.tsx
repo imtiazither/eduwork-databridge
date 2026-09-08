@@ -13,7 +13,7 @@ function mockSuccessfulApi() {
   vi.stubGlobal("fetch", vi.fn((input: RequestInfo | URL) => {
     const url = String(input);
     const body = url.endsWith("/api/v1/version")
-      ? { version: "0.16.0", maturity: "release-candidate", completed_phases: Array.from({ length: 15 }, (_, index) => index) }
+      ? { version: "0.20.0" }
       : fallbackSummary;
     return Promise.resolve({ ok: true, json: async () => body } as Response);
   }));
@@ -31,7 +31,7 @@ test("renders the case story and live API version", async () => {
   mockSuccessfulApi();
   renderApp();
   expect(screen.getByRole("heading", { name: "Can we trust the training report?" })).toBeInTheDocument();
-  expect(await screen.findByText("API 0.16.0")).toBeInTheDocument();
+  expect(await screen.findByText("API 0.20.0")).toBeInTheDocument();
   expect(screen.getByText("366")).toBeInTheDocument();
 });
 

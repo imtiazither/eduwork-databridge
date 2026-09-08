@@ -1,6 +1,6 @@
 # Probabilistic Matching and Gray-Zone Review
 
-Phase 9 generates candidates through governed blocking rules, calculates exact/string/date/numeric comparison features, and converts weighted evidence into illustrative match probabilities. Missing comparison values are neutral rather than automatic disagreement.
+Probabilistic matching generates candidates through governed blocking rules, calculates exact/string/date/numeric comparison features, and converts weighted evidence into illustrative match probabilities. Missing comparison values are neutral rather than automatic disagreement.
 
 Synthetic truth may be used only through an explicit estimation call. Parameter estimates, model version, truth-set name, thresholds, run counts, feature evidence, candidate status, and cluster impact are persisted. Human decisions do not update the model automatically.
 

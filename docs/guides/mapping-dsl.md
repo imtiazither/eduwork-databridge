@@ -1,6 +1,6 @@
 # Mapping DSL Guide
 
-Phase 6 compiles strict YAML into an allowlisted transformation plan. It rejects duplicate targets, unavailable lookups, unregistered plugins, and pseudonymization without a named context salt.
+The mapping engine compiles strict YAML into an allowlisted transformation plan. It rejects duplicate targets, unavailable lookups, unregistered plugins, and pseudonymization without a named context salt.
 
 Built-in transforms: copy, trim, lower, upper, UTC datetime parsing, lookup, default, concat, split, conditional, SHA-256 pseudonymization, and registered plugin.
 

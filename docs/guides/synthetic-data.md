@@ -1,6 +1,6 @@
 # Synthetic Data Guide
 
-Phase 3 provides deterministic HRIS, LMS, assessment, credential, and identity-truth fixtures. Every record is fictional and uses the reserved `example.test` domain.
+The project provides deterministic HRIS, LMS, assessment, credential, and identity-truth fixtures. Every record is fictional and uses the reserved `example.test` domain.
 
 ## Generate
 
@@ -24,7 +24,7 @@ The manifest records expected counts for missing employee IDs, name variants, du
 
 ## Truth data
 
-`truth/identity_truth.json` links fictional source identifiers to a fictional canonical person UUID. It is test-only evaluation evidence for future entity-resolution phases. It must never be treated as a company result.
+`truth/identity_truth.json` links fictional source identifiers to a fictional canonical person UUID. It is test-only evaluation evidence for entity-resolution work. It must never be treated as a company result.
 
 ## Reproducibility
 

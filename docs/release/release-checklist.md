@@ -1,4 +1,4 @@
-# Release Candidate Checklist
+# Release Checklist
 
 ## Source and tests
 
@@ -23,7 +23,7 @@
 - [ ] 30-minute evaluator path works
 - [ ] Demo video and screenshots contain synthetic content only
 - [ ] Benchmark records environment, preset, results, budgets, and limitations
-- [ ] Changelog, roadmap, release manifest, risk register, and maturity claims agree
+- [ ] Changelog, roadmap, release manifest, risk register, and evidence claims agree
 
 ## Deployment-dependent gates
 

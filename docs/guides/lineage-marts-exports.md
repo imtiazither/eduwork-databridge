@@ -1,6 +1,6 @@
 # Lineage, Marts, and Governed Exports
 
-Phase 10 stores dataset, job, field, mart, and export lineage nodes/edges. Mapping rules link raw snapshots to canonical target fields. Exports link mart snapshots to immutable export snapshots. OpenLineage-compatible JSON events describe jobs, runs, inputs, outputs, and organization facets without raw values.
+The lineage service stores dataset, job, field, mart, and export nodes and edges. Mapping rules link raw snapshots to canonical target fields. Exports link mart snapshots to immutable export snapshots. OpenLineage-compatible JSON events describe jobs, runs, inputs, outputs, and organization facets without raw values.
 
 Implemented marts:
 

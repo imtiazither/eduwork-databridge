@@ -1,4 +1,4 @@
-"""Add Phase 9–12 model, mart, orchestration, and retention metadata.
+"""Add model, mart, orchestration, and retention metadata.
 
 Revision ID: 20260720_0004
 Revises: 20260719_0003

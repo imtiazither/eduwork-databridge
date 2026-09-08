@@ -356,7 +356,7 @@ export function App() {
       <main id="top">
         <section className="hero" aria-labelledby="page-title">
           <div className="hero-copy">
-            <p className="hero-kicker"><span>Open-source reference</span> Learning + workforce data</p>
+            <p className="hero-kicker"><span>Open-source platform</span> Learning + workforce data</p>
             <h1 id="page-title"><em>Can we trust</em> the training report?</h1>
             <p className="hero-lede">The employee list lives in HR. Completions live in the LMS. Scores and credentials arrive in two more files. DataBridge turns that hand-built reconciliation into a trail people can inspect.</p>
             <div className="hero-actions">
@@ -364,7 +364,7 @@ export function App() {
               <a className="button text" href="#story">Read the Monday story <span aria-hidden="true">→</span></a>
             </div>
             <div className="hero-footnote">
-              <span>Public reference build · v0.16.0</span>
+              <span>Public synthetic demo · v0.20.0</span>
               <p>No customer records. No hidden matches. No outcome claims.</p>
             </div>
           </div>
@@ -445,7 +445,7 @@ export function App() {
                 {item.key === "exceptions" && <b>{issueTotal}</b>}
               </button>
             ))}
-            <div className="nav-footnote"><span>Reference build</span><p>Phases 0–14 complete. Production checks and partner validation remain.</p></div>
+            <div className="nav-footnote"><span>Reviewable by design</span><p>Source evidence, exceptions, decisions, and lineage stay visible.</p></div>
           </nav>
           <div className="workspace-content">{currentView}</div>
         </div>
@@ -479,7 +479,7 @@ export function App() {
 
       <footer>
         <a className="footer-mark" href="#top"><i className="bridge-mark" aria-hidden="true"><span /><span /></i><span>EduWork DataBridge</span></a>
-        <p>Open-source reference implementation · MIT License · public examples use synthetic data only</p>
+        <p>Open-source platform · MIT License · public examples use synthetic data only</p>
         <div><a href={docsHref}>Docs</a><a href={fieldGuideHref}>Field guide</a><a href="https://github.com/imtiazither/eduwork-databridge">GitHub</a></div>
       </footer>
     </>

@@ -1,13 +1,13 @@
-# Phase 0–2 Completion Record
+# Foundation Completion Record
 
 Date: July 19, 2026
 Version: 0.2.0
 
 ## Completed
 
-- Phase 0: charter, scope, architecture decisions, evidence log, metrics, claim register, and public/private boundaries.
-- Phase 1: Python/TypeScript monorepo skeleton, FastAPI and React shells, reproducible lockfiles, Docker/Compose definitions, CI, governance, security, and developer commands.
-- Phase 2: 42 application tables plus Alembic versioning, canonical and control-plane SQLAlchemy models, baseline migration, strict Pydantic configuration/API contracts, four generated JSON Schemas, seed metadata, generated data dictionary, and Mermaid diagrams.
+- Charter, scope, architecture decisions, evidence log, metrics, claim register, and public/private boundaries.
+- Python/TypeScript monorepo skeleton, FastAPI and React shells, reproducible lockfiles, Docker/Compose definitions, CI, governance, security, and developer commands.
+- 42 application tables plus Alembic versioning, canonical and control-plane SQLAlchemy models, baseline migration, strict Pydantic configuration/API contracts, four generated JSON Schemas, seed metadata, generated data dictionary, and Mermaid diagrams.
 
 ## Verification
 
@@ -26,9 +26,9 @@ Version: 0.2.0
 
 The execution sandbox did not provide a Docker daemon. Container images and the live Compose stack were therefore not run here. The Dockerfiles and Compose definition are included and should be validated with `docker compose up --build` on a machine with Docker before a public release.
 
-## Maturity boundary
+## Evidence boundary
 
-Production connectors, ingestion, profiling, mapping execution, validation/quarantine pipelines, entity-resolution execution, reviewer business workflows, lineage processing, and partner pilots begin in later blueprint phases and are not claimed complete.
+At this recorded milestone, connectors, ingestion, profiling, mapping execution, validation/quarantine pipelines, entity-resolution execution, reviewer workflows, lineage processing, and partner work were not claimed complete.
 
 ## Attribution and evidence discipline
 

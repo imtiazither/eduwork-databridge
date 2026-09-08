@@ -1,4 +1,4 @@
-"""Add Phase 4 ingestion resume, failure, and content-idempotency metadata.
+"""Add ingestion resume, failure, and content-idempotency metadata.
 
 Revision ID: 20260719_0002
 Revises: 20260719_0001

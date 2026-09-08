@@ -4,7 +4,7 @@ This path uses synthetic data only and is intended to answer: **Can I run it, un
 
 ## Minutes 0–5: start with the case
 
-1. Read `docs/PROJECT_STORY.md` and the maturity warning in `README.md`.
+1. Read `docs/PROJECT_STORY.md` and the evidence boundaries in `README.md`.
 2. Note the working question: who completed the training, passed, and received the credential?
 3. Review `docs/evidence/release-manifest.json`.
 
@@ -40,7 +40,7 @@ Open `http://127.0.0.1:5173` and inspect the source checks, exception desk, iden
 ## Minutes 20–25: complete technical flow
 
 ```bash
-uv run python scripts/run_phase8_demo.py
+uv run python scripts/run_demo.py
 ```
 
 Then inspect:

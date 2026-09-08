@@ -1,4 +1,4 @@
-.PHONY: install lock lint format type test test-fast test-migration frontend frontend-test frontend-build generate generate-synthetic generate-check check docs-build benchmark-smoke sbom security-scan package-build package-verify release-checksums release-verify api ui seed migrate phase8-demo clean
+.PHONY: install lock lint format type test test-fast test-migration frontend frontend-test frontend-build generate generate-synthetic generate-check check docs-build benchmark-smoke sbom security-scan package-build package-verify release-checksums release-verify api ui seed migrate demo clean
 
 install:
 	uv sync --frozen --extra dev
@@ -59,8 +59,8 @@ seed:
 migrate:
 	uv run alembic upgrade head
 
-phase8-demo: migrate seed
-	uv run python scripts/run_phase8_demo.py
+demo: migrate seed
+	uv run python scripts/run_demo.py
 
 docs-build:
 	uv run mkdocs build --strict

@@ -7,5 +7,5 @@ sequenceDiagram
   Dev->>DB: seed synthetic metadata
   UI->>API: GET /healthz and /api/v1/version
   API->>DB: readiness and organization-scoped metadata query
-  DB-->>API: Phase 2 canonical/control-plane records
+  DB-->>API: Canonical and control-plane records
   API-->>UI: typed response

@@ -1,4 +1,4 @@
-"""Add Phase 5–8 processing, drift, mapping, quarantine, and evaluation metadata.
+"""Add processing, drift, mapping, quarantine, and evaluation metadata.
 
 Revision ID: 20260719_0003
 Revises: 20260719_0002

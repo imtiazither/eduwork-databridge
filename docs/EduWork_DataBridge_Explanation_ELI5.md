@@ -8,7 +8,7 @@ Somebody asks: who completed the cybersecurity training, passed the assessment, 
 
 That sounds like a five-minute question. It rarely is. The employee list lives in HR. Completions live in the learning platform, under its own user IDs. Scores arrive in a spreadsheet. Certificates sit in a fourth system with its own idea of everyone's name. So someone exports four files, spends an afternoon on VLOOKUPs, and produces a report that looks tidy. Six weeks later, nobody can explain every choice that went into it.
 
-EduWork DataBridge is an open-source reference implementation for doing that reconciliation with receipts. It does not replace HR, the LMS, or anything else. It sits beside them, brings their records into one checked structure, and keeps the evidence for every step.
+EduWork DataBridge is an open-source platform for doing that reconciliation with receipts. It does not replace HR, the LMS, or anything else. It sits beside them, brings their records into one checked structure, and keeps the evidence for every step.
 
 ## The five-year-old version
 
@@ -63,6 +63,8 @@ The frontend is a review console rather than a dashboard. It walks a five-stop e
 
 One honest wrinkle: review decisions made in the demo console are deliberately not saved. The backend services remain the authoritative path for recorded decisions, and the console says so plainly.
 
+In v0.20, authorized backend users can also list the match-review queue, filter it by current status, page through larger queues, see each candidate's latest decision, and check how many candidates remain unreviewed.
+
 ## Why teams bother
 
 Most organizations already own every record they need. The trouble is that the records disagree, the IDs do not line up, and the person who reconciled them last quarter did it by hand and remembers roughly half of the decisions. Each new source, department, or customer starts the whole exercise over.
@@ -87,7 +89,7 @@ For development, the Makefile covers the same ground:
 ```
 make install
 make generate
-make phase8-demo
+make demo
 make api          # one terminal
 make ui           # another terminal
 ```
@@ -96,11 +98,11 @@ make ui           # another terminal
 
 ## How to talk about it honestly
 
-The project is a pre-production reference implementation. That is a real thing worth showing, and it is not the same as a proven product. The wording matters.
+The public materials show tested software using synthetic data. Claims about adoption, savings, certification, or measured outcomes still require evidence from the organization making them.
 
 | Do not say | Say instead |
 | --- | --- |
-| Companies already use it. | It is a reference implementation ready for a bounded pilot. |
+| Companies already use it. | It is an open-source platform that organizations can evaluate with a bounded workflow. |
 | It guarantees savings. | A pilot can measure preparation time, exception rates, and reviewer burden. |
 | It is certified compliant. | It includes audit, masking, retention, and access controls that still need deployment-specific review. |
 | It replaces the HRIS or LMS. | It connects and governs data from the systems already in place. |
@@ -128,4 +130,4 @@ There is also a line the project will not cross. It prepares evidence; it does n
 - PROJECT_STORY.md for the full story and contribution.
 - ARCHITECTURE.md and the docs site for the technical design.
 
-This guide describes the public repository as of July 2026. Everything in it can be checked against the code and the synthetic case file. No real people appear anywhere, and nothing here claims a customer deployment or a production result.
+This guide describes the public repository as of September 2026. Everything in it can be checked against the code and the synthetic case file. No real people appear anywhere, and nothing here claims a customer deployment or measured business result.

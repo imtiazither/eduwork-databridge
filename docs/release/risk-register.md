@@ -9,6 +9,6 @@
 | Schema/model drift | Masked profiles, baselines, threshold evidence | Approve workflow-specific thresholds |
 | Supply-chain compromise | Lockfiles, SBOMs, CI scans, checksums | Run container scan and signing in Docker/registry environment |
 | Unreproducible release | Clean-clone, generated-artifact checks, package build | Preserve signed tag and immutable release artifacts |
-| Unsupported impact claim | Claims register, maturity notices, synthetic labels | Use real measured pilot evidence only |
+| Unsupported impact claim | Claims register, evidence notices, synthetic labels | Use real measured pilot evidence only |
 | Demo identity misuse | Demo provider refuses production | Configure and verify real OIDC deployment |
 | Retention deletion error | Dry-run default, organization/path restrictions | Approve policy and backup in target environment |

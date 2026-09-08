@@ -1,6 +1,6 @@
 import uuid
 from datetime import datetime
-from typing import Literal
+from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -22,8 +22,6 @@ class ReadyResponse(APIModel):
 
 class VersionResponse(APIModel):
     version: str
-    maturity: str
-    completed_phases: list[int]
 
 
 class DemoSummaryResponse(APIModel):
@@ -178,6 +176,24 @@ class MatchDecisionResponse(APIModel):
     reviewer_id: uuid.UUID
     decided_at: datetime
     supersedes_decision_id: uuid.UUID | None
+
+
+class MatchQueueItemResponse(APIModel):
+    candidate_id: uuid.UUID
+    left_record_key: str
+    right_record_key: str
+    score: float | None
+    evidence: dict[str, Any]
+    status: str
+    created_at: datetime
+    decision_count: int
+    latest_decision: MatchDecisionResponse | None
+
+
+class MatchQueueSummaryResponse(APIModel):
+    total_candidates: int
+    unreviewed_candidates: int
+    by_status: dict[str, int]
 
 
 class ProbabilisticMatchRequest(APIModel):

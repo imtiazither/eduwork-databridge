@@ -2,7 +2,7 @@
 
 - `GET /healthz` — process liveness
 - `GET /readyz` — database readiness
-- `GET /api/v1/version` — product maturity and completed phases
+- `GET /api/v1/version` — current product version
 - `GET /api/v1/demo/summary` — counts and planted defect evidence from the small public synthetic fixture
 - `GET /api/v1/organizations` — seeded metadata
 - `GET /api/v1/sources` — explicitly organization-scoped source inventory; requires `X-Organization-ID`
@@ -14,6 +14,8 @@
 - `POST /api/v1/validations` — multi-category validation, quality dimensions, persisted results, and quarantine IDs; optional `mapping_id` and `lookup_ids` validate the mapped canonical records instead of the raw snapshot, and the response labels its `record_source`
 - `POST /api/v1/quarantine/{quarantine_id}/resolve` — attributable resolution/waiver/correction metadata
 - `POST /api/v1/matches/deterministic/synthetic` — organization-scoped deterministic linkage and synthetic truth evaluation
+- `GET /api/v1/matches/review-queue` — permission-gated candidate queue with optional status filtering and bounded pagination
+- `GET /api/v1/matches/review-queue/summary` — organization-scoped workload totals, unreviewed count, and current status counts
 - `POST /api/v1/matches/{candidate_id}/decisions` — permission-gated reasoned match, no-match, defer, or escalation decision
 - `GET /api/v1/matches/{candidate_id}/decisions` — organization-scoped decision history, newest first
 - `POST /api/v1/matches/probabilistic/synthetic` — explicit synthetic estimation, probabilities, gray-zone candidates, and model/run evidence
@@ -25,4 +27,4 @@
 - `GET /api/v1/me` — current demo/OIDC-adapted actor
 - `GET /api/v1/audit` — permission-gated organization audit events covering extraction, mapping previews, validation, matching, marts, exports, orchestration, and retention
 
-Extraction returns run ID, snapshot ID, checksum, storage URI, row count, reuse flag, and cursor. Match decisions require `matching:write`, a non-empty reason, and a decision of `match`, `no_match`, `defer`, or `escalate`. A later decision supersedes the prior decision and emits `matching.decision.recorded` in the organization audit trail. Processing endpoints require an organization header and versioned configuration. In non-production demo mode, `X-Demo-User` selects `demo-admin` or `demo-viewer`; production must replace demo identity with verified OIDC infrastructure. Authorization is still enforced after authentication.
+Extraction returns run ID, snapshot ID, checksum, storage URI, row count, reuse flag, and cursor. Match decisions require `matching:write`, a non-empty reason, and a decision of `match`, `no_match`, `defer`, or `escalate`. A later decision supersedes the prior decision and emits `matching.decision.recorded` in the organization audit trail. The review queue exposes only organization-scoped candidate keys, scores, fingerprints, statuses, and decision metadata. Processing endpoints require an organization header and versioned configuration. In demo mode, `X-Demo-User` selects `demo-admin` or `demo-viewer`; deployed environments must replace demo identity with verified OIDC infrastructure. Authorization is still enforced after authentication.

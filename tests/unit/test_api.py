@@ -16,8 +16,7 @@ def test_health_and_version() -> None:
     assert health.json()["status"] == "ok"
     version = asyncio.run(request("GET", "/api/v1/version"))
     assert version.status_code == 200
-    assert version.json()["maturity"] == "release-candidate"
-    assert version.json()["completed_phases"] == list(range(15))
+    assert version.json() == {"version": "0.20.0"}
 
 
 def test_demo_summary_comes_from_public_synthetic_manifest() -> None:

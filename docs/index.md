@@ -1,6 +1,6 @@
 # EduWork DataBridge
 
-**v0.16.0 pre-production reference release**
+**Current release: v0.20.0**
 
 EduWork DataBridge turns fragmented learning, training, skills, credential, HRIS, LMS, CRM, assessment, and workforce records into documented, validated, reviewable, and traceable data products.
 
@@ -15,6 +15,7 @@ It began with a smaller problem: a training report assembled from four systems s
 - Eight validation categories and immutable quarantine history
 - Deterministic and probabilistic identity-linkage evidence with human review
 - Reasoned, reversible match decisions with protected API and audit evidence
+- A protected, filterable match-review queue with workload summary
 - Run and field lineage plus OpenLineage-compatible events
 - Governed marts and masked CSV/Parquet exports
 - Asset orchestration, partitions, retries, watermarks, backfills, and telemetry
@@ -28,12 +29,12 @@ It began with a smaller problem: a training report assembled from four systems s
   Your browser does not support the walkthrough video.
 </video>
 
-!!! warning "Pre-production boundary"
-    Blueprint-complete means the documented implementation phases and acceptance tests are complete. It does **not** mean a company deployment, regulatory certification, production security approval, or measured business outcome exists.
+!!! note "Evidence boundary"
+    Public examples use synthetic data and do not claim customer adoption, regulatory certification, or measured business outcomes.
 
 ## Start based on your goal
 
 - **Evaluator:** follow the [30-minute tour](evaluator/30-minute-tour.md).
 - **Developer:** use the [developer setup](developer/getting-started.md).
-- **Security reviewer:** read the [connector threat model](security/connector-threat-model.md) and [release checklists](release/release-candidate-checklist.md).
+- **Security reviewer:** read the [connector threat model](security/connector-threat-model.md) and [release checklists](release/release-checklist.md).
 - **Potential collaborator:** begin with one bounded, authorized parallel workflow and preserve factual evidence.

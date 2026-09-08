@@ -1,6 +1,6 @@
 # Deterministic Identity Matching Guide
 
-Phase 8 normalizes Unicode, whitespace, email, phone, and source IDs, then applies rules in priority order.
+Deterministic matching normalizes Unicode, whitespace, email, phone, and source IDs, then applies rules in priority order.
 
 1. Trusted exact identifiers link first.
 2. Approved composite exact rules may link remaining records.
@@ -11,4 +11,4 @@ Candidates persist only field fingerprints and rule IDs, not raw comparison valu
 
 The synthetic evaluation uses pairwise precision, recall, false positives, false negatives, and coverage. With the v0.8.0 small fixture and default rule set, the measured demonstration is precision 1.0, recall 0.91666667, and coverage 0.93495935. These are synthetic benchmark results, not partner or operational outcomes.
 
-Probabilistic matching, learned thresholds, and gray-zone scoring begin in Phase 9.
+Probabilistic matching provides weighted evidence, configured thresholds, and gray-zone scoring for cases that exact rules cannot settle.

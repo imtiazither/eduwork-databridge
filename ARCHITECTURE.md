@@ -6,9 +6,9 @@ EduWork DataBridge uses a modular-monolith architecture for its first complete r
 
 Source data → immutable raw snapshot → contract/profile → versioned mapping → validation/quarantine → identity review → canonical records → traceable export.
 
-Phases 0–14 implement the governed data path from immutable extraction through reviewable analytics, lineage-aware products, operations/security, evaluator documentation, benchmark and supply-chain evidence, and release-candidate controls. Target-environment hardening and partner pilots remain explicit future work.
+The governed data path covers immutable extraction, reviewable analytics, lineage-aware products, operations and security, evaluator documentation, benchmarks, and supply-chain evidence. Deployment-specific validation and partner workflows remain separate evidence activities.
 
-## Phase 0–14 components
+## Components
 
 - FastAPI service with source, profile, mapping-preview, validation, quarantine, and deterministic-matching endpoints
 - PostgreSQL-oriented SQLAlchemy control/canonical schema and four Alembic revisions
@@ -29,10 +29,10 @@ Phases 0–14 implement the governed data path from immutable extraction through
 
 ## Data zones
 
-- Bronze: immutable, content-addressed raw snapshots and manifests (Phase 4)
-- Silver preparation: mapping, validation, quarantine, and deterministic identity evidence (Phases 6–8); approved canonical publication remains later work
-- Gold: documented training participation, credential status, and data-quality trend marts plus governed exports (Phase 10)
-- Control plane: source, contract, processing, match-model, lineage, mart/export, orchestration, retention, audit, and access metadata (Phases 2–12)
+- Bronze: immutable, content-addressed raw snapshots and manifests
+- Silver preparation: mapping, validation, quarantine, and deterministic identity evidence
+- Gold: documented training participation, credential status, and data-quality trend marts plus governed exports
+- Control plane: source, contract, processing, match-model, lineage, mart/export, orchestration, retention, audit, and access metadata
 
 ## Tenancy
 

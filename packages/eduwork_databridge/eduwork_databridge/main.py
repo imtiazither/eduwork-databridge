@@ -5,7 +5,7 @@ from dataclasses import asdict
 from pathlib import Path
 from typing import Annotated, Any
 
-from fastapi import Depends, FastAPI, Header, HTTPException, Request
+from fastapi import Depends, FastAPI, Header, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
@@ -56,6 +56,8 @@ from eduwork_databridge.schemas.api import (
     MartBuildResponse,
     MatchDecisionRequest,
     MatchDecisionResponse,
+    MatchQueueItemResponse,
+    MatchQueueSummaryResponse,
     OrganizationRead,
     ProbabilisticMatchRequest,
     ProbabilisticMatchResponse,
@@ -177,7 +179,7 @@ def _mapping_rules(config: MappingConfig) -> list[dict[str, Any]]:
 app = FastAPI(
     title=settings.api_title,
     version=settings.api_version,
-    description="Phase 0–12 reference implementation for EduWork DataBridge.",
+    description="Open-source learning and workforce data interoperability platform.",
 )
 app.add_middleware(
     CORSMiddleware,
@@ -214,9 +216,7 @@ def ready(session: SessionDep) -> ReadyResponse:
 
 @app.get("/api/v1/version", response_model=VersionResponse, tags=["metadata"])
 def version() -> VersionResponse:
-    return VersionResponse(
-        version=__version__, maturity="release-candidate", completed_phases=list(range(15))
-    )
+    return VersionResponse(version=__version__)
 
 
 @app.get("/api/v1/demo/summary", response_model=DemoSummaryResponse, tags=["metadata"])
@@ -642,6 +642,67 @@ def record_match_decision(
         },
     )
     return MatchDecisionResponse.model_validate(row)
+
+
+@app.get(
+    "/api/v1/matches/review-queue",
+    response_model=list[MatchQueueItemResponse],
+    tags=["matching"],
+)
+def list_match_review_queue(
+    session: SessionDep,
+    actor: ActorDep,
+    x_organization_id: OrganizationHeader = None,
+    status: str | None = None,
+    limit: int = Query(default=50, ge=1, le=200),
+    offset: int = Query(default=0, ge=0),
+) -> list[MatchQueueItemResponse]:
+    organization_id = _required_organization(x_organization_id)
+    require_organization(actor, organization_id)
+    require_permission(actor, "matching:write")
+    items = DeterministicMatchService(session).list_review_queue(
+        organization_id=organization_id,
+        status=status,
+        limit=limit,
+        offset=offset,
+    )
+    return [
+        MatchQueueItemResponse(
+            candidate_id=item.candidate.id,
+            left_record_key=item.candidate.left_record_key,
+            right_record_key=item.candidate.right_record_key,
+            score=float(item.candidate.score) if item.candidate.score is not None else None,
+            evidence=item.candidate.evidence_json,
+            status=item.candidate.status,
+            created_at=item.candidate.created_at,
+            decision_count=item.decision_count,
+            latest_decision=MatchDecisionResponse.model_validate(item.latest_decision)
+            if item.latest_decision
+            else None,
+        )
+        for item in items
+    ]
+
+
+@app.get(
+    "/api/v1/matches/review-queue/summary",
+    response_model=MatchQueueSummaryResponse,
+    tags=["matching"],
+)
+def match_review_queue_summary(
+    session: SessionDep,
+    actor: ActorDep,
+    x_organization_id: OrganizationHeader = None,
+) -> MatchQueueSummaryResponse:
+    organization_id = _required_organization(x_organization_id)
+    require_organization(actor, organization_id)
+    require_permission(actor, "matching:write")
+    summary = DeterministicMatchService(session).review_queue_summary(organization_id)
+    return MatchQueueSummaryResponse(
+        total_candidates=summary.total_candidates,
+        unreviewed_candidates=summary.unreviewed_candidates,
+        by_status=summary.by_status,
+    )
 
 
 @app.get(

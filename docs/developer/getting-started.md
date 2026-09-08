@@ -58,4 +58,4 @@ The Pages build is a static synthetic case file. It deliberately skips API reque
 - Add or update tests and documentation with behavior changes.
 - Never add real personal or partner data to fixtures, issues, logs, screenshots, or videos.
 - Regenerate JSON Schemas and the data dictionary when models change.
-- Create an ADR for changes to public contracts, security boundaries, migrations, licensing, or maturity claims.
+- Create an ADR for changes to public contracts, security boundaries, migrations, licensing, or evidence claims.

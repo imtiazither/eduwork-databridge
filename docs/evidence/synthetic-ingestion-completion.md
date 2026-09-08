@@ -1,9 +1,9 @@
-# Phase 3–4 Completion Record
+# Synthetic Data and Ingestion Completion Record
 
 Date: July 19, 2026
 Version: 0.4.0
 
-## Phase 3 completed
+## Synthetic data completed
 
 - Deterministic small, medium, and on-demand benchmark generator presets.
 - Fictional HRIS CSV, LMS CSV/JSON, assessment XLSX, credential Parquet, and identity-truth JSON outputs.
@@ -11,7 +11,7 @@ Version: 0.4.0
 - Nine documented defect scenarios with expected counts, including missing IDs, name variants, duplicate accounts, conflicts, invalid statuses, temporal errors, late events, and formula-like text.
 - Committed small and medium fixtures; benchmark generation is supported without repository bloat.
 
-## Phase 4 completed
+## Connectors and ingestion completed
 
 - CSV, XLSX, JSON, Parquet, REST/JSON, and PostgreSQL connectors.
 - Connector contract for connection test, schema discovery, extraction, cursor, and close.
@@ -38,9 +38,9 @@ Version: 0.4.0
 - The PostgreSQL connector was contract-tested through SQLAlchemy with a local test database; run the included Docker Compose stack for a live PostgreSQL integration check before public release.
 - The public REST example is intentionally non-operational and contains no real token or endpoint.
 
-## Maturity boundary
+## Evidence boundary
 
-Automated schema profiling and drift detection begin in Phase 5. Mapping execution, validation/quarantine processing, entity resolution, reviewer business workflows, lineage processing, and partner pilots remain later phases and are not claimed complete.
+At this recorded milestone, automated schema profiling, mapping execution, validation/quarantine processing, entity resolution, reviewer workflows, lineage processing, and partner work were not claimed complete.
 
 ## Attribution and evidence discipline
 

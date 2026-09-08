@@ -2,4 +2,4 @@
 
 Status: Accepted
 
-Phase 8 uses trusted exact identifiers and approved composite exact rules only. Conflicting trusted identifiers block automatic linkage. Probabilistic linkage, thresholds, and gray-zone review begin in Phase 9 after deterministic evidence is measured.
+Deterministic matching uses trusted exact identifiers and approved composite exact rules first. Conflicting trusted identifiers block automatic linkage. Probabilistic linkage, thresholds, and gray-zone review build on measured deterministic evidence.

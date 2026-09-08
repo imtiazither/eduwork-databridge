@@ -6,7 +6,7 @@ A reviewer should be independent of the implementation work and should identify 
 
 - [ ] Central source-to-export flow is coherent
 - [ ] Package boundaries match the architecture
-- [ ] Deferred features and pre-production limits are explicit
+- [ ] Deferred features and deployment-specific evidence limits are explicit
 - [ ] Public/private repository boundary is credible
 
 ## Data and algorithms

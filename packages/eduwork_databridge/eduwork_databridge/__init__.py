@@ -1,3 +1,3 @@
-"""EduWork DataBridge v0.16.0 reference implementation."""
+"""EduWork DataBridge v0.20.0."""
 
-__version__ = "0.16.0"
+__version__ = "0.20.0"

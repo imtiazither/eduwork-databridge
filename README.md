@@ -9,13 +9,13 @@
 
 [Open EduWork DataBridge on GitHub Pages](https://imtiazither.github.io/eduwork-databridge/) · [Browse the documentation](https://imtiazither.github.io/eduwork-databridge/docs/)
 
-## Current release: v0.16.0
+## Current release: v0.20.0
 
-v0.16.0 exposes reasoned, reversible identity-match decisions through a protected API. Each decision is organization-scoped, permission-gated, linked to its superseded predecessor when revised, and recorded in the audit trail. The public reviewer desk remains a non-persistent synthetic preview.
+v0.20.0 adds a protected match-review queue and workload summary. Authorized reviewers can list candidates, filter by current status, page through the queue, see the latest reasoned decision, and measure how many candidates remain unreviewed.
 
 One training report may need an employee roster from HR, completion records from an LMS, scores from an assessment file, and awards from a credential system. The joins usually happen in a spreadsheet. When an ID is missing or two accounts look alike, the reasoning can disappear inside the finished report.
 
-EduWork DataBridge is an open-source reference implementation for making that reconciliation inspectable. It keeps source evidence, checks the awkward records, separates uncertain identity matches from safe ones, and carries lineage into governed outputs.
+EduWork DataBridge is an open-source platform for making that reconciliation inspectable. It keeps source evidence, checks the awkward records, separates uncertain identity matches from safe ones, and carries lineage into governed outputs.
 
 
 
@@ -82,7 +82,7 @@ uv sync --frozen --extra dev
 uv run python scripts/generate_synthetic_data.py --preset small --seed 20260719
 uv run alembic upgrade head
 uv run python -m eduwork_databridge.seed
-uv run python scripts/run_phase8_demo.py
+uv run python scripts/run_demo.py
 uv run uvicorn eduwork_databridge.main:app --reload
 ```
 
@@ -96,6 +96,8 @@ The public API surface includes source processing, matching, marts, exports, lin
 - `POST /api/v1/validations`
 - `POST /api/v1/quarantine/{quarantine_id}/resolve`
 - `POST /api/v1/matches/deterministic/synthetic`
+- `GET /api/v1/matches/review-queue`
+- `GET /api/v1/matches/review-queue/summary`
 - `POST /api/v1/matches/{candidate_id}/decisions`
 - `GET /api/v1/matches/{candidate_id}/decisions`
 - `POST /api/v1/matches/probabilistic/synthetic`

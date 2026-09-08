@@ -1,10 +1,9 @@
 # EduWork DataBridge: Project Overview, Usage Guide, and Benefits
 
-**Version:** 0.16.0
-**Status:** Blueprint-complete, pre-production reference implementation  
+**Version:** 0.20.0
 **License:** MIT
 
-For the human problem that motivated the reference design, read [the project story](PROJECT_STORY.md). The [five-page field guide](EduWork_DataBridge_Field_Guide.pdf) pairs that story with the current reviewer desk.
+For the human problem that motivated the platform, read [the project story](PROJECT_STORY.md). The [five-page field guide](EduWork_DataBridge_Field_Guide.pdf) pairs that story with the current reviewer desk.
 
 ## What it is
 
@@ -12,7 +11,7 @@ EduWork DataBridge is an open-source interoperability and data-governance founda
 
 It is designed to turn source-system extracts into documented, validated, reviewable, traceable, and exportable data products. It does this without assuming that one source system is the permanent source of truth and without treating a person's email address as a universal identity.
 
-The project is intentionally a **reference implementation**, not a finished institutional deployment. Its public fixtures, screenshots, benchmark, probability thresholds, and walkthrough are synthetic. It does not claim customer adoption, regulatory certification, production readiness for every environment, or measured business outcomes.
+Its public fixtures, screenshots, benchmark, probability thresholds, and walkthrough are synthetic. They do not claim customer adoption, regulatory certification, universal deployment readiness, or measured business outcomes.
 
 ## What it can be used for
 
@@ -68,13 +67,13 @@ Typical uses include:
 5. **Faster evaluation and extension.** Synthetic fixtures, a 30-minute evaluator tour, developer instructions, JSON Schemas, docs, tests, and reproducible evidence make the project inspectable and extendable.
 6. **Lower pilot risk.** A real organization can begin with one authorized, bounded workflow while keeping proprietary data, credentials, mappings, endpoints, and results private.
 
-## v0.16.0: Auditable match decisions
+## v0.20.0: Match review queue
 
-v0.16.0 exposes the existing reversible match-decision model through a protected API. An authorized reviewer can record `match`, `no_match`, `defer`, or `escalate` with a required reason. A later decision preserves the prior decision through a supersession link, and the API records an audit event with the decision metadata. The public GitHub Pages reviewer desk remains a static synthetic preview and does not submit decisions.
+v0.20.0 adds protected endpoints for listing match candidates and summarizing review workload. An authorized reviewer can filter candidates by current status, use bounded pagination, see the latest decision and decision count, and identify how many candidates have never been reviewed. Organization scoping and existing matching permissions apply to every request.
 
 ## How to use it
 
-### 1. Run the reference implementation locally
+### 1. Run the platform locally
 
 Prerequisites:
 
@@ -122,13 +121,14 @@ Use `docs/evaluator/30-minute-tour.md` to inspect the synthetic data, run the co
 
 ## Verification and release evidence
 
-The v0.16.0 release includes:
+The v0.20.0 release includes:
 
-- 76 Python tests with 90.10% measured coverage
+- Automated Python and frontend tests with enforced repository-wide coverage
 - Ruff, format, and strict mypy checks across 81 Python source and script files
 - Six frontend Vitest tests and a TypeScript/Vite production build
 - Generated JSON Schema contracts and four Alembic migrations
 - Protected, organization-scoped match-decision endpoints with reversible history and audit events
+- Protected, organization-scoped match-review queue and workload-summary endpoints
 - A strict MkDocs documentation build
 - A versioned synthetic benchmark with regression budgets
 - Python CycloneDX plus frontend CycloneDX and SPDX SBOMs
@@ -153,5 +153,5 @@ The v0.16.0 release includes:
 - `docs/developer/getting-started.md` — developer setup
 - `docs/concepts/architecture.md` — architecture and data zones
 - `docs/release/claim-boundaries.md` — supported and unsupported claims
-- `docs/release/release-candidate-checklist.md` — final release checks
+- `docs/release/release-checklist.md` — final release checks
 - `docs/release/docker-validation.md` — target-environment deployment validation

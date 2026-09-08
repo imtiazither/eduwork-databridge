@@ -1,36 +1,19 @@
 {
   "project": "EduWork DataBridge",
-  "version": "0.15.0",
-  "completed_phases": [
-    0,
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7,
-    8,
-    9,
-    10,
-    11,
-    12,
-    13,
-    14
-  ],
-  "verified_at": "2026-07-23",
+  "version": "0.20.0",
+  "verified_at": "2026-09-08",
   "application_tables": 52,
   "alembic_revisions": 4,
   "python_source_files_checked": 81,
-  "python_tests_passed": 75,
-  "python_coverage_percent": 90.1,
-  "frontend_tests_passed": 4,
+  "python_tests_passed": 76,
+  "python_coverage_percent": 90.2,
+  "frontend_tests_passed": 6,
   "generated_json_schemas": 11,
   "synthetic_presets_committed": [
     "small",
     "medium"
   ],
-  "implemented_phase_9_12": [
+  "implemented_capabilities": [
     "probabilistic_gray_zone_matching",
     "run_and_field_lineage",
     "openlineage_compatible_events",
@@ -41,6 +24,8 @@
     "opentelemetry_compatible_telemetry",
     "demo_and_oidc_ready_identity",
     "organization_permission_authorization",
+    "organization_scoped_match_review_queue",
+    "match_review_workload_summary",
     "audit_events",
     "retention_enforcement"
   ],
@@ -67,7 +52,7 @@
   "live_postgresql_connector_validation": "not_run_no_daemon",
   "dagster_daemon_validation": "not_run_no_daemon",
   "lockfile_sha256": {
-    "uv.lock": "0cb17c747e00654c962200a5cd1ff4f9a66c3bc822ca5321e80c25aedfbb4dc6",
-    "apps/reviewer-ui/package-lock.json": "188b052eeb18348173c8d534c83bc89bfc4ba1a609be0ddc786f2dbe8547c899"
+    "uv.lock": "45eda022ce97455a3851a941152fb5348902947aae9e620a425e586e83b1df69",
+    "apps/reviewer-ui/package-lock.json": "2a305009a4290c113c25be78120f7b7abd0b0dce4fecffdd42048af30dde40b6"
   }
 }

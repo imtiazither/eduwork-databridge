@@ -1,7 +1,5 @@
 export interface VersionResponse {
   version: string;
-  maturity: string;
-  completed_phases: number[];
 }
 
 export interface DemoSummaryResponse {
@@ -183,4 +181,3 @@ export const pipelineStages = [
     evidence: "Run and field lineage · audit events",
   },
 ] as const;
-

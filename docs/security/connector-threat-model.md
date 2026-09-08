@@ -1,4 +1,4 @@
-# Phase 4 Connector Threat Model
+# Connector Threat Model
 
 | Threat | Control |
 |---|---|

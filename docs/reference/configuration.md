@@ -2,7 +2,7 @@
 
 Configuration is strict, versioned YAML validated through Pydantic and exported JSON Schema. Literal secrets are forbidden; use a secret reference resolved by the deployment environment.
 
-Supported Phase 12 configuration models:
+Supported configuration models:
 
 - SourceConfig
 - MappingConfig

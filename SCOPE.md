@@ -1,6 +1,6 @@
 # Scope and Boundaries
 
-## In scope through Phase 14
+## Current scope
 
 - Industry-neutral canonical and technical/control-plane models
 - Organization scoping, effective dates, and versioned metadata

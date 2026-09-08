@@ -1,8 +1,8 @@
-"""Phase 1 worker shell. Data-processing assets begin in later blueprint phases."""
+"""EduWork DataBridge worker entry point."""
 
 
 def main() -> None:
-    print("EduWork DataBridge worker shell: Phases 0–2 complete; no pipeline jobs registered yet.")
+    print("EduWork DataBridge worker shell is ready; no pipeline jobs are registered.")
 
 
 if __name__ == "__main__":

@@ -1,6 +1,6 @@
 # Profiling and Drift Guide
 
-Phase 5 uses Polars to profile row/sample counts, observed types, null and blank counts, distinctness, numeric summaries, string lengths, and top-value shares. Top values are SHA-256 fingerprints by default; raw examples are not persisted.
+The profiling service uses Polars to measure row/sample counts, observed types, null and blank counts, distinctness, numeric summaries, string lengths, and top-value shares. Top values are SHA-256 fingerprints by default; raw examples are not persisted.
 
 Profiles are stored by raw snapshot and may reference an approved baseline. Comparisons report added/removed fields, type changes, raw metric deltas, configurable threshold breaches, and baseline/current row counts.
 

@@ -1,6 +1,6 @@
 # Identity, Authorization, Audit, and Retention
 
-Phase 12 provides an isolated demo identity provider and an OIDC claims adapter for tokens whose signature and standard claims have already been verified by deployment infrastructure. The demo provider refuses production mode.
+The security layer provides an isolated demo identity provider and an OIDC claims adapter for tokens whose signature and standard claims have already been verified by deployment infrastructure. The demo provider refuses production mode.
 
 Authorization checks organization membership and explicit permissions. Seeded roles are administrator, data steward, publisher, and viewer. Protected APIs require permissions for matching, marts, exports, lineage, orchestration, audit, or retention.
 
