@@ -70,11 +70,24 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release create "${{ github.ref_name }}" \
-            release/packages/* \
-            release/sbom/* \
-            release/security/* \
-            release/SHA256SUMS \
-            docs/assets/eduwork-databridge-walkthrough.mp4 \
-            --verify-tag \
-            --generate-notes
+          NOTES_FILE="docs/release/${{ github.ref_name }}.md"
+          if [ -f "$NOTES_FILE" ]; then
+            gh release create "${{ github.ref_name }}" \
+              release/packages/* \
+              release/sbom/* \
+              release/security/* \
+              release/SHA256SUMS \
+              docs/assets/eduwork-databridge-walkthrough.mp4 \
+              --verify-tag \
+              --title "$(sed -n '1s/^# //p' "$NOTES_FILE")" \
+              --notes-file "$NOTES_FILE"
+          else
+            gh release create "${{ github.ref_name }}" \
+              release/packages/* \
+              release/sbom/* \
+              release/security/* \
+              release/SHA256SUMS \
+              docs/assets/eduwork-databridge-walkthrough.mp4 \
+              --verify-tag \
+              --generate-notes
+          fi
