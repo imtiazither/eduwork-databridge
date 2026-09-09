@@ -53,6 +53,6 @@
   "dagster_daemon_validation": "not_run_no_daemon",
   "lockfile_sha256": {
     "uv.lock": "45eda022ce97455a3851a941152fb5348902947aae9e620a425e586e83b1df69",
-    "apps/reviewer-ui/package-lock.json": "2a305009a4290c113c25be78120f7b7abd0b0dce4fecffdd42048af30dde40b6"
+    "apps/reviewer-ui/package-lock.json": "bd047d2beb02e08bacbe04cb97870bb1495b851b572545a77c5a012c6e5ee680"
   }
 }

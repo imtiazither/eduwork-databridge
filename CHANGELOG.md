@@ -18,6 +18,7 @@ All notable changes will be documented here. The project follows Semantic Versio
 ### Changed
 
 - The public Pages experience now uses an explicit synthetic-demo state instead of making unavailable backend requests
+- Vitest updated to 5.0.0 following a dependency advisory
 - Public-facing language now focuses on capabilities, evidence, and responsible use
 
 ## [0.15.0] - 2026-07-23
