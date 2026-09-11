@@ -13,10 +13,9 @@
 
 v0.20.0 adds a protected match-review queue and workload summary. Authorized reviewers can list candidates, filter by current status, page through the queue, see the latest reasoned decision, and measure how many candidates remain unreviewed.
 
-One training report may need an employee roster from HR, completion records from an LMS, scores from an assessment file, and awards from a credential system. The joins usually happen in a spreadsheet. When an ID is missing or two accounts look alike, the reasoning can disappear inside the finished report.
-
 EduWork DataBridge is an open-source platform for making that reconciliation inspectable. It keeps source evidence, checks the awkward records, separates uncertain identity matches from safe ones, and carries lineage into governed outputs.
 
+One training report may need an employee roster from HR, completion records from an LMS, scores from an assessment file, and awards from a credential system. The joins usually happen in a spreadsheet. When an ID is missing or two accounts look alike, the reasoning can disappear inside the finished report.
 
 
 Read [the story behind the project and its contribution](docs/PROJECT_STORY.md), the [plain-English explainer](EduWork_DataBridge_Explanation_ELI5.pdf), or the shorter [five-page field guide](docs/EduWork_DataBridge_Field_Guide.pdf).
