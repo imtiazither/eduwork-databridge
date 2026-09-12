@@ -279,3 +279,6 @@ if __name__ == "__main__":
     parser.add_argument("--output", type=Path, required=True)
     arguments = parser.parse_args()
     run(cast(PresetName, arguments.preset), arguments.seed, arguments.output)
+
+
+
