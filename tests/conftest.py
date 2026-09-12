@@ -12,3 +12,4 @@ def dispose_application_engine():
     from eduwork_databridge.db.session import engine
 
     engine.dispose()
+
