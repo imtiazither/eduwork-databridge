@@ -9,7 +9,7 @@
 
 [Open EduWork DataBridge on GitHub Pages](https://imtiazither.github.io/eduwork-databridge/) · [Browse the documentation](https://imtiazither.github.io/eduwork-databridge/docs/)
 
-## Current release: v0.20.0 (Next version coming soon!!)
+## Current release: v0.20.0
 
 v0.20.0 adds a protected match-review queue and workload summary. Authorized reviewers can list candidates, filter by current status, page through the queue, see the latest reasoned decision, and measure how many candidates remain unreviewed.
 
