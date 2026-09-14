@@ -70,3 +70,4 @@ def build_snapshot_session(
     session.add(snapshot)
     session.commit()
     return session, organization.id, snapshot.id
+
