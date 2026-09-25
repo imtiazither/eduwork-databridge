@@ -20,6 +20,5 @@ def main() -> None:
     print(f"Generated {preset} synthetic dataset with seed {args.seed}: {manifest['counts']}")
 
 
-
 if __name__ == "__main__":
     main()
