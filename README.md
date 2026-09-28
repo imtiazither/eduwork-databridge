@@ -50,6 +50,7 @@ Read the complete [project overview, usage guide, and benefits](docs/PROJECT_OVE
 - Corporate learning and development teams
 - Organizations consolidating HRIS, LMS, CRM, assessment, and credential records
 - Colleges and workforce programs through optional domain adapters
+- Companies running dataset from different sources into a single pipeline
 
 ## Architecture
 
