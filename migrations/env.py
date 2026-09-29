@@ -6,6 +6,7 @@ from eduwork_databridge.db import Base, models  # noqa: F401
 from eduwork_databridge.settings import get_settings
 from sqlalchemy import engine_from_config, pool
 
+
 config = context.config
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
