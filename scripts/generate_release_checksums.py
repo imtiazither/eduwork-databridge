@@ -5,7 +5,6 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "release/SHA256SUMS"
 
-
 def release_files() -> list[Path]:
     files = [path for path in (ROOT / "release").rglob("*") if path.is_file() and path != OUTPUT]
     files += [
