@@ -17,7 +17,6 @@ def release_files() -> list[Path]:
     return sorted(set(files), key=lambda path: str(path.relative_to(ROOT)))
 
 
-
 def render() -> str:
     lines = []
     for path in release_files():
