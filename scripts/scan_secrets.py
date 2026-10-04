@@ -62,6 +62,7 @@ def scan(root: Path) -> list[dict[str, str | int]]:
     return findings
 
 
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--root", type=Path, default=Path("."))
