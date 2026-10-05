@@ -24,6 +24,7 @@ def mart_asset(validated_asset: dict[str, str]) -> dict[str, str]:
     return {"status": "configured"}
 
 
+
 phase11_job = define_asset_job("phase11_daily", selection=AssetSelection.all())
 phase11_schedule = ScheduleDefinition(job=phase11_job, cron_schedule="0 2 * * *")
 
