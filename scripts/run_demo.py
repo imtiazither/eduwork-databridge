@@ -22,6 +22,7 @@ from eduwork_databridge.validation import ValidationService
 from sqlalchemy import select
 
 
+
 async def run() -> dict[str, object]:
     settings = get_settings()
     with SessionLocal() as session:
