@@ -7,6 +7,7 @@ from pathlib import Path
 
 from alembic import command
 from alembic.config import Config
+from eduwork_databridge import __version__
 from sqlalchemy import create_engine, inspect, text
 
 
@@ -48,6 +49,7 @@ def verify(output: Path) -> dict[str, object]:
         raise SystemExit("Backup/restore verification failed")
     result: dict[str, object] = {
         "status": "passed",
+        "version": __version__,
         "database": "sqlite reference verification",
         "table_count": len(restored_tables),
         "organization_count": organization_count,

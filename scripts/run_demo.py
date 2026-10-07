@@ -9,18 +9,22 @@ from eduwork_databridge.db.models.core import Organization
 from eduwork_databridge.db.session import SessionLocal
 from eduwork_databridge.ingestion import IngestionService, read_snapshot_records
 from eduwork_databridge.mapping import MappingService, load_lookup
-from eduwork_databridge.matching import DeterministicMatchService, load_synthetic_identity_fixture
+from eduwork_databridge.matching import (
+    DeterministicMatchService,
+    ProbabilisticMatchService,
+    load_synthetic_identity_fixture,
+)
 from eduwork_databridge.profiling import ProfilingService
 from eduwork_databridge.schemas.config import (
     DeterministicMatchConfig,
     MappingConfig,
+    ProbabilisticMatchConfig,
     ProfileConfig,
     ValidationConfig,
 )
 from eduwork_databridge.settings import get_settings
 from eduwork_databridge.validation import ValidationService
 from sqlalchemy import select
-
 
 
 async def run() -> dict[str, object]:
@@ -77,7 +81,19 @@ async def run() -> dict[str, object]:
             truth=truth,
             truth_set_name="small_identity_truth",
         )
+        probabilistic_config = load_yaml_model(
+            Path("configs/demo/matching/person_probabilistic_v1.yml"), ProbabilisticMatchConfig
+        )
+        probabilistic = ProbabilisticMatchService(session).execute(
+            organization.id,
+            identity_records,
+            probabilistic_config,
+            truth=truth,
+            truth_set_name="small_identity_truth",
+        )
+        queue = DeterministicMatchService(session).review_queue_summary(organization.id)
         return {
+            "organization_id": str(organization.id),
             "snapshot_id": str(snapshot.id),
             "profile_id": str(profile.profile_id),
             "mapping": {
@@ -90,6 +106,8 @@ async def run() -> dict[str, object]:
                 "quarantine_records": len(validation.quarantine_ids),
             },
             "matching": asdict(matching.metrics) if matching.metrics else None,
+            "probabilistic_run_id": str(probabilistic.run_id),
+            "review_queue": asdict(queue),
         }
 
 

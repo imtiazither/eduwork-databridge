@@ -21,7 +21,7 @@ async def api_request(
         return await client.request(
             method,
             path,
-            headers={"X-Organization-ID": organization_id},
+            headers={"X-Organization-ID": organization_id, "X-Demo-User": "demo-admin"},
             json=payload,
         )
 

@@ -31,7 +31,7 @@ A sidecar manifest records source and object IDs, connector and contract version
 - `GET /api/v1/sources/{source_id}/objects/{object_key}/discover`
 - `POST /api/v1/sources/{source_id}/extract`
 
-Extraction requires `X-Organization-ID` and registered source/object metadata. Resume requests may identify a prior run; the service verifies organization and source before using the prior cursor.
+All source operations require an authenticated actor, `X-Organization-ID`, and registered source metadata for that organization. Connection testing and discovery require `sources:read`; extraction requires `ingestion:write`. Local demo requests must explicitly send `X-Demo-User: demo-admin` or `demo-viewer`. Resume requests may identify a prior run; the service verifies organization and source before using the prior cursor.
 
 ## Security defaults
 

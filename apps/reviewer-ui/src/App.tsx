@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
+import { ReviewDesk } from "./ReviewDesk";
 import {
   fallbackSummary,
   issueDefinitions,
@@ -266,20 +267,20 @@ function Evidence() {
   );
 }
 
-export function App() {
+export function App({ preview = staticDemo }: { preview?: boolean } = {}) {
   const [view, setView] = useState<ViewKey>("overview");
   const [theme, setTheme] = useState<Theme>(getInitialTheme);
   const version = useQuery({
     queryKey: ["version"],
     queryFn: () => fetchJson<VersionResponse>("/api/v1/version"),
     retry: false,
-    enabled: !staticDemo,
+    enabled: !preview,
   });
   const summaryQuery = useQuery({
     queryKey: ["demo-summary"],
     queryFn: () => fetchJson<DemoSummaryResponse>("/api/v1/demo/summary"),
     retry: false,
-    enabled: !staticDemo,
+    enabled: !preview,
   });
   const summary = summaryQuery.data ?? fallbackSummary;
   const issueTotal = useMemo(
@@ -305,7 +306,7 @@ export function App() {
     overview: <Overview issueTotal={issueTotal} />,
     sources: <Sources summary={summary} />,
     exceptions: <Exceptions summary={summary} />,
-    identity: <IdentityReview />,
+    identity: !preview && version.data ? <ReviewDesk /> : <IdentityReview />,
     evidence: <Evidence />,
   }[view];
 
@@ -326,8 +327,8 @@ export function App() {
         </nav>
         <div className="header-actions">
           <div className="api-state" role="status">
-            <span className={staticDemo ? "static" : version.data ? "live" : version.isLoading ? "checking" : "offline"} />
-            {staticDemo
+            <span className={preview ? "static" : version.data ? "live" : version.isLoading ? "checking" : "offline"} />
+            {preview
               ? "Synthetic demo"
               : version.data
                 ? `API ${version.data.version}`
@@ -364,7 +365,7 @@ export function App() {
               <a className="button text" href="#story">Read the Monday story <span aria-hidden="true">→</span></a>
             </div>
             <div className="hero-footnote">
-              <span>Public synthetic demo · v0.20.0</span>
+              <span>Public synthetic demo · v0.50.0</span>
               <p>No customer records. No hidden matches. No outcome claims.</p>
             </div>
           </div>

@@ -7,7 +7,6 @@ from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from typing import Any
 
-
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 

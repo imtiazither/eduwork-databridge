@@ -4,6 +4,25 @@ All notable changes will be documented here. The project follows Semantic Versio
 
 ## Unreleased
 
+## [0.50.0] - 2026-10-07
+
+### Added
+
+- Connected identity reviewer desk with scoped sessions, evidence, workload counts, search, filters, pagination, reasoned decisions, and persisted history
+- Revision-checked decisions with HTTP 409 conflicts and atomic decision/audit persistence
+- Bounded decision history, attention/unreviewed queue filters, database aggregation, and queue indexes
+- Migration revision 0005 with history-preserving backfill and frozen baseline schema
+- Concurrency, audit rollback, tenant isolation, explicit identity, frontend workflow, and upgrade regression coverage
+- A review workflow guide, API upgrade notes, ADR, refreshed release artifacts, and future roadmap
+
+### Fixed
+
+- Implicit anonymous demo administrator access and missing authorization on metadata, source inspection, profiling, and quarantine resolution
+- Snapshot file reads and lineage attribution before organization ownership checks, and cross-source/organization profile baselines
+- Caller-controlled quarantine reviewer attribution and missing resolution audit events
+- Missing-ID bridge records could bypass probabilistic trusted-ID cluster conflicts; duplicate probabilistic record keys are now rejected
+- Retention's configured export root, existing formatting failures, and the source-map-js dependency advisory
+
 ## [0.20.0] - 2026-09-08
 
 ### Added

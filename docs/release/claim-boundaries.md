@@ -2,7 +2,7 @@
 
 ## Supported claims
 
-- v0.20.0 includes auditable match decisions plus an organization-scoped review queue and workload summary.
+- v0.50.0 includes a connected identity desk, searchable organization-scoped queues, revision-checked decisions, and atomic decision/audit persistence.
 - Public examples use deterministic synthetic data.
 - The committed tests, benchmark, SBOMs, packages, documentation, and release evidence are reproducible under the recorded environment.
 - The framework can be configured and extended for learning/workforce data workflows.

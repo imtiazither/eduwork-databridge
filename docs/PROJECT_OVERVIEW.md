@@ -1,6 +1,6 @@
 # EduWork DataBridge: Project Overview, Usage Guide, and Benefits
 
-**Version:** 0.20.0
+**Version:** 0.50.0
 **License:** MIT
 
 For the human problem that motivated the platform, read [the project story](PROJECT_STORY.md). The [five-page field guide](EduWork_DataBridge_Field_Guide.pdf) pairs that story with the current reviewer desk.
@@ -67,9 +67,9 @@ Typical uses include:
 5. **Faster evaluation and extension.** Synthetic fixtures, a 30-minute evaluator tour, developer instructions, JSON Schemas, docs, tests, and reproducible evidence make the project inspectable and extendable.
 6. **Lower pilot risk.** A real organization can begin with one authorized, bounded workflow while keeping proprietary data, credentials, mappings, endpoints, and results private.
 
-## v0.20.0: Match review queue
+## v0.50.0: Connected review workbench
 
-v0.20.0 adds protected endpoints for listing match candidates and summarizing review workload. An authorized reviewer can filter candidates by current status, use bounded pagination, see the latest decision and decision count, and identify how many candidates have never been reviewed. Organization scoping and existing matching permissions apply to every request.
+v0.50.0 connects the identity desk to the local API. Reviewers can select an organization, inspect masked evidence, search and filter candidates, record a reason, and inspect append-only decision history. Revision checks reject stale saves; each decision commits with its audit event. The public Pages site retains its non-persistent synthetic preview.
 
 ## How to use it
 
@@ -89,6 +89,7 @@ make generate
 uv run alembic upgrade head
 uv run python -m eduwork_databridge.seed
 make check
+make demo
 ```
 
 Start the API and the reviewer UI:
@@ -121,12 +122,12 @@ Use `docs/evaluator/30-minute-tour.md` to inspect the synthetic data, run the co
 
 ## Verification and release evidence
 
-The v0.20.0 release includes:
+The v0.50.0 release includes:
 
 - Automated Python and frontend tests with enforced repository-wide coverage
 - Ruff, format, and strict mypy checks across 81 Python source and script files
-- Six frontend Vitest tests and a TypeScript/Vite production build
-- Generated JSON Schema contracts and four Alembic migrations
+- Frontend workflow tests and TypeScript/Vite production and Pages builds
+- Generated JSON Schema contracts and five Alembic migrations, including history-preserving review revisions
 - Protected, organization-scoped match-decision endpoints with reversible history and audit events
 - Protected, organization-scoped match-review queue and workload-summary endpoints
 - A strict MkDocs documentation build

@@ -22,6 +22,7 @@ make generate-check
 uv run alembic upgrade head
 uv run python -m eduwork_databridge.seed
 uv run python scripts/verify_synthetic_data.py
+uv run python scripts/run_demo.py
 ```
 
 Inspect `data/synthetic/small/dataset_manifest.json`: every file is fictional, checksummed, and accompanied by expected defect counts.
@@ -35,12 +36,14 @@ make api
 make ui
 ```
 
-Open `http://127.0.0.1:5173` and inspect the source checks, exception desk, identity-review preview, and evidence trail. The preview decision is local UI state; it does not write a review decision to the database.
+Open `http://127.0.0.1:5173` and select **Identity review**. Inspect the organization, workload, candidate evidence, and history. Save a reasoned decision, refresh, and confirm that the history persists. Select the demo viewer to verify that review controls are unavailable.
+
+The public Pages build and offline case file use preview decisions that reset on refresh. Other case-file views continue to illustrate the committed synthetic fixture.
 
 ## Minutes 20–25: complete technical flow
 
 ```bash
-uv run python scripts/run_demo.py
+make generate-check
 ```
 
 Then inspect:

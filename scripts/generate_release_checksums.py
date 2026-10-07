@@ -5,14 +5,18 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "release/SHA256SUMS"
 
+
 def release_files() -> list[Path]:
     files = [path for path in (ROOT / "release").rglob("*") if path.is_file() and path != OUTPUT]
     files += [
         ROOT / "benchmark-baseline/small-v0.14.0.json",
         ROOT / "benchmark-baseline/budgets.json",
+        ROOT / "benchmark-results/current.json",
+        ROOT / "docs/evidence/release-manifest.json",
         ROOT / "docs/assets/eduwork-databridge-walkthrough.mp4",
         ROOT / "docs/assets/reviewer-console.svg",
         ROOT / "docs/assets/lineage-view.svg",
+        ROOT / "docs/assets/review-workbench-v0.50.jpg",
     ]
     return sorted(set(files), key=lambda path: str(path.relative_to(ROOT)))
 

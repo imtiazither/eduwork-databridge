@@ -1,7 +1,14 @@
 import asyncio
+from collections.abc import Generator
 
 import httpx
+from eduwork_databridge.db.models.control import SourceSystem
+from eduwork_databridge.db.session import get_session
 from eduwork_databridge.main import app
+from sqlalchemy import select
+from sqlalchemy.orm import Session
+
+from tests.factories import build_snapshot_session
 
 
 async def request(method: str, path: str, headers: dict[str, str] | None = None) -> httpx.Response:
@@ -16,7 +23,7 @@ def test_health_and_version() -> None:
     assert health.json()["status"] == "ok"
     version = asyncio.run(request("GET", "/api/v1/version"))
     assert version.status_code == 200
-    assert version.json() == {"version": "0.20.0"}
+    assert version.json() == {"version": "0.50.0"}
 
 
 def test_demo_summary_comes_from_public_synthetic_manifest() -> None:
@@ -45,15 +52,32 @@ def test_local_reviewer_origin_is_allowed() -> None:
 
 
 def test_sources_requires_explicit_organization_scope() -> None:
-    response = asyncio.run(request("GET", "/api/v1/sources"))
+    response = asyncio.run(request("GET", "/api/v1/sources", {"X-Demo-User": "demo-admin"}))
     assert response.status_code == 400
 
 
-def test_file_source_connection_and_discovery() -> None:
-    connection = asyncio.run(request("POST", "/api/v1/sources/demo_hris/test"))
-    assert connection.status_code == 200
-    assert connection.json()["ok"] is True
-    discovery = asyncio.run(request("GET", "/api/v1/sources/demo_hris/objects/employees/discover"))
-    assert discovery.status_code == 200
-    field_names = {field["name"] for field in discovery.json()["fields"]}
-    assert {"employee_id", "display_name", "updated_at"} <= field_names
+def test_file_source_connection_and_discovery(tmp_path) -> None:
+    session, organization_id, _ = build_snapshot_session(tmp_path, [])
+    source = session.scalar(select(SourceSystem))
+    assert source is not None
+    source.source_key = "demo_hris"
+    session.commit()
+
+    def override_session() -> Generator[Session, None, None]:
+        yield session
+
+    app.dependency_overrides[get_session] = override_session
+    headers = {"X-Demo-User": "demo-admin", "X-Organization-ID": str(organization_id)}
+    try:
+        connection = asyncio.run(request("POST", "/api/v1/sources/demo_hris/test", headers))
+        assert connection.status_code == 200
+        assert connection.json()["ok"] is True
+        discovery = asyncio.run(
+            request("GET", "/api/v1/sources/demo_hris/objects/employees/discover", headers)
+        )
+        assert discovery.status_code == 200
+        field_names = {field["name"] for field in discovery.json()["fields"]}
+        assert {"employee_id", "display_name", "updated_at"} <= field_names
+    finally:
+        app.dependency_overrides.clear()
+        session.close()

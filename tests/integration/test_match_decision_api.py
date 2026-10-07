@@ -77,7 +77,7 @@ def test_match_decisions_are_reasoned_reversible_and_audited(tmp_path) -> None:
                 "POST",
                 f"/api/v1/matches/{candidate_id}/decisions",
                 str(organization_id),
-                {"decision": "defer", "reason": "   "},
+                {"decision": "defer", "reason": "   ", "expected_revision": 0},
             )
         )
         assert missing_reason.status_code == 400
@@ -90,6 +90,7 @@ def test_match_decisions_are_reasoned_reversible_and_audited(tmp_path) -> None:
                 {
                     "decision": "defer",
                     "reason": "Duplicate account needs source-owner review.",
+                    "expected_revision": 0,
                 },
             )
         )
@@ -103,7 +104,7 @@ def test_match_decisions_are_reasoned_reversible_and_audited(tmp_path) -> None:
                 "POST",
                 f"/api/v1/matches/{candidate_id}/decisions",
                 str(organization_id),
-                {"decision": "match", "reason": "Viewer must not decide."},
+                {"decision": "match", "reason": "Viewer must not decide.", "expected_revision": 1},
                 user="demo-viewer",
             )
         )
@@ -117,6 +118,7 @@ def test_match_decisions_are_reasoned_reversible_and_audited(tmp_path) -> None:
                 {
                     "decision": "no_match",
                     "reason": "Source owner confirmed the accounts are separate.",
+                    "expected_revision": 1,
                 },
             )
         )

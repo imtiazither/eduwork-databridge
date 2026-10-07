@@ -1,6 +1,7 @@
 import uuid
 from pathlib import Path
 
+import pytest
 from eduwork_databridge.config_loader import load_yaml_model
 from eduwork_databridge.db.models.control import (
     MatchCandidate,
@@ -10,7 +11,11 @@ from eduwork_databridge.db.models.control import (
 from eduwork_databridge.matching import load_synthetic_identity_fixture
 from eduwork_databridge.matching.probabilistic import ProbabilisticMatcher
 from eduwork_databridge.matching.probabilistic_service import ProbabilisticMatchService
-from eduwork_databridge.schemas.config import ProbabilisticMatchConfig
+from eduwork_databridge.schemas.config import (
+    BlockingRuleConfig,
+    ComparisonFieldConfig,
+    ProbabilisticMatchConfig,
+)
 from sqlalchemy import func, select
 
 from tests.factories import build_snapshot_session
@@ -67,3 +72,39 @@ def test_probabilistic_service_persists_model_run_and_candidates(tmp_path: Path)
     session.refresh(model)
     assert model.parameters_json == original_parameters
     session.close()
+
+
+def test_missing_id_cannot_bridge_conflicting_trusted_clusters():
+    model = config().model_copy(deep=True)
+    model.blocking_rules = [BlockingRuleConfig(rule_id="email", fields=["email"])]
+    model.comparisons = [
+        ComparisonFieldConfig(
+            field="email",
+            method="exact",
+            weight=10,
+            agreement_probability=0.99,
+            random_agreement_probability=0.01,
+        )
+    ]
+    records = [
+        {
+            "record_key": key,
+            "organization_id": "one",
+            "employee_id": employee,
+            "email": "shared@example.test",
+        }
+        for key, employee in [("a", "E-1"), ("b", ""), ("c", "E-2")]
+    ]
+    result = ProbabilisticMatcher().run(records, model)
+    statuses = {
+        (item.left_record_key, item.right_record_key): item.status for item in result.candidates
+    }
+    assert statuses[("a", "b")] == "auto_match"
+    assert statuses[("a", "c")] == "trusted_id_conflict"
+    assert statuses[("b", "c")] == "trusted_id_conflict"
+
+
+def test_probabilistic_matching_rejects_duplicate_record_keys():
+    records = [{"record_key": "duplicate", "organization_id": "one"}] * 2
+    with pytest.raises(ValueError, match="unique"):
+        ProbabilisticMatcher().run(records, config())

@@ -11,7 +11,7 @@ The governed data path covers immutable extraction, reviewable analytics, lineag
 ## Components
 
 - FastAPI service with source, profile, mapping-preview, validation, quarantine, and deterministic-matching endpoints
-- PostgreSQL-oriented SQLAlchemy control/canonical schema and four Alembic revisions
+- PostgreSQL-oriented SQLAlchemy control/canonical schema and five Alembic revisions
 - Pydantic configuration/API contracts and JSON Schema 2020-12 exports
 - Deterministic synthetic HRIS, LMS, assessment, credential, and identity-truth fixtures
 - Safe CSV, XLSX, JSON, Parquet, REST, and PostgreSQL extraction with immutable raw evidence
@@ -25,7 +25,7 @@ The governed data path covers immutable extraction, reviewable analytics, lineag
 - Isolated demo identity, OIDC-ready claims conversion, organization/permission authorization, audit events, security middleware, export controls, and retention enforcement
 - Strict MkDocs site, evaluator/developer paths, synthetic UI/lineage illustrations, and a synthetic walkthrough video
 - Versioned benchmark, regression budgets, SBOMs, audits, package artifacts, release checksums, pinned CI, and Docker scan/sign/attestation workflow hooks
-- React/TypeScript evaluator shell and Docker Compose developer topology
+- React/TypeScript reviewer desk with a connected identity queue and isolated public preview and Docker Compose developer topology
 
 ## Data zones
 

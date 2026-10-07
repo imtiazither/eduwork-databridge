@@ -20,6 +20,7 @@ npm --prefix apps/reviewer-ui ci
 make generate
 uv run alembic upgrade head
 uv run python -m eduwork_databridge.seed
+uv run python scripts/run_demo.py
 ```
 
 ## Run
@@ -51,7 +52,7 @@ cp apps/reviewer-ui/dist/index.html apps/reviewer-ui/dist/404.html
 touch apps/reviewer-ui/dist/.nojekyll
 ```
 
-The Pages build is a static synthetic case file. It deliberately skips API requests and labels itself as a demo. The normal development and deployment builds keep the live API integration.
+The Pages build is a static synthetic case file. It deliberately skips API requests and labels itself as a demo. The normal development and deployment builds connect the identity-review desk to the API. See the [review workbench guide](../guides/review-workbench.md) for permissions, queue controls, decision revisions, and upgrade compatibility.
 
 ## Working rules
 

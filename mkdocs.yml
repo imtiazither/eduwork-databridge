@@ -60,6 +60,7 @@ nav:
       - Profiling and drift: guides/profiling-and-drift.md
       - Mapping DSL: guides/mapping-dsl.md
       - Validation and quarantine: guides/validation-and-quarantine.md
+      - Review workbench: guides/review-workbench.md
       - Deterministic matching: guides/deterministic-matching.md
       - Probabilistic matching: guides/probabilistic-matching.md
       - Lineage, marts, and exports: guides/lineage-marts-exports.md
@@ -73,6 +74,7 @@ nav:
       - Troubleshooting: troubleshooting.md
       - FAQ: faq.md
   - Release:
+      - v0.50.0: release/v0.50.0.md
       - v0.20.0: release/v0.20.0.md
       - v0.16.0: release/v0.16.0.md
       - External review: release/external-review-checklist.md

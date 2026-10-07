@@ -151,6 +151,8 @@ class ValidationService:
         reviewer_id: uuid.UUID,
         note: str,
         corrected_snapshot_id: uuid.UUID | None = None,
+        *,
+        commit: bool = True,
     ) -> QuarantineRecord:
         allowed = {"acknowledged", "corrected_upstream", "corrected_mapping", "waived", "closed"}
         if status not in allowed:
@@ -168,7 +170,10 @@ class ValidationService:
         record.waiver_reason = note.strip() if status == "waived" else None
         record.corrected_snapshot_id = corrected_snapshot_id
         record.resolved_at = datetime.now(UTC)
-        self.session.commit()
+        if commit:
+            self.session.commit()
+        else:
+            self.session.flush()
         return record
 
     def reprocess_link(

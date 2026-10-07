@@ -23,7 +23,9 @@ def load(path: Path) -> dict[str, Any]:
     return cast(dict[str, Any], json.loads(path.read_text(encoding="utf-8")))
 
 
-def verify(current_path: Path, baseline_path: Path | None, budgets_path: Path | None) -> None:
+def verify(
+    current_path: Path, baseline_path: Path | None, budgets_path: Path | None
+) -> dict[str, Any]:
     current = load(current_path)
     stages = {item["stage"]: item for item in current["stages"]}
     missing = REQUIRED_STAGES - set(stages)
@@ -34,8 +36,14 @@ def verify(current_path: Path, baseline_path: Path | None, budgets_path: Path | 
             raise SystemExit(f"Benchmark duration is invalid: {name}")
         if item["record_count"] < 0:
             raise SystemExit(f"Benchmark record count is invalid: {name}")
+    result: dict[str, Any] = {
+        "status": "passed",
+        "version": current["project_version"],
+        "current": str(current_path),
+        "interpretation": "Local regression check only; not a production SLA.",
+    }
     if baseline_path is None or budgets_path is None:
-        return
+        return result
     baseline = load(baseline_path)
     baseline_stages = {item["stage"]: item for item in baseline["stages"]}
     budgets = load(budgets_path)
@@ -53,6 +61,21 @@ def verify(current_path: Path, baseline_path: Path | None, budgets_path: Path | 
             failures.append(f"{name}: {current_duration:.4f}s > {limit:.4f}s")
     if failures:
         raise SystemExit("Benchmark regression budget exceeded: " + "; ".join(failures))
+    result.update(
+        {
+            "baseline": str(baseline_path),
+            "budgets": str(budgets_path),
+            "duration_ratios": {
+                name: round(
+                    float(stages[name]["duration_seconds"])
+                    / float(baseline_stages[name]["duration_seconds"]),
+                    4,
+                )
+                for name in sorted(REQUIRED_STAGES)
+            },
+        }
+    )
+    return result
 
 
 if __name__ == "__main__":
@@ -60,5 +83,9 @@ if __name__ == "__main__":
     parser.add_argument("--current", type=Path, required=True)
     parser.add_argument("--baseline", type=Path)
     parser.add_argument("--budgets", type=Path)
+    parser.add_argument("--output", type=Path)
     args = parser.parse_args()
-    verify(args.current, args.baseline, args.budgets)
+    report = verify(args.current, args.baseline, args.budgets)
+    if args.output is not None:
+        args.output.parent.mkdir(parents=True, exist_ok=True)
+        args.output.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")

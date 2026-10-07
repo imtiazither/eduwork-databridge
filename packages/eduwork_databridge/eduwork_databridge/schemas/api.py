@@ -110,7 +110,7 @@ class MappingPreviewRequest(APIModel):
     snapshot_id: uuid.UUID
     mapping_id: str
     lookup_ids: list[str] = Field(default_factory=list)
-    preview_limit: int = 25
+    preview_limit: int = Field(default=25, ge=1, le=1000)
 
 
 class MappingResponse(APIModel):
@@ -143,9 +143,8 @@ class ValidationResponse(APIModel):
 
 
 class QuarantineResolveRequest(APIModel):
-    status: str
-    reviewer_id: uuid.UUID
-    note: str
+    status: Literal["acknowledged", "corrected_upstream", "corrected_mapping", "waived", "closed"]
+    note: str = Field(min_length=1, max_length=2000)
     corrected_snapshot_id: uuid.UUID | None = None
 
 
@@ -166,12 +165,14 @@ class DeterministicMatchResponse(APIModel):
 class MatchDecisionRequest(APIModel):
     decision: Literal["match", "no_match", "defer", "escalate"]
     reason: str = Field(min_length=1, max_length=2000)
+    expected_revision: int = Field(ge=0)
 
 
 class MatchDecisionResponse(APIModel):
     id: uuid.UUID
     candidate_id: uuid.UUID
     decision: str
+    revision: int
     reason: str
     reviewer_id: uuid.UUID
     decided_at: datetime
@@ -185,6 +186,7 @@ class MatchQueueItemResponse(APIModel):
     score: float | None
     evidence: dict[str, Any]
     status: str
+    revision: int
     created_at: datetime
     decision_count: int
     latest_decision: MatchDecisionResponse | None
@@ -193,6 +195,7 @@ class MatchQueueItemResponse(APIModel):
 class MatchQueueSummaryResponse(APIModel):
     total_candidates: int
     unreviewed_candidates: int
+    needs_review_candidates: int
     by_status: dict[str, int]
 
 

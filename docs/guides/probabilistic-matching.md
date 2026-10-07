@@ -12,3 +12,5 @@ Statuses:
 - `trusted_id_conflict`: different nonblank trusted IDs; automatic linking is prohibited
 
 The default small synthetic demonstration creates 121 safe auto-match pairs and 29 gray-zone reviews. Auto-match precision is 1.0; potential recall with review is 1.0. These are synthetic evaluation results, not production guarantees or partner outcomes.
+
+Trusted-ID conflict checks apply to whole current clusters, including a link through a record with a missing employee ID. Record keys must be unique and non-blank. Automatic suggestions remain distinct from recorded human decisions; use the [review workbench](review-workbench.md) to inspect evidence and append a reasoned review.
