@@ -9,9 +9,9 @@
 
 [Open EduWork DataBridge on GitHub Pages](https://imtiazither.github.io/eduwork-databridge/) · [Browse the documentation](https://imtiazither.github.io/eduwork-databridge/docs/)
 
-## Current release: v0.20.0 (Update Coming SOON!!)
+## Current version: v0.50.0
 
-v0.20.0 adds a protected match-review queue and workload summary. Authorized reviewers can list candidates, filter by current status, page through the queue, see the latest reasoned decision, and measure how many candidates remain unreviewed.
+v0.50.0 connects the identity reviewer desk to the API. Select an organization, search and filter candidates, inspect evidence and decision history, and save a reasoned decision. Revision checks prevent stale saves, and decisions commit with their audit evidence. Read the [release notes and upgrade steps](docs/release/v0.50.0.md).
 
 EduWork DataBridge is an open-source platform for making that reconciliation inspectable. It keeps source evidence, checks the awkward records, separates uncertain identity matches from safe ones, and carries lineage into governed outputs.
 
@@ -35,7 +35,7 @@ The reviewer desk uses a deterministic public fixture: 120 fictional people, 366
 
 ![EduWork DataBridge reviewer desk showing the five-stop evidence path](docs/assets/reviewer-desk.jpg)
 
-The desk includes a source inventory, filterable exception types, an identity-review preview, and a field-lineage view. The public preview deliberately remains non-persistent; the local API records reasoned match decisions and their audit evidence.
+The desk includes a source inventory, filterable exception types, an identity-review preview, and a field-lineage view. The public preview deliberately remains non-persistent; the connected local desk records reasoned match decisions and their audit evidence. The source inventory, exception examples, and field-lineage illustration remain synthetic fixture views.
 
 ## Why use it
 
@@ -121,6 +121,8 @@ npm run dev
 
 Run the API in another terminal first. The Vite development server proxies `/api` to `http://127.0.0.1:8000`, so the reviewer desk works with the documented `make api` and `make ui` commands without extra environment setup.
 
+Open **Identity review** in the local desk, select a demo identity and organization, and review the candidates created by `make demo`. An empty local queue offers an explicit **Generate synthetic candidates** action.
+
 The GitHub Pages build uses `npm run build:pages`. It publishes an explicitly labeled static synthetic demo at the repository subpath and bundles the MkDocs site under `/docs/`; it does not imply that the FastAPI service is hosted by GitHub Pages.
 
 ### Tests and generated artifacts
@@ -145,7 +147,7 @@ The demo configuration is under `configs/demo`. It contains no real people or co
 ## Repository map
 
 - `packages/eduwork_databridge`: backend, models, connectors, profiling/mapping/validation, deterministic and probabilistic matching, lineage, marts/exports, orchestration/telemetry, identity/authorization, audit, and retention
-- `apps/reviewer-ui`: typed frontend shell for later review workflows
+- `apps/reviewer-ui`: connected identity-review desk and static public synthetic preview
 - `data/synthetic`: deterministic small and medium public fixtures plus identity truth sets
 - `migrations`: Alembic database migrations
 - `schemas`: committed JSON Schemas generated from Pydantic models

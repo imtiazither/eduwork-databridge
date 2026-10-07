@@ -1,8 +1,9 @@
 {
   "status": "passed",
+  "version": "0.50.0",
   "database": "sqlite reference verification",
   "table_count": 53,
   "organization_count": 1,
-  "alembic_revision": "20260720_0004",
+  "alembic_revision": "20261007_0005",
   "limitations": "Repeat with target PostgreSQL backup tooling before deployment."
 }

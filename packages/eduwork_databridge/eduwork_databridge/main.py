@@ -3,7 +3,7 @@ import uuid
 from collections.abc import Callable
 from dataclasses import asdict
 from pathlib import Path
-from typing import Annotated, Any
+from typing import Annotated, Any, Literal
 
 from fastapi import Depends, FastAPI, Header, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -19,7 +19,7 @@ from eduwork_databridge.config_loader import (
     source_config_path,
 )
 from eduwork_databridge.connectors import ConnectorError, build_connector
-from eduwork_databridge.db.models.control import DataMartSnapshot, RawSnapshot
+from eduwork_databridge.db.models.control import DataMartSnapshot
 from eduwork_databridge.db.session import get_session
 from eduwork_databridge.ingestion import IngestionService, read_snapshot_records
 from eduwork_databridge.lineage import LineageService
@@ -34,7 +34,12 @@ from eduwork_databridge.matching import (
 from eduwork_databridge.orchestration import AssetOrchestrator, AssetSpec
 from eduwork_databridge.profiling import ProfilingService
 from eduwork_databridge.publishing import ExportService, RetentionService
-from eduwork_databridge.repositories import list_organizations, list_sources
+from eduwork_databridge.repositories import (
+    get_scoped_snapshot,
+    get_scoped_source,
+    list_organizations,
+    list_sources,
+)
 from eduwork_databridge.schemas.api import (
     ActorResponse,
     AssetRunRequest,
@@ -196,7 +201,13 @@ app.add_middleware(RateLimitMiddleware, requests_per_minute=settings.rate_limit_
 @app.exception_handler(ConnectorError)
 async def connector_error_handler(request: Request, exc: ConnectorError) -> JSONResponse:
     del request
-    status = 403 if exc.code.endswith("forbidden") else 400
+    status = 400
+    if exc.code.endswith("forbidden"):
+        status = 403
+    elif exc.code.endswith("not_found"):
+        status = 404
+    elif exc.code == "decision_conflict":
+        status = 409
     return JSONResponse(
         {"detail": {"code": exc.code, "message": exc.safe_message}},
         status_code=status,
@@ -242,19 +253,25 @@ def demo_summary() -> DemoSummaryResponse:
 
 
 @app.get("/api/v1/organizations", response_model=list[OrganizationRead], tags=["metadata"])
-def organizations(session: SessionDep) -> list[OrganizationRead]:
-    return [OrganizationRead.model_validate(item) for item in list_organizations(session)]
+def organizations(session: SessionDep, actor: ActorDep) -> list[OrganizationRead]:
+    require_permission(actor, "sources:read")
+    return [
+        OrganizationRead.model_validate(item)
+        for item in list_organizations(session, actor.organization_ids)
+    ]
 
 
 @app.get("/api/v1/sources", response_model=list[SourceSystemRead], tags=["metadata"])
 def sources(
     session: SessionDep,
+    actor: ActorDep,
     x_organization_id: OrganizationHeader = None,
 ) -> list[SourceSystemRead]:
-    if x_organization_id is None:
-        raise HTTPException(status_code=400, detail="X-Organization-ID is required")
+    organization_id = _required_organization(x_organization_id)
+    require_organization(actor, organization_id)
+    require_permission(actor, "sources:read")
     return [
-        SourceSystemRead.model_validate(item) for item in list_sources(session, x_organization_id)
+        SourceSystemRead.model_validate(item) for item in list_sources(session, organization_id)
     ]
 
 
@@ -263,7 +280,16 @@ def sources(
     response_model=SourceConnectionTestResponse,
     tags=["sources"],
 )
-async def test_source_connection(source_id: str) -> SourceConnectionTestResponse:
+async def test_source_connection(
+    source_id: str,
+    session: SessionDep,
+    actor: ActorDep,
+    x_organization_id: OrganizationHeader = None,
+) -> SourceConnectionTestResponse:
+    organization_id = _required_organization(x_organization_id)
+    require_organization(actor, organization_id)
+    require_permission(actor, "sources:read")
+    get_scoped_source(session, organization_id, source_id)
     config = _source_config(source_id)
     connector = build_connector(config, settings)
     try:
@@ -283,7 +309,17 @@ async def test_source_connection(source_id: str) -> SourceConnectionTestResponse
     response_model=SourceDiscoveryResponse,
     tags=["sources"],
 )
-async def discover_source(source_id: str, object_key: str) -> SourceDiscoveryResponse:
+async def discover_source(
+    source_id: str,
+    object_key: str,
+    session: SessionDep,
+    actor: ActorDep,
+    x_organization_id: OrganizationHeader = None,
+) -> SourceDiscoveryResponse:
+    organization_id = _required_organization(x_organization_id)
+    require_organization(actor, organization_id)
+    require_permission(actor, "sources:read")
+    get_scoped_source(session, organization_id, source_id)
     config = _source_config(source_id)
     source_object = _source_object(config, object_key)
     connector = build_connector(config, settings)
@@ -360,13 +396,14 @@ async def extract_source(
 def create_profile(
     request: ProfileRequest,
     session: SessionDep,
+    actor: ActorDep,
     x_organization_id: OrganizationHeader = None,
 ) -> ProfileResponse:
     organization_id = _required_organization(x_organization_id)
+    require_organization(actor, organization_id)
+    require_permission(actor, "profiles:write")
     config = _named_config("profiles", request.profile_config_id, ProfileConfig)
-    snapshot = session.get(RawSnapshot, request.snapshot_id)
-    if snapshot is None:
-        raise HTTPException(status_code=404, detail="Raw snapshot was not found")
+    snapshot = get_scoped_snapshot(session, organization_id, request.snapshot_id)
     try:
         records = read_snapshot_records(snapshot)
         outcome = ProfilingService(session).create_profile(
@@ -381,6 +418,14 @@ def create_profile(
             status_code=400,
             detail={"code": exc.code, "message": exc.safe_message},
         ) from exc
+    AuditService(session).record(
+        actor,
+        "profile.created",
+        "schema_profile",
+        str(outcome.profile_id),
+        organization_id,
+        details={"snapshot_id": str(request.snapshot_id), "drift_status": outcome.drift_status},
+    )
     return ProfileResponse(
         profile_id=outcome.profile_id,
         schema_fingerprint=outcome.schema_fingerprint,
@@ -402,9 +447,7 @@ def preview_mapping(
     require_organization(actor, organization_id)
     require_permission(actor, "mappings:write")
     config = _named_config("mappings", request.mapping_id, MappingConfig)
-    snapshot = session.get(RawSnapshot, request.snapshot_id)
-    if snapshot is None:
-        raise HTTPException(status_code=404, detail="Raw snapshot was not found")
+    snapshot = get_scoped_snapshot(session, organization_id, request.snapshot_id)
     lookups = _load_lookups(request.lookup_ids)
     try:
         outcome = MappingService(session).execute(
@@ -458,9 +501,7 @@ def validate_snapshot(
     require_organization(actor, organization_id)
     require_permission(actor, "validation:write")
     config = _named_config("validations", request.validation_set_id, ValidationConfig)
-    snapshot = session.get(RawSnapshot, request.snapshot_id)
-    if snapshot is None:
-        raise HTTPException(status_code=404, detail="Raw snapshot was not found")
+    snapshot = get_scoped_snapshot(session, organization_id, request.snapshot_id)
     records = read_snapshot_records(snapshot)
     record_source = "raw"
     if request.mapping_id is not None:
@@ -529,20 +570,35 @@ def resolve_quarantine(
     quarantine_id: uuid.UUID,
     request: QuarantineResolveRequest,
     session: SessionDep,
+    actor: ActorDep,
     x_organization_id: OrganizationHeader = None,
 ) -> dict[str, str]:
     organization_id = _required_organization(x_organization_id)
+    require_organization(actor, organization_id)
+    require_permission(actor, "validation:write")
     try:
         row = ValidationService(session).resolve_quarantine(
             organization_id=organization_id,
             quarantine_id=quarantine_id,
             status=request.status,
-            reviewer_id=request.reviewer_id,
+            reviewer_id=actor.actor_id,
             note=request.note,
             corrected_snapshot_id=request.corrected_snapshot_id,
+            commit=False,
         )
     except ConnectorError as exc:
+        session.rollback()
         raise HTTPException(status_code=400, detail=exc.safe_message) from exc
+    AuditService(session).record(
+        actor,
+        "quarantine.resolved",
+        "quarantine_record",
+        str(row.id),
+        organization_id,
+        details={"status": row.status},
+        commit=False,
+    )
+    session.commit()
     return {"quarantine_id": str(row.id), "status": row.status}
 
 
@@ -624,9 +680,12 @@ def record_match_decision(
             decision=request.decision,
             reason=request.reason,
             reviewer_id=actor.actor_id,
+            expected_revision=request.expected_revision,
+            commit=False,
         )
     except ConnectorError as exc:
-        raise HTTPException(status_code=400, detail=exc.safe_message) from exc
+        session.rollback()
+        raise exc
     AuditService(session).record(
         actor,
         "matching.decision.recorded",
@@ -636,11 +695,14 @@ def record_match_decision(
         details={
             "candidate_id": str(candidate_id),
             "decision": row.decision,
+            "revision": row.revision,
             "supersedes_decision_id": str(row.supersedes_decision_id)
             if row.supersedes_decision_id
             else None,
         },
+        commit=False,
     )
+    session.commit()
     return MatchDecisionResponse.model_validate(row)
 
 
@@ -653,9 +715,22 @@ def list_match_review_queue(
     session: SessionDep,
     actor: ActorDep,
     x_organization_id: OrganizationHeader = None,
-    status: str | None = None,
+    status: Literal[
+        "pending",
+        "auto_match",
+        "review",
+        "trusted_id_conflict",
+        "match",
+        "no_match",
+        "defer",
+        "escalate",
+    ]
+    | None = None,
     limit: int = Query(default=50, ge=1, le=200),
     offset: int = Query(default=0, ge=0),
+    needs_review: bool = False,
+    unreviewed: bool = False,
+    q: str | None = Query(default=None, max_length=100),
 ) -> list[MatchQueueItemResponse]:
     organization_id = _required_organization(x_organization_id)
     require_organization(actor, organization_id)
@@ -665,6 +740,9 @@ def list_match_review_queue(
         status=status,
         limit=limit,
         offset=offset,
+        needs_review=needs_review,
+        unreviewed=unreviewed,
+        q=q,
     )
     return [
         MatchQueueItemResponse(
@@ -674,6 +752,7 @@ def list_match_review_queue(
             score=float(item.candidate.score) if item.candidate.score is not None else None,
             evidence=item.candidate.evidence_json,
             status=item.candidate.status,
+            revision=item.candidate.revision,
             created_at=item.candidate.created_at,
             decision_count=item.decision_count,
             latest_decision=MatchDecisionResponse.model_validate(item.latest_decision)
@@ -701,6 +780,7 @@ def match_review_queue_summary(
     return MatchQueueSummaryResponse(
         total_candidates=summary.total_candidates,
         unreviewed_candidates=summary.unreviewed_candidates,
+        needs_review_candidates=summary.needs_review_candidates,
         by_status=summary.by_status,
     )
 
@@ -715,12 +795,16 @@ def list_match_decisions(
     session: SessionDep,
     actor: ActorDep,
     x_organization_id: OrganizationHeader = None,
+    limit: int = Query(default=50, ge=1, le=200),
+    offset: int = Query(default=0, ge=0),
 ) -> list[MatchDecisionResponse]:
     organization_id = _required_organization(x_organization_id)
     require_organization(actor, organization_id)
     require_permission(actor, "matching:write")
     try:
-        rows = DeterministicMatchService(session).list_decisions(organization_id, candidate_id)
+        rows = DeterministicMatchService(session).list_decisions(
+            organization_id, candidate_id, limit=limit, offset=offset
+        )
     except ConnectorError as exc:
         raise HTTPException(status_code=400, detail=exc.safe_message) from exc
     return [MatchDecisionResponse.model_validate(row) for row in rows]
@@ -806,10 +890,8 @@ def build_mart(
     mapping_config: MappingConfig | None = None
     if request.mapping_id is not None:
         mapping_config = _named_config("mappings", request.mapping_id, MappingConfig)
-    if request.source_snapshot_id is not None and (
-        session.get(RawSnapshot, request.source_snapshot_id) is None
-    ):
-        raise HTTPException(status_code=404, detail="Source snapshot was not found")
+    if request.source_snapshot_id is not None:
+        get_scoped_snapshot(session, organization_id, request.source_snapshot_id)
     outcome = MartService(session, settings.mart_root).build(
         organization_id,
         [dict(record) for record in request.records],
@@ -964,7 +1046,7 @@ def apply_retention(
     require_organization(actor, organization_id)
     require_permission(actor, "retention:write")
     config = _named_config("retention", request.policy_id, RetentionPolicyConfig)
-    service = RetentionService(session)
+    service = RetentionService(session, settings.export_root)
     policy = service.upsert_policy(organization_id, config)
     outcome = service.apply_export_retention(organization_id, policy, dry_run=request.dry_run)
     AuditService(session).record(

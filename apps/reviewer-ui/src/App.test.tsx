@@ -4,16 +4,20 @@ import { afterEach, expect, test, vi } from "vitest";
 import { App } from "./App";
 import { fallbackSummary } from "./demoData";
 
-function renderApp() {
+function renderApp(preview = false) {
   const client = new QueryClient({ defaultOptions: { queries: { retry: false } } });
-  return render(<QueryClientProvider client={client}><App /></QueryClientProvider>);
+  return render(<QueryClientProvider client={client}><App preview={preview} /></QueryClientProvider>);
 }
 
 function mockSuccessfulApi() {
   vi.stubGlobal("fetch", vi.fn((input: RequestInfo | URL) => {
     const url = String(input);
     const body = url.endsWith("/api/v1/version")
-      ? { version: "0.20.0" }
+      ? { version: "0.50.0" }
+      : url.endsWith("/api/v1/organizations")
+        ? []
+        : url.endsWith("/api/v1/me")
+          ? { display_name: "Demo Administrator", permissions: ["matching:write"] }
       : fallbackSummary;
     return Promise.resolve({ ok: true, json: async () => body } as Response);
   }));
@@ -31,7 +35,7 @@ test("renders the case story and live API version", async () => {
   mockSuccessfulApi();
   renderApp();
   expect(screen.getByRole("heading", { name: "Can we trust the training report?" })).toBeInTheDocument();
-  expect(await screen.findByText("API 0.20.0")).toBeInTheDocument();
+  expect(await screen.findByText("API 0.50.0")).toBeInTheDocument();
   expect(screen.getByText("366")).toBeInTheDocument();
 });
 
@@ -53,7 +57,7 @@ test("lets a reviewer inspect exceptions", async () => {
 });
 
 test("labels the public identity interaction as a static preview", () => {
-  mockSuccessfulApi();
+  vi.stubGlobal("fetch", vi.fn().mockRejectedValue(new Error("offline")));
   renderApp();
   fireEvent.click(screen.getByRole("button", { name: /Identity review/ }));
   fireEvent.click(screen.getByRole("button", { name: "Keep separate" }));
@@ -92,4 +96,24 @@ test("switches themes and remembers the visitor's choice", () => {
     "true",
   );
   expect(window.localStorage.getItem("eduwork-databridge-theme")).toBe("dark");
+});
+
+
+test("keeps the Pages preview free of API requests", () => {
+  const fetch = vi.fn();
+  vi.stubGlobal("fetch", fetch);
+  renderApp(true);
+  fireEvent.click(screen.getByRole("button", { name: /Identity review/ }));
+  fireEvent.click(screen.getByRole("button", { name: "Keep separate" }));
+  expect(screen.getByText(/static preview and resets on refresh/)).toBeInTheDocument();
+  expect(fetch).not.toHaveBeenCalled();
+});
+
+test("opens the connected review desk when the API is available", async () => {
+  mockSuccessfulApi();
+  renderApp();
+  await screen.findByText("API 0.50.0");
+  fireEvent.click(screen.getByRole("button", { name: /Identity review/ }));
+  expect(screen.getByRole("heading", { name: /Evidence, a reason, and a recorded decision/ })).toBeInTheDocument();
+  expect(await screen.findByText(/No accessible organizations/)).toBeInTheDocument();
 });

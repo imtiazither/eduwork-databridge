@@ -403,6 +403,7 @@ Generated from SQLAlchemy metadata. Do not edit by hand.
 | score | NUMERIC(8, 6) | yes |  |
 | evidence_json | JSON | no |  |
 | status | VARCHAR(30) | no |  |
+| revision | INTEGER | no |  |
 | id | CHAR(32) | no | PK |
 | created_at | DATETIME | no |  |
 | updated_at | DATETIME | no |  |
@@ -414,6 +415,7 @@ Generated from SQLAlchemy metadata. Do not edit by hand.
 | organization_id | CHAR(32) | no | FK → organizations.id |
 | candidate_id | CHAR(32) | no | FK → match_candidates.id |
 | decision | VARCHAR(30) | no |  |
+| revision | INTEGER | no |  |
 | reason | TEXT | no |  |
 | reviewer_id | CHAR(32) | no |  |
 | decided_at | DATETIME | no |  |

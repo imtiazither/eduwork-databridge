@@ -1,4 +1,4 @@
-.PHONY: install lock lint format type test test-fast test-migration frontend frontend-test frontend-build generate generate-synthetic generate-check check docs-build benchmark-smoke sbom security-scan package-build package-verify release-checksums release-verify api ui seed migrate demo clean
+.PHONY: install lock lint format type test test-fast test-migration frontend frontend-test frontend-build generate generate-synthetic generate-check check docs-build benchmark-smoke backup-verify sbom security-scan package-build package-verify release-checksums release-verify api ui seed migrate demo clean
 
 install:
 	uv sync --frozen --extra dev
@@ -67,8 +67,11 @@ docs-build:
 
 benchmark-smoke:
 	mkdir -p benchmark-results
-	uv run python scripts/run_benchmark.py --preset small --seed 20260719 --output benchmark-results/smoke.json
-	uv run python scripts/verify_benchmark.py --current benchmark-results/smoke.json --baseline benchmark-baseline/small-v0.14.0.json --budgets benchmark-baseline/budgets.json
+	uv run python scripts/run_benchmark.py --preset small --seed 20260719 --output benchmark-results/current.json
+	uv run python scripts/verify_benchmark.py --current benchmark-results/current.json --baseline benchmark-baseline/small-v0.14.0.json --budgets benchmark-baseline/budgets.json --output release/benchmark-verification.json
+
+backup-verify:
+	uv run python scripts/verify_backup_restore.py
 
 sbom:
 	mkdir -p release/sbom
@@ -95,7 +98,7 @@ release-checksums:
 	uv run python scripts/generate_release_checksums.py
 	uv run python scripts/generate_release_checksums.py --check
 
-release-verify: check docs-build benchmark-smoke sbom security-scan package-build package-verify
+release-verify: check docs-build benchmark-smoke backup-verify sbom security-scan package-build package-verify
 	uv run python scripts/verify_release.py
 	$(MAKE) release-checksums
 

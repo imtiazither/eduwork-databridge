@@ -3,7 +3,7 @@ from dataclasses import asdict, dataclass
 from datetime import UTC, datetime
 from typing import Any
 
-from sqlalchemy import select
+from sqlalchemy import exists, func, or_, select, update
 from sqlalchemy.orm import Session
 
 from eduwork_databridge.connectors.base import ConnectorError
@@ -20,6 +20,8 @@ from eduwork_databridge.matching.deterministic import (
     evaluate_matches,
 )
 from eduwork_databridge.schemas.config import DeterministicMatchConfig
+
+REVIEW_STATUSES = ("pending", "review", "trusted_id_conflict", "defer", "escalate")
 
 
 @dataclass(frozen=True)
@@ -41,6 +43,7 @@ class MatchQueueItem:
 class MatchQueueSummary:
     total_candidates: int
     unreviewed_candidates: int
+    needs_review_candidates: int
     by_status: dict[str, int]
 
 
@@ -144,6 +147,9 @@ class DeterministicMatchService:
         decision: str,
         reason: str,
         reviewer_id: uuid.UUID,
+        expected_revision: int,
+        *,
+        commit: bool = True,
     ) -> MatchDecision:
         if decision not in {"match", "no_match", "defer", "escalate"}:
             raise ConnectorError("invalid_match_decision", "Match decision is invalid")
@@ -152,29 +158,57 @@ class DeterministicMatchService:
             raise ConnectorError("candidate_not_found", "Match candidate was not found")
         if not reason.strip():
             raise ConnectorError("decision_reason_required", "Match decision reason is required")
+        # Compare and advance in one database statement. A competing writer must
+        # observe the new revision before it can append another decision.
+        updated_id = self.session.scalar(
+            update(MatchCandidate)
+            .where(
+                MatchCandidate.id == candidate_id,
+                MatchCandidate.organization_id == organization_id,
+                MatchCandidate.revision == expected_revision,
+            )
+            .values(status=decision, revision=expected_revision + 1)
+            .returning(MatchCandidate.id)
+            .execution_options(synchronize_session=False)
+        )
+        if updated_id is None:
+            self.session.rollback()
+            raise ConnectorError(
+                "decision_conflict", "Candidate changed. Refresh the queue before deciding."
+            )
         prior = self.session.scalar(
             select(MatchDecision)
-            .where(MatchDecision.candidate_id == candidate.id)
-            .order_by(MatchDecision.decided_at.desc())
+            .where(
+                MatchDecision.candidate_id == candidate.id,
+                MatchDecision.organization_id == organization_id,
+            )
+            .order_by(MatchDecision.revision.desc())
+            .limit(1)
         )
         row = MatchDecision(
             organization_id=organization_id,
             candidate_id=candidate.id,
             decision=decision,
+            revision=expected_revision + 1,
             reason=reason.strip(),
             reviewer_id=reviewer_id,
             decided_at=datetime.now(UTC),
             supersedes_decision_id=prior.id if prior else None,
         )
         self.session.add(row)
-        candidate.status = decision
-        self.session.commit()
+        self.session.expire(candidate)
+        if commit:
+            self.session.commit()
+        else:
+            self.session.flush()
         return row
 
     def list_decisions(
         self,
         organization_id: uuid.UUID,
         candidate_id: uuid.UUID,
+        limit: int = 50,
+        offset: int = 0,
     ) -> list[MatchDecision]:
         candidate = self.session.get(MatchCandidate, candidate_id)
         if candidate is None or candidate.organization_id != organization_id:
@@ -182,8 +216,13 @@ class DeterministicMatchService:
         return list(
             self.session.scalars(
                 select(MatchDecision)
-                .where(MatchDecision.candidate_id == candidate.id)
-                .order_by(MatchDecision.decided_at.desc(), MatchDecision.id.desc())
+                .where(
+                    MatchDecision.candidate_id == candidate.id,
+                    MatchDecision.organization_id == organization_id,
+                )
+                .order_by(MatchDecision.revision.desc())
+                .offset(offset)
+                .limit(limit)
             )
         )
 
@@ -193,10 +232,29 @@ class DeterministicMatchService:
         status: str | None = None,
         limit: int = 50,
         offset: int = 0,
+        needs_review: bool = False,
+        unreviewed: bool = False,
+        q: str | None = None,
     ) -> list[MatchQueueItem]:
         query = select(MatchCandidate).where(MatchCandidate.organization_id == organization_id)
         if status is not None:
             query = query.where(MatchCandidate.status == status)
+        if needs_review:
+            query = query.where(MatchCandidate.status.in_(REVIEW_STATUSES))
+        if unreviewed:
+            query = query.where(
+                ~exists().where(
+                    MatchDecision.candidate_id == MatchCandidate.id,
+                    MatchDecision.organization_id == organization_id,
+                )
+            )
+        if q and q.strip():
+            query = query.where(
+                or_(
+                    MatchCandidate.left_record_key.icontains(q.strip(), autoescape=True),
+                    MatchCandidate.right_record_key.icontains(q.strip(), autoescape=True),
+                )
+            )
         candidates = list(
             self.session.scalars(
                 query.order_by(MatchCandidate.created_at.asc(), MatchCandidate.id.asc())
@@ -208,48 +266,64 @@ class DeterministicMatchService:
             return []
 
         candidate_ids = [candidate.id for candidate in candidates]
-        decisions = list(
-            self.session.scalars(
+        counts = {
+            candidate_id: count
+            for candidate_id, count in self.session.execute(
+                select(MatchDecision.candidate_id, func.count())
+                .where(
+                    MatchDecision.candidate_id.in_(candidate_ids),
+                    MatchDecision.organization_id == organization_id,
+                )
+                .group_by(MatchDecision.candidate_id)
+            ).all()
+        }
+        latest = {
+            row.candidate_id: row
+            for row in self.session.scalars(
                 select(MatchDecision)
-                .where(MatchDecision.candidate_id.in_(candidate_ids))
-                .order_by(MatchDecision.decided_at.desc(), MatchDecision.id.desc())
+                .join(MatchCandidate, MatchCandidate.id == MatchDecision.candidate_id)
+                .where(
+                    MatchDecision.candidate_id.in_(candidate_ids),
+                    MatchDecision.organization_id == organization_id,
+                    MatchDecision.revision == MatchCandidate.revision,
+                )
             )
-        )
-        decisions_by_candidate: dict[uuid.UUID, list[MatchDecision]] = {}
-        for decision in decisions:
-            decisions_by_candidate.setdefault(decision.candidate_id, []).append(decision)
+        }
         items: list[MatchQueueItem] = []
         for candidate in candidates:
-            candidate_decisions = decisions_by_candidate.get(candidate.id, [])
             items.append(
                 MatchQueueItem(
                     candidate=candidate,
-                    latest_decision=candidate_decisions[0] if candidate_decisions else None,
-                    decision_count=len(candidate_decisions),
+                    latest_decision=latest.get(candidate.id),
+                    decision_count=counts.get(candidate.id, 0),
                 )
             )
         return items
 
     def review_queue_summary(self, organization_id: uuid.UUID) -> MatchQueueSummary:
-        candidates = list(
-            self.session.scalars(
-                select(MatchCandidate).where(MatchCandidate.organization_id == organization_id)
+        by_status = {
+            status: count
+            for status, count in self.session.execute(
+                select(MatchCandidate.status, func.count())
+                .where(MatchCandidate.organization_id == organization_id)
+                .group_by(MatchCandidate.status)
+                .order_by(MatchCandidate.status)
+            ).all()
+        }
+        unreviewed = self.session.scalar(
+            select(func.count())
+            .select_from(MatchCandidate)
+            .where(
+                MatchCandidate.organization_id == organization_id,
+                ~exists().where(
+                    MatchDecision.candidate_id == MatchCandidate.id,
+                    MatchDecision.organization_id == organization_id,
+                ),
             )
         )
-        reviewed_candidate_ids = set(
-            self.session.scalars(
-                select(MatchDecision.candidate_id)
-                .where(MatchDecision.organization_id == organization_id)
-                .distinct()
-            )
-        )
-        by_status: dict[str, int] = {}
-        for candidate in candidates:
-            by_status[candidate.status] = by_status.get(candidate.status, 0) + 1
         return MatchQueueSummary(
-            total_candidates=len(candidates),
-            unreviewed_candidates=sum(
-                candidate.id not in reviewed_candidate_ids for candidate in candidates
-            ),
-            by_status=dict(sorted(by_status.items())),
+            total_candidates=sum(by_status.values()),
+            unreviewed_candidates=unreviewed or 0,
+            needs_review_candidates=sum(by_status.get(status, 0) for status in REVIEW_STATUSES),
+            by_status=by_status,
         )

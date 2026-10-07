@@ -7,7 +7,6 @@ ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "docs/reference/data-dictionary.md"
 
 
-
 def render() -> str:
     lines = [
         "# Data Dictionary",

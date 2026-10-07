@@ -23,6 +23,8 @@ class AuditService:
         organization_id: uuid.UUID | None,
         correlation_id: str | None = None,
         details: dict[str, Any] | None = None,
+        *,
+        commit: bool = True,
     ) -> AuditEvent:
         event = AuditEvent(
             occurred_at=datetime.now(UTC),
@@ -35,7 +37,10 @@ class AuditService:
             details_json=sanitize_attributes(details or {}),
         )
         self.session.add(event)
-        self.session.commit()
+        if commit:
+            self.session.commit()
+        else:
+            self.session.flush()
         return event
 
     def list_for_organization(

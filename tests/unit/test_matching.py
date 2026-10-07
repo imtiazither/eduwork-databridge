@@ -109,16 +109,21 @@ def test_synthetic_truth_evaluation_and_persistence(tmp_path: Path) -> None:
     candidate_id = outcome.candidate_ids[0]
     reviewer = uuid.uuid4()
     first = DeterministicMatchService(session).record_decision(
-        organization_id, candidate_id, "defer", "Needs synthetic review.", reviewer
+        organization_id,
+        candidate_id,
+        "defer",
+        "Needs synthetic review.",
+        reviewer,
+        expected_revision=0,
     )
     second = DeterministicMatchService(session).record_decision(
-        organization_id, candidate_id, "match", "Evidence reviewed.", reviewer
+        organization_id, candidate_id, "match", "Evidence reviewed.", reviewer, expected_revision=1
     )
     assert second.supersedes_decision_id == first.id
     assert session.scalar(select(func.count()).select_from(MatchDecision)) == 2
     with pytest.raises(ConnectorError, match="reason"):
         DeterministicMatchService(session).record_decision(
-            organization_id, candidate_id, "match", "", reviewer
+            organization_id, candidate_id, "match", "", reviewer, expected_revision=2
         )
     session.close()
 

@@ -5,8 +5,10 @@ from typing import Any
 from sqlalchemy import (
     JSON,
     Boolean,
+    CheckConstraint,
     DateTime,
     ForeignKey,
+    Index,
     Integer,
     Numeric,
     String,
@@ -250,6 +252,10 @@ class MatchRuleSet(UUIDPrimaryKeyMixin, TimestampMixin, Base):
 
 class MatchCandidate(UUIDPrimaryKeyMixin, TimestampMixin, Base):
     __tablename__ = "match_candidates"
+    __table_args__ = (
+        CheckConstraint("revision >= 0", name="ck_match_candidate_revision"),
+        Index("ix_match_queue", "organization_id", "status", "created_at", "id"),
+    )
 
     organization_id: Mapped[uuid.UUID] = mapped_column(
         Uuid(as_uuid=True), ForeignKey("organizations.id"), nullable=False, index=True
@@ -262,10 +268,15 @@ class MatchCandidate(UUIDPrimaryKeyMixin, TimestampMixin, Base):
     score: Mapped[float | None] = mapped_column(Numeric(8, 6), nullable=True)
     evidence_json: Mapped[dict[str, Any]] = mapped_column(JSON, nullable=False, default=dict)
     status: Mapped[str] = mapped_column(String(30), nullable=False, default="pending")
+    revision: Mapped[int] = mapped_column(Integer, nullable=False, default=0, server_default="0")
 
 
 class MatchDecision(UUIDPrimaryKeyMixin, TimestampMixin, Base):
     __tablename__ = "match_decisions"
+    __table_args__ = (
+        UniqueConstraint("candidate_id", "revision", name="uq_match_decision_revision"),
+        CheckConstraint("revision > 0", name="ck_match_decision_revision"),
+    )
 
     organization_id: Mapped[uuid.UUID] = mapped_column(
         Uuid(as_uuid=True), ForeignKey("organizations.id"), nullable=False, index=True
@@ -274,6 +285,7 @@ class MatchDecision(UUIDPrimaryKeyMixin, TimestampMixin, Base):
         Uuid(as_uuid=True), ForeignKey("match_candidates.id"), nullable=False, index=True
     )
     decision: Mapped[str] = mapped_column(String(30), nullable=False)
+    revision: Mapped[int] = mapped_column(Integer, nullable=False)
     reason: Mapped[str] = mapped_column(Text, nullable=False)
     reviewer_id: Mapped[uuid.UUID] = mapped_column(Uuid(as_uuid=True), nullable=False)
     decided_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)

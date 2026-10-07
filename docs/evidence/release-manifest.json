@@ -1,13 +1,13 @@
 {
   "project": "EduWork DataBridge",
-  "version": "0.20.0",
-  "verified_at": "2026-09-08",
+  "version": "0.50.0",
+  "verified_at": "2026-10-07",
   "application_tables": 52,
-  "alembic_revisions": 4,
+  "alembic_revisions": 5,
   "python_source_files_checked": 81,
-  "python_tests_passed": 76,
-  "python_coverage_percent": 90.2,
-  "frontend_tests_passed": 6,
+  "python_tests_passed": 92,
+  "python_coverage_percent": 90.86,
+  "frontend_tests_passed": 16,
   "generated_json_schemas": 11,
   "synthetic_presets_committed": [
     "small",
@@ -27,16 +27,24 @@
     "organization_scoped_match_review_queue",
     "match_review_workload_summary",
     "audit_events",
-    "retention_enforcement"
+    "retention_enforcement",
+    "atomic_review_decision_and_audit",
+    "optimistic_review_concurrency",
+    "cluster_wide_trusted_id_guard",
+    "explicit_identity_and_pre_read_tenant_checks"
   ],
   "reviewer_experience": [
     "synthetic_manifest_summary_api",
     "case_overview",
     "source_inventory",
     "filterable_exception_desk",
-    "identity_decision_preview",
     "field_lineage_view",
-    "offline_preview_boundary"
+    "offline_preview_boundary",
+    "connected_identity_review",
+    "searchable_paginated_review_queue",
+    "bounded_revision_ordered_history",
+    "stale_decision_recovery",
+    "explicit_static_pages_preview"
   ],
   "probabilistic_small_truth_metrics": {
     "auto_matches": 121,
@@ -52,7 +60,14 @@
   "live_postgresql_connector_validation": "not_run_no_daemon",
   "dagster_daemon_validation": "not_run_no_daemon",
   "lockfile_sha256": {
-    "uv.lock": "45eda022ce97455a3851a941152fb5348902947aae9e620a425e586e83b1df69",
-    "apps/reviewer-ui/package-lock.json": "bd047d2beb02e08bacbe04cb97870bb1495b851b572545a77c5a012c6e5ee680"
+    "uv.lock": "d2d658ee91943f4f64c4de083df1bdf6c407b646246f86197a1073b90acc47bc",
+    "apps/reviewer-ui/package-lock.json": "81efcdb02ff881faa6bd25d94000937c06a3b761c66a977af66591376b5bdd45"
+  },
+  "verification_environment": {
+    "backend_python": "3.13",
+    "wheel_install_python": "3.12",
+    "frontend_node": "22.18.0",
+    "migration_database": "SQLite",
+    "live_ui_smoke": "saved decision, reload persistence, viewer boundary"
   }
 }

@@ -3,6 +3,7 @@ import os
 import pytest
 
 os.environ.setdefault("EDUWORK_DATABASE_URL", "sqlite+pysqlite:///:memory:")
+os.environ.setdefault("EDUWORK_RATE_LIMIT_PER_MINUTE", "10000")
 
 
 @pytest.fixture(scope="session", autouse=True)

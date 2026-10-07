@@ -68,6 +68,9 @@ class ProbabilisticMatcher:
         organizations = {str(record.get(config.organization_field, "")) for record in records}
         if "" in organizations or len(organizations) != 1:
             raise ValueError("Probabilistic matching requires exactly one organization")
+        keys = [str(record.get(record_key_field, "")).strip() for record in records]
+        if not all(keys) or len(keys) != len(set(keys)):
+            raise ValueError("Probabilistic matching requires unique non-empty record keys")
         candidates: dict[tuple[str, str], list[str]] = {}
         for blocking_rule in config.blocking_rules:
             groups: dict[tuple[str, ...], list[str]] = {}
@@ -132,7 +135,7 @@ class ProbabilisticMatcher:
         config: ProbabilisticMatchConfig,
     ) -> dict[str, dict[str, float]]:
         del candidates
-        record_by_key = {str(record[config.record_key_field]): record for record in records}
+        record_by_key = {str(record[config.record_key_field]).strip(): record for record in records}
         truth_keys = sorted(set(record_by_key) & set(truth))
         estimation_pairs = itertools.islice(itertools.combinations(truth_keys, 2), 100_000)
         labeled_pairs = [
@@ -196,7 +199,7 @@ class ProbabilisticMatcher:
         parameters: dict[str, dict[str, float]] | None = None,
     ) -> ProbabilisticResult:
         candidates = self.generate_candidates(records, config)
-        record_by_key = {str(record[config.record_key_field]): record for record in records}
+        record_by_key = {str(record[config.record_key_field]).strip(): record for record in records}
         model_parameters = parameters or (
             self.estimate_parameters(records, candidates, truth, config)
             if truth is not None
@@ -226,15 +229,23 @@ class ProbabilisticMatcher:
             )
             scored.append((pair, block_rules, features, probability))
         union_find = UnionFind(list(record_by_key))
+        trusted_ids = {
+            key: {value}
+            if (value := normalize_value("employee_id", record.get("employee_id")))
+            else set()
+            for key, record in record_by_key.items()
+        }
+        cluster_sizes = dict.fromkeys(record_by_key, 1)
         results: list[ProbabilisticCandidate] = []
         for pair, block_rules, features, probability in sorted(
             scored, key=lambda item: item[3], reverse=True
         ):
             left, right = pair
-            left_employee = normalize_value("employee_id", record_by_key[left].get("employee_id"))
-            right_employee = normalize_value("employee_id", record_by_key[right].get("employee_id"))
+            left_root, right_root = union_find.find(left), union_find.find(right)
             trusted_conflict = (
-                bool(left_employee) and bool(right_employee) and left_employee != right_employee
+                bool(trusted_ids[left_root])
+                and bool(trusted_ids[right_root])
+                and trusted_ids[left_root].isdisjoint(trusted_ids[right_root])
             )
             if trusted_conflict:
                 status = "trusted_id_conflict"
@@ -244,11 +255,13 @@ class ProbabilisticMatcher:
                 status = "review"
             else:
                 status = "no_match"
-            left_root, right_root = union_find.find(left), union_find.find(right)
-            left_size = sum(union_find.find(key) == left_root for key in record_by_key)
-            right_size = sum(union_find.find(key) == right_root for key in record_by_key)
+            left_size, right_size = cluster_sizes[left_root], cluster_sizes[right_root]
+            merged_size = left_size if left_root == right_root else left_size + right_size
             if status == "auto_match" and left_root != right_root:
-                union_find.union(left, right)
+                combined_ids = trusted_ids[left_root] | trusted_ids[right_root]
+                root = union_find.union(left, right)
+                trusted_ids[root] = combined_ids
+                cluster_sizes[root] = merged_size
             results.append(
                 ProbabilisticCandidate(
                     left_record_key=left,
@@ -266,7 +279,7 @@ class ProbabilisticMatcher:
                     cluster_impact={
                         "left_cluster_size": left_size,
                         "right_cluster_size": right_size,
-                        "merged_size": left_size + right_size,
+                        "merged_size": merged_size,
                     },
                 )
             )

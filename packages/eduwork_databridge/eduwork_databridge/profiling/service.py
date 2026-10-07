@@ -62,6 +62,13 @@ class ProfilingService:
         )
         if baseline_profile_id and baseline is None:
             raise ConnectorError("baseline_not_found", "Baseline profile was not found")
+        if baseline is not None:
+            current_snapshot = self._snapshot(organization_id, snapshot_id)
+            baseline_snapshot = self._snapshot(organization_id, baseline.raw_snapshot_id)
+            if current_snapshot.source_object_id != baseline_snapshot.source_object_id:
+                raise ConnectorError(
+                    "baseline_source_mismatch", "Baseline must describe the same source object"
+                )
         profile = SchemaProfile(
             raw_snapshot_id=snapshot_id,
             profile_version=self.profiler.version,

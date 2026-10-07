@@ -31,7 +31,9 @@ class DemoIdentityProvider:
     def authenticate(self, credential: str | None) -> Actor:
         if not self.enabled or self.environment == "production":
             raise ConnectorError("identity_required", "Production identity is required")
-        user = credential or "demo-admin"
+        if not credential:
+            raise ConnectorError("identity_required", "An explicit demo identity is required")
+        user = credential
         if user == "demo-admin":
             return Actor(
                 actor_id=uuid.uuid5(uuid.NAMESPACE_URL, "eduwork:demo-admin"),

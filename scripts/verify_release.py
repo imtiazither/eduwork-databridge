@@ -1,3 +1,4 @@
+import hashlib
 import json
 import re
 import shutil
@@ -20,12 +21,15 @@ def verify() -> dict[str, Any]:
     project = tomllib.loads((ROOT / "pyproject.toml").read_text(encoding="utf-8"))
     version = str(project["project"]["version"])
     package = load_json("apps/reviewer-ui/package.json")
+    package_lock = load_json("apps/reviewer-ui/package-lock.json")
     init_text = (ROOT / "packages/eduwork_databridge/eduwork_databridge/__init__.py").read_text(
         encoding="utf-8"
     )
     versions = {
         str(project["project"]["version"]),
         str(package["version"]),
+        str(package_lock["version"]),
+        str(package_lock["packages"][""]["version"]),
         re.search(r'__version__ = "([^"]+)"', init_text).group(1),  # type: ignore[union-attr]
     }
     if versions != {version}:
@@ -37,6 +41,10 @@ def verify() -> dict[str, Any]:
         "docs/index.md",
         "docs/PROJECT_OVERVIEW.md",
         "docs/evaluator/30-minute-tour.md",
+        "docs/guides/review-workbench.md",
+        f"docs/release/v{version}.md",
+        "docs/evidence/release-manifest.json",
+        "benchmark-results/current.json",
         "docs/assets/eduwork-databridge-walkthrough.mp4",
         "benchmark-baseline/small-v0.14.0.json",
         "benchmark-baseline/budgets.json",
@@ -93,17 +101,41 @@ def verify() -> dict[str, Any]:
             raise SystemExit(f"SBOM is empty: {path}")
     checks["sboms"] = "passed"
 
-    if load_json("release/packages/package-verification.json")["status"] != "passed":
+    package_report = load_json("release/packages/package-verification.json")
+    wheel_report = load_json("release/packages/wheel-install-verification.json")
+    if package_report["status"] != "passed" or package_report["version"] != version:
         raise SystemExit("Package verification did not pass")
-    if load_json("release/packages/wheel-install-verification.json")["status"] != "passed":
+    if (
+        wheel_report["status"] != "passed"
+        or wheel_report["import_version"] != version
+        or wheel_report["fastapi_app_version"] != version
+    ):
         raise SystemExit("Wheel installation verification did not pass")
     checks["packages"] = "passed"
 
-    if load_json("release/backup-restore-verification.json")["status"] != "passed":
+    backup_report = load_json("release/backup-restore-verification.json")
+    if backup_report["status"] != "passed" or backup_report["version"] != version:
         raise SystemExit("Backup/restore verification did not pass")
-    if load_json("release/benchmark-verification.json")["status"] != "passed":
+    benchmark_report = load_json("release/benchmark-verification.json")
+    if benchmark_report["status"] != "passed" or benchmark_report["version"] != version:
         raise SystemExit("Benchmark regression verification did not pass")
+    current_benchmark = ROOT / benchmark_report["current"]
+    if load_json(benchmark_report["current"])["project_version"] != version:
+        raise SystemExit("Benchmark results are from a different version")
+    verify_benchmark(
+        current_benchmark,
+        ROOT / benchmark_report["baseline"],
+        ROOT / benchmark_report["budgets"],
+    )
     checks["backup_restore_and_regression"] = "passed"
+
+    manifest = load_json("docs/evidence/release-manifest.json")
+    if manifest["version"] != version:
+        raise SystemExit("Release manifest is from a different version")
+    for path, expected in manifest["lockfile_sha256"].items():
+        if hashlib.sha256((ROOT / path).read_bytes()).hexdigest() != expected:
+            raise SystemExit(f"Release manifest lockfile hash is out of date: {path}")
+    checks["release_manifest"] = "passed"
 
     video_path = ROOT / "docs/assets/eduwork-databridge-walkthrough.mp4"
     if video_path.read_bytes()[4:8] != b"ftyp":
