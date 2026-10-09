@@ -157,6 +157,7 @@ The demo configuration is under `configs/demo`. It contains no real people or co
 - `release`: SBOMs, audits, package artifacts, environment gaps, verification, and checksums
 - `.github`: pinned CI, dependency updates, templates, and tag-triggered release workflow
 
+
 ## Public/private boundary
 
 Public assets use synthetic data and generic configuration. Never commit partner data, identifiers, credentials, endpoints, proprietary mappings, unapproved screenshots, or pilot results.
