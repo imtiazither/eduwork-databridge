@@ -41,7 +41,7 @@ data = [
   "pandera[polars]>=0.24,<1",
   "tenacity>=9,<10",
 ]
-matching = ["splink>=4.0,<5"]
+matching = ["splink>=4.0,<6"]
 dev = [
   "build>=1.2,<2",
   "hypothesis>=6.135,<7",
