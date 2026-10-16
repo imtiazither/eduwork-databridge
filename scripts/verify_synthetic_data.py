@@ -1,6 +1,5 @@
 from pathlib import Path
 
-
 from eduwork_databridge.synthetic import PresetName, verify_manifest
 
 
