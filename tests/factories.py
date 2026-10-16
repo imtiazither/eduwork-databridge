@@ -16,7 +16,6 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import Session, sessionmaker
 from sqlalchemy.pool import NullPool
 
-
 def build_snapshot_session(
     tmp_path: Path,
     records: list[dict],
