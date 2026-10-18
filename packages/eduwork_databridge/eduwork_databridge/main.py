@@ -68,7 +68,11 @@ from eduwork_databridge.schemas.api import (
     ProbabilisticMatchResponse,
     ProfileRequest,
     ProfileResponse,
+    QuarantineItemResponse,
+    QuarantineResolutionResponse,
     QuarantineResolveRequest,
+    QuarantineStatus,
+    QuarantineSummaryResponse,
     ReadyResponse,
     RetentionApplyRequest,
     RetentionApplyResponse,
@@ -206,7 +210,7 @@ async def connector_error_handler(request: Request, exc: ConnectorError) -> JSON
         status = 403
     elif exc.code.endswith("not_found"):
         status = 404
-    elif exc.code == "decision_conflict":
+    elif exc.code in {"decision_conflict", "quarantine_conflict"}:
         status = 409
     return JSONResponse(
         {"detail": {"code": exc.code, "message": exc.safe_message}},
@@ -565,14 +569,102 @@ def validate_snapshot(
     )
 
 
-@app.post("/api/v1/quarantine/{quarantine_id}/resolve", tags=["validation"])
+@app.get("/api/v1/quarantine", response_model=list[QuarantineItemResponse], tags=["validation"])
+def quarantine_queue(
+    session: SessionDep,
+    actor: ActorDep,
+    x_organization_id: OrganizationHeader = None,
+    status: QuarantineStatus | None = None,
+    severity: Literal["blocking", "error", "warning"] | None = None,
+    needs_attention: bool = False,
+    q: str | None = Query(default=None, max_length=100),
+    limit: int = Query(default=50, ge=1, le=200),
+    offset: int = Query(default=0, ge=0),
+) -> list[QuarantineItemResponse]:
+    organization_id = _required_organization(x_organization_id)
+    require_organization(actor, organization_id)
+    require_permission(actor, "validation:write")
+    rows = ValidationService(session).review_queue(
+        organization_id,
+        status=status,
+        severity=severity,
+        needs_attention=needs_attention,
+        q=q,
+        limit=limit,
+        offset=offset,
+    )
+    return [
+        QuarantineItemResponse(
+            quarantine_id=row.id,
+            source_record_key=row.source_record_key,
+            field_name=row.field_name,
+            evidence_masked=row.evidence_masked,
+            explanation=row.explanation,
+            status=row.status,
+            revision=row.revision,
+            created_at=row.created_at,
+            raw_snapshot_id=row.raw_snapshot_id,
+            supersedes_quarantine_id=row.supersedes_quarantine_id,
+            rule_key=rule.rule_key,
+            rule_title=rule.title,
+            severity=rule.severity,
+            remediation=rule.remediation,
+        )
+        for row, rule in rows
+    ]
+
+
+@app.get(
+    "/api/v1/quarantine/summary", response_model=QuarantineSummaryResponse, tags=["validation"]
+)
+def quarantine_summary(
+    session: SessionDep,
+    actor: ActorDep,
+    x_organization_id: OrganizationHeader = None,
+) -> QuarantineSummaryResponse:
+    organization_id = _required_organization(x_organization_id)
+    require_organization(actor, organization_id)
+    require_permission(actor, "validation:write")
+    return QuarantineSummaryResponse(**ValidationService(session).queue_summary(organization_id))
+
+
+@app.get(
+    "/api/v1/quarantine/{quarantine_id}/history",
+    response_model=list[QuarantineResolutionResponse],
+    tags=["validation"],
+)
+def quarantine_history(
+    quarantine_id: uuid.UUID,
+    session: SessionDep,
+    actor: ActorDep,
+    x_organization_id: OrganizationHeader = None,
+    limit: int = Query(default=50, ge=1, le=200),
+    offset: int = Query(default=0, ge=0),
+) -> list[QuarantineResolutionResponse]:
+    organization_id = _required_organization(x_organization_id)
+    require_organization(actor, organization_id)
+    require_permission(actor, "validation:write")
+    rows = ValidationService(session).resolution_history(
+        organization_id,
+        quarantine_id,
+        limit=limit,
+        offset=offset,
+    )
+    return [QuarantineResolutionResponse.model_validate(row) for row in rows]
+
+
+@app.post(
+    "/api/v1/quarantine/{quarantine_id}/resolve",
+    response_model=QuarantineResolutionResponse,
+    tags=["validation"],
+)
 def resolve_quarantine(
     quarantine_id: uuid.UUID,
     request: QuarantineResolveRequest,
     session: SessionDep,
     actor: ActorDep,
     x_organization_id: OrganizationHeader = None,
-) -> dict[str, str]:
+) -> QuarantineResolutionResponse:
     organization_id = _required_organization(x_organization_id)
     require_organization(actor, organization_id)
     require_permission(actor, "validation:write")
@@ -584,22 +676,25 @@ def resolve_quarantine(
             reviewer_id=actor.actor_id,
             note=request.note,
             corrected_snapshot_id=request.corrected_snapshot_id,
+            expected_revision=request.expected_revision,
             commit=False,
         )
     except ConnectorError as exc:
         session.rollback()
-        raise HTTPException(status_code=400, detail=exc.safe_message) from exc
+        raise exc
     AuditService(session).record(
         actor,
         "quarantine.resolved",
         "quarantine_record",
         str(row.id),
         organization_id,
-        details={"status": row.status},
+        details={"status": row.status, "revision": row.revision},
         commit=False,
     )
+    resolution = ValidationService(session).resolution_history(organization_id, row.id, limit=1)[0]
+    response = QuarantineResolutionResponse.model_validate(resolution)
     session.commit()
-    return {"quarantine_id": str(row.id), "status": row.status}
+    return response
 
 
 @app.post(

@@ -4,6 +4,25 @@ All notable changes will be documented here. The project follows Semantic Versio
 
 ## Unreleased
 
+## [0.60.0] - 2026-10-18
+
+### Added
+
+- Connected Exception Desk with scoped queues, search, severity/status filters, pagination, and evidence inspection
+- Required resolution notes, authenticated reviewer attribution, corrected-snapshot links, and append-only history
+- Revision-checked saves, atomic resolution/audit persistence, reopening, and legacy-note migration
+- Synthetic source-validation example and exception workflow, concurrency, isolation, rollback, and migration tests
+
+### Fixed
+
+- Backend CI import-order failure in the shared test factory
+- Misleading fixed exception count in connected navigation
+
+### Changed
+
+- Quarantine resolution requests require `expected_revision` and return the recorded history entry
+- Database migration 0006 preserves the latest legacy note and blocks downgrades that would discard new history
+
 ## [0.50.0] - 2026-10-07
 
 ### Added

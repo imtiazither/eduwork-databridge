@@ -190,6 +190,7 @@ def test_validation_service_persists_and_resolves_quarantine(tmp_path: Path) -> 
         "waived",
         reviewer,
         "Synthetic exception reviewed for test only.",
+        expected_revision=0,
     )
     assert resolved.status == "waived"
     assert resolved.waiver_reason
@@ -204,6 +205,7 @@ def test_validation_service_persists_and_resolves_quarantine(tmp_path: Path) -> 
             "closed",
             reviewer,
             "",
+            expected_revision=0,
         )
     session.close()
 
@@ -211,6 +213,7 @@ def test_validation_service_persists_and_resolves_quarantine(tmp_path: Path) -> 
 def test_demo_validation_configs_parse() -> None:
     for path in [
         Path("configs/demo/validations/person_v1.yml"),
+        Path("configs/demo/validations/hris_source_v1.yml"),
         Path("configs/demo/validations/participation_v1.yml"),
     ]:
         config = load_yaml_model(path, ValidationConfig)

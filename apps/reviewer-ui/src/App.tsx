@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
 import { ReviewDesk } from "./ReviewDesk";
+import { ExceptionDesk } from "./ExceptionDesk";
 import {
   fallbackSummary,
   issueDefinitions,
@@ -305,7 +306,7 @@ export function App({ preview = staticDemo }: { preview?: boolean } = {}) {
   const currentView = {
     overview: <Overview issueTotal={issueTotal} />,
     sources: <Sources summary={summary} />,
-    exceptions: <Exceptions summary={summary} />,
+    exceptions: !preview && version.data ? <ExceptionDesk /> : <Exceptions summary={summary} />,
     identity: !preview && version.data ? <ReviewDesk /> : <IdentityReview />,
     evidence: <Evidence />,
   }[view];
@@ -365,7 +366,7 @@ export function App({ preview = staticDemo }: { preview?: boolean } = {}) {
               <a className="button text" href="#story">Read the Monday story <span aria-hidden="true">→</span></a>
             </div>
             <div className="hero-footnote">
-              <span>Public synthetic demo · v0.50.0</span>
+              <span>Public synthetic demo · v0.60.0</span>
               <p>No customer records. No hidden matches. No outcome claims.</p>
             </div>
           </div>
@@ -443,7 +444,7 @@ export function App({ preview = staticDemo }: { preview?: boolean } = {}) {
             {navigation.map((item, index) => (
               <button key={item.key} className={view === item.key ? "active" : ""} aria-current={view === item.key ? "page" : undefined} onClick={() => setView(item.key)}>
                 <span>0{index + 1}</span>{item.label}
-                {item.key === "exceptions" && <b>{issueTotal}</b>}
+                {item.key === "exceptions" && (preview || !version.data) && <b>{issueTotal}</b>}
               </button>
             ))}
             <div className="nav-footnote"><span>Reviewable by design</span><p>Source evidence, exceptions, decisions, and lineage stay visible.</p></div>

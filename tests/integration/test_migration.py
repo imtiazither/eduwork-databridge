@@ -34,6 +34,7 @@ def test_baseline_upgrade_and_downgrade(tmp_path: Path, monkeypatch: pytest.Monk
         "data_mart_snapshots",
         "asset_runs",
         "retention_policies",
+        "quarantine_resolutions",
     } <= tables
     ingestion_columns = {column["name"] for column in inspector.get_columns("ingestion_runs")}
     assert {"resume_from_run_id", "attempt_number", "failure_code", "failure_summary"} <= (
@@ -49,6 +50,7 @@ def test_baseline_upgrade_and_downgrade(tmp_path: Path, monkeypatch: pytest.Monk
     }
     quarantine_columns = {column["name"] for column in inspector.get_columns("quarantine_records")}
     assert {
+        "revision",
         "waiver_reason",
         "resolution_note",
         "resolved_at",
@@ -61,6 +63,71 @@ def test_baseline_upgrade_and_downgrade(tmp_path: Path, monkeypatch: pytest.Monk
     remaining = set(inspect(downgraded_engine).get_table_names())
     downgraded_engine.dispose()
     assert remaining <= {"alembic_version"}
+
+
+@pytest.mark.integration
+def test_exception_upgrade_preserves_latest_note_and_protects_new_history(tmp_path, monkeypatch):
+    from eduwork_databridge.db.models.control import QuarantineRecord, QuarantineResolution
+    from eduwork_databridge.schemas.config import ValidationConfig, ValidationRuleConfig
+    from eduwork_databridge.validation import ValidationService
+    from sqlalchemy import text
+    from sqlalchemy.orm import Session
+
+    from tests.factories import build_snapshot_session
+
+    url = f"sqlite+pysqlite:///{tmp_path / 'control.db'}"
+    monkeypatch.setenv("EDUWORK_DATABASE_URL", url)
+    config = Config("alembic.ini")
+    command.upgrade(config, "head")
+    session, org, snapshot = build_snapshot_session(tmp_path, [{"record_key": "R-1"}])
+    outcome = ValidationService(session).validate(
+        org,
+        snapshot,
+        [{"record_key": "R-1"}],
+        ValidationConfig(
+            validation_set_id="upgrade",
+            entity="Person",
+            rules=[
+                ValidationRuleConfig(
+                    rule_id="id",
+                    title="Missing ID",
+                    entity="Person",
+                    severity="blocking",
+                    rule_type="required",
+                    fields=["employee_id"],
+                    explanation="ID required.",
+                )
+            ],
+        ),
+    )
+    issue_id = outcome.quarantine_ids[0]
+    session.close()
+    command.downgrade(config, "20261007_0005")
+    engine = create_engine(url)
+    reviewer = uuid.uuid4()
+    with engine.begin() as connection:
+        connection.execute(
+            text(
+                "UPDATE quarantine_records SET status='waived', resolution_note='Original note', "
+                "reviewer_id=:reviewer WHERE id=:id"
+            ),
+            {"reviewer": reviewer.hex, "id": issue_id.hex},
+        )
+    command.upgrade(config, "head")
+    with Session(engine) as upgraded:
+        history = ValidationService(upgraded).resolution_history(org, issue_id)
+        assert len(history) == 1 and history[0].imported
+        assert history[0].note == "Original note" and history[0].reviewer_id == reviewer
+        assert upgraded.get(QuarantineRecord, issue_id).revision == 1
+        ValidationService(upgraded).resolve_quarantine(
+            org, issue_id, "open", reviewer, "More evidence needed", expected_revision=1
+        )
+        assert len(upgraded.scalars(select(QuarantineResolution)).all()) == 2
+    with pytest.raises(RuntimeError, match="discard resolution history"):
+        command.downgrade(config, "20261007_0005")
+    with Session(engine) as checked:
+        assert len(checked.scalars(select(QuarantineResolution)).all()) == 2
+    engine.dispose()
 
 
 @pytest.mark.integration

@@ -38,7 +38,9 @@ make ui
 
 Open `http://127.0.0.1:5173` and select **Identity review**. Inspect the organization, workload, candidate evidence, and history. Save a reasoned decision, refresh, and confirm that the history persists. Select the demo viewer to verify that review controls are unavailable.
 
-The public Pages build and offline case file use preview decisions that reset on refresh. Other case-file views continue to illustrate the committed synthetic fixture.
+Select **Exceptions** to inspect saved validation issues. Record an acknowledgment with a note, refresh, and inspect the resolution history. Use status and severity filters to revisit resolved issues. See the [exception desk guide](../guides/exception-desk.md).
+
+The public Pages build and offline case file retain static synthetic examples. Connected identity and exception workflows are available through the local API.
 
 ## Minutes 20–25: complete technical flow
 

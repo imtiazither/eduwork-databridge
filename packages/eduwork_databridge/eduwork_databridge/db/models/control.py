@@ -195,6 +195,10 @@ class ValidationResult(UUIDPrimaryKeyMixin, TimestampMixin, Base):
 
 class QuarantineRecord(UUIDPrimaryKeyMixin, TimestampMixin, Base):
     __tablename__ = "quarantine_records"
+    __table_args__ = (
+        CheckConstraint("revision >= 0", name="ck_quarantine_revision"),
+        Index("ix_quarantine_queue", "organization_id", "status", "created_at", "id"),
+    )
 
     organization_id: Mapped[uuid.UUID] = mapped_column(
         Uuid(as_uuid=True), ForeignKey("organizations.id"), nullable=False, index=True
@@ -213,6 +217,7 @@ class QuarantineRecord(UUIDPrimaryKeyMixin, TimestampMixin, Base):
     evidence_masked: Mapped[str | None] = mapped_column(Text, nullable=True)
     explanation: Mapped[str] = mapped_column(Text, nullable=False)
     status: Mapped[str] = mapped_column(String(30), nullable=False, default="open")
+    revision: Mapped[int] = mapped_column(Integer, nullable=False, default=0, server_default="0")
     reviewer_id: Mapped[uuid.UUID | None] = mapped_column(Uuid(as_uuid=True), nullable=True)
     waiver_reason: Mapped[str | None] = mapped_column(Text, nullable=True)
     resolution_note: Mapped[str | None] = mapped_column(Text, nullable=True)
@@ -227,6 +232,30 @@ class QuarantineRecord(UUIDPrimaryKeyMixin, TimestampMixin, Base):
     corrected_snapshot_id: Mapped[uuid.UUID | None] = mapped_column(
         Uuid(as_uuid=True), ForeignKey("raw_snapshots.id"), nullable=True
     )
+
+
+class QuarantineResolution(UUIDPrimaryKeyMixin, TimestampMixin, Base):
+    __tablename__ = "quarantine_resolutions"
+    __table_args__ = (
+        UniqueConstraint("quarantine_id", "revision", name="uq_quarantine_resolution_revision"),
+        CheckConstraint("revision > 0", name="ck_quarantine_resolution_revision"),
+    )
+
+    organization_id: Mapped[uuid.UUID] = mapped_column(
+        Uuid(as_uuid=True), ForeignKey("organizations.id"), nullable=False, index=True
+    )
+    quarantine_id: Mapped[uuid.UUID] = mapped_column(
+        Uuid(as_uuid=True), ForeignKey("quarantine_records.id"), nullable=False, index=True
+    )
+    revision: Mapped[int] = mapped_column(Integer, nullable=False)
+    status: Mapped[str] = mapped_column(String(30), nullable=False)
+    note: Mapped[str] = mapped_column(Text, nullable=False)
+    reviewer_id: Mapped[uuid.UUID | None] = mapped_column(Uuid(as_uuid=True), nullable=True)
+    recorded_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    corrected_snapshot_id: Mapped[uuid.UUID | None] = mapped_column(
+        Uuid(as_uuid=True), ForeignKey("raw_snapshots.id"), nullable=True
+    )
+    imported: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
 
 
 class MatchRuleSet(UUIDPrimaryKeyMixin, TimestampMixin, Base):

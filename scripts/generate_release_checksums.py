@@ -17,6 +17,7 @@ def release_files() -> list[Path]:
         ROOT / "docs/assets/reviewer-console.svg",
         ROOT / "docs/assets/lineage-view.svg",
         ROOT / "docs/assets/review-workbench-v0.50.jpg",
+        ROOT / "docs/assets/exception-desk-v0.60.jpg",
     ]
     return sorted(set(files), key=lambda path: str(path.relative_to(ROOT)))
 

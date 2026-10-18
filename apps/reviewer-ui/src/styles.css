@@ -2414,3 +2414,20 @@ footer > div a {
 .review-empty p { color: var(--muted); line-height: 1.6; }
 @media (max-width: 1180px) { .review-layout { grid-template-columns: 1fr; } .candidate-list { max-height: 320px; } }
 @media (max-width: 720px) { .review-session, .review-toolbar { grid-template-columns: 1fr; } .candidate-detail { padding: 16px; } .review-workload { gap: 18px; } }
+
+.live-exceptions h2 { font: 700 1.85rem/1.2 "Avenir Next", Avenir, sans-serif; letter-spacing: 0; }
+.live-exceptions .view-heading { align-items: center; }
+.exception-toolbar { grid-template-columns: 1fr 1fr minmax(0, 1.5fr); }
+.exception-inspector { min-width: 0; border-top: 3px solid var(--teal); padding: 20px 0; }
+.exception-inspector h3 { margin: 8px 0; font: 700 1.2rem/1.4 "Avenir Next", Avenir, sans-serif; letter-spacing: 0; overflow-wrap: anywhere; }
+.exception-record-key { font-size: .8rem; color: var(--muted); overflow-wrap: anywhere; }
+.exception-evidence { margin: 24px 0; font-size: .8rem; line-height: 1.6; }
+.exception-evidence > div { padding: 10px 0; border-bottom: 1px solid var(--line); }
+.exception-evidence dt { color: var(--muted); font-size: .7rem; }
+.exception-evidence dd { margin: 4px 0 0; overflow-wrap: anywhere; white-space: pre-wrap; }
+.exception-queue button { border-width: 0 0 1px; transition: background-color 120ms ease; }
+.exception-queue button:hover { background: var(--teal-soft); }
+.exception-inspector .review-form, .exception-inspector .review-history { border-top: 1px solid var(--line); padding-top: 18px; }
+.exception-inspector .review-history code { overflow-wrap: anywhere; }
+@media (max-width: 1180px) { .exception-toolbar { grid-template-columns: 1fr 1fr; } .exception-toolbar form { grid-column: 1 / -1; } }
+@media (max-width: 720px) { .exception-toolbar { grid-template-columns: 1fr; } }

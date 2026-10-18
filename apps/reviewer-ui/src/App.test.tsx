@@ -13,7 +13,7 @@ function mockSuccessfulApi() {
   vi.stubGlobal("fetch", vi.fn((input: RequestInfo | URL) => {
     const url = String(input);
     const body = url.endsWith("/api/v1/version")
-      ? { version: "0.50.0" }
+      ? { version: "0.60.0" }
       : url.endsWith("/api/v1/organizations")
         ? []
         : url.endsWith("/api/v1/me")
@@ -35,7 +35,7 @@ test("renders the case story and live API version", async () => {
   mockSuccessfulApi();
   renderApp();
   expect(screen.getByRole("heading", { name: "Can we trust the training report?" })).toBeInTheDocument();
-  expect(await screen.findByText("API 0.50.0")).toBeInTheDocument();
+  expect(await screen.findByText("API 0.60.0")).toBeInTheDocument();
   expect(screen.getByText("366")).toBeInTheDocument();
 });
 
@@ -47,9 +47,9 @@ test("keeps a useful synthetic preview when the API is offline", async () => {
   expect(screen.getByText(/Not a customer outcome/)).toBeInTheDocument();
 });
 
-test("lets a reviewer inspect exceptions", async () => {
+test("lets a visitor inspect synthetic exceptions", async () => {
   mockSuccessfulApi();
-  renderApp();
+  renderApp(true);
   fireEvent.click(screen.getByRole("button", { name: /Exceptions/ }));
   expect(screen.getByRole("heading", { name: /short queue with reasons/ })).toBeInTheDocument();
   fireEvent.click(screen.getByRole("button", { name: /Unknown completion status/ }));
@@ -109,10 +109,18 @@ test("keeps the Pages preview free of API requests", () => {
   expect(fetch).not.toHaveBeenCalled();
 });
 
+test("opens the connected exception desk when the API is available", async () => {
+  mockSuccessfulApi();
+  renderApp();
+  await screen.findByText("API 0.60.0");
+  fireEvent.click(screen.getByRole("button", { name: /Exceptions/ }));
+  expect(screen.getByRole("heading", { name: "Exception desk" })).toBeInTheDocument();
+});
+
 test("opens the connected review desk when the API is available", async () => {
   mockSuccessfulApi();
   renderApp();
-  await screen.findByText("API 0.50.0");
+  await screen.findByText("API 0.60.0");
   fireEvent.click(screen.getByRole("button", { name: /Identity review/ }));
   expect(screen.getByRole("heading", { name: /Evidence, a reason, and a recorded decision/ })).toBeInTheDocument();
   expect(await screen.findByText(/No accessible organizations/)).toBeInTheDocument();

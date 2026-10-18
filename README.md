@@ -9,9 +9,9 @@
 
 [Open EduWork DataBridge on GitHub Pages](https://imtiazither.github.io/eduwork-databridge/) · [Browse the documentation](https://imtiazither.github.io/eduwork-databridge/docs/)
 
-## Current version: v0.50.0
+## Current version: v0.60.0
 
-v0.50.0 connects the identity reviewer desk to the API. Select an organization, search and filter candidates, inspect evidence and decision history, and save a reasoned decision. Revision checks prevent stale saves, and decisions commit with their audit evidence. Read the [release notes and upgrade steps](docs/release/v0.50.0.md).
+v0.60.0 connects the Exceptions screen to saved validation issues. Filter by status and severity, inspect masked evidence and remediation guidance, and save a reasoned resolution with persistent history. Revision checks prevent stale saves, and resolutions commit with their audit evidence. Read the [release notes and upgrade steps](docs/release/v0.60.0.md) or the [exception desk guide](docs/guides/exception-desk.md).
 
 EduWork DataBridge is an open-source platform for making that reconciliation inspectable. It keeps source evidence, checks the awkward records, separates uncertain identity matches from safe ones, and carries lineage into governed outputs.
 
@@ -35,7 +35,7 @@ The reviewer desk uses a deterministic public fixture: 120 fictional people, 366
 
 ![EduWork DataBridge reviewer desk showing the five-stop evidence path](docs/assets/reviewer-desk.jpg)
 
-The desk includes a source inventory, filterable exception types, an identity-review preview, and a field-lineage view. The public preview deliberately remains non-persistent; the connected local desk records reasoned match decisions and their audit evidence. The source inventory, exception examples, and field-lineage illustration remain synthetic fixture views.
+The public case file includes source inventory, synthetic exception examples, identity-review preview, and a field-lineage illustration. The connected local desk saves both identity decisions and exception resolutions with their audit evidence and history.
 
 ## Why use it
 

@@ -1,8 +1,8 @@
 import uuid
-from datetime import datetime
+from datetime import UTC, datetime
 from typing import Any, Literal
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 
 class APIModel(BaseModel):
@@ -142,10 +142,58 @@ class ValidationResponse(APIModel):
     record_source: str
 
 
+QuarantineStatus = Literal[
+    "open", "acknowledged", "corrected_upstream", "corrected_mapping", "waived", "closed"
+]
+
+
 class QuarantineResolveRequest(APIModel):
-    status: Literal["acknowledged", "corrected_upstream", "corrected_mapping", "waived", "closed"]
+    status: QuarantineStatus
     note: str = Field(min_length=1, max_length=2000)
     corrected_snapshot_id: uuid.UUID | None = None
+    expected_revision: int = Field(ge=0)
+
+
+class QuarantineResolutionResponse(APIModel):
+    id: uuid.UUID
+    quarantine_id: uuid.UUID
+    revision: int
+    status: str
+    note: str
+    reviewer_id: uuid.UUID | None
+    recorded_at: datetime
+    corrected_snapshot_id: uuid.UUID | None
+    imported: bool
+
+    @field_validator("recorded_at")
+    @classmethod
+    def utc_timestamp(cls, value: datetime) -> datetime:
+        # SQLite returns stored UTC timestamps without their timezone information.
+        return value.replace(tzinfo=UTC) if value.tzinfo is None else value
+
+
+class QuarantineItemResponse(APIModel):
+    quarantine_id: uuid.UUID
+    source_record_key: str
+    field_name: str | None
+    evidence_masked: str | None
+    explanation: str
+    status: str
+    revision: int
+    created_at: datetime
+    raw_snapshot_id: uuid.UUID
+    supersedes_quarantine_id: uuid.UUID | None
+    rule_key: str
+    rule_title: str
+    severity: str
+    remediation: str | None
+
+
+class QuarantineSummaryResponse(APIModel):
+    total: int
+    needs_attention: int
+    by_status: dict[str, int]
+    by_severity: dict[str, int]
 
 
 class DeterministicMatchRequest(APIModel):

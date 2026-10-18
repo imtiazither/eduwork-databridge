@@ -1,13 +1,13 @@
 {
   "project": "EduWork DataBridge",
-  "version": "0.50.0",
-  "verified_at": "2026-10-07",
-  "application_tables": 52,
-  "alembic_revisions": 5,
+  "version": "0.60.0",
+  "verified_at": "2026-10-18",
+  "application_tables": 53,
+  "alembic_revisions": 6,
   "python_source_files_checked": 81,
-  "python_tests_passed": 92,
-  "python_coverage_percent": 90.86,
-  "frontend_tests_passed": 16,
+  "python_tests_passed": 99,
+  "python_coverage_percent": 91.18,
+  "frontend_tests_passed": 24,
   "generated_json_schemas": 11,
   "synthetic_presets_committed": [
     "small",
@@ -31,7 +31,12 @@
     "atomic_review_decision_and_audit",
     "optimistic_review_concurrency",
     "cluster_wide_trusted_id_guard",
-    "explicit_identity_and_pre_read_tenant_checks"
+    "explicit_identity_and_pre_read_tenant_checks",
+    "organization_scoped_exception_queue",
+    "append_only_quarantine_resolution_history",
+    "atomic_resolution_and_audit",
+    "optimistic_exception_concurrency",
+    "legacy_resolution_note_backfill"
   ],
   "reviewer_experience": [
     "synthetic_manifest_summary_api",
@@ -44,7 +49,10 @@
     "searchable_paginated_review_queue",
     "bounded_revision_ordered_history",
     "stale_decision_recovery",
-    "explicit_static_pages_preview"
+    "explicit_static_pages_preview",
+    "connected_exception_desk",
+    "exception_severity_status_search",
+    "resolution_history_and_reopening"
   ],
   "probabilistic_small_truth_metrics": {
     "auto_matches": 121,
@@ -60,14 +68,14 @@
   "live_postgresql_connector_validation": "not_run_no_daemon",
   "dagster_daemon_validation": "not_run_no_daemon",
   "lockfile_sha256": {
-    "uv.lock": "d2d658ee91943f4f64c4de083df1bdf6c407b646246f86197a1073b90acc47bc",
-    "apps/reviewer-ui/package-lock.json": "81efcdb02ff881faa6bd25d94000937c06a3b761c66a977af66591376b5bdd45"
+    "uv.lock": "55941be52aec35dfc6dba24b09a004fee9eeced9d68bef7d3e888bd47e90afc5",
+    "apps/reviewer-ui/package-lock.json": "dc615e57d50a918074605b1ef0b4bd0f6735a220eb21a53c307b0eb5421b5ad2"
   },
   "verification_environment": {
     "backend_python": "3.13",
     "wheel_install_python": "3.12",
-    "frontend_node": "22.18.0",
+    "frontend_node": "24.19.0",
     "migration_database": "SQLite",
-    "live_ui_smoke": "saved decision, reload persistence, viewer boundary"
+    "live_ui_smoke": "saved exception resolution, reload persistence, viewer boundary, desktop/mobile layout"
   }
 }

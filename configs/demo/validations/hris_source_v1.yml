@@ -1,0 +1,12 @@
+schema_version: "1.0"
+validation_set_id: hris_source_v1
+entity: HRIS source person
+rules:
+  - rule_id: hris_employee_id_required
+    title: Missing employee ID
+    entity: HRIS source person
+    severity: blocking
+    rule_type: required
+    fields: [employee_id]
+    explanation: A source employee identifier is required before this record can be mapped.
+    remediation: Ask the HR source owner for an approved identifier, then validate a corrected extract.

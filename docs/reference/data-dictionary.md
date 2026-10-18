@@ -595,12 +595,30 @@ Generated from SQLAlchemy metadata. Do not edit by hand.
 | evidence_masked | TEXT | yes |  |
 | explanation | TEXT | no |  |
 | status | VARCHAR(30) | no |  |
+| revision | INTEGER | no |  |
 | reviewer_id | CHAR(32) | yes |  |
 | waiver_reason | TEXT | yes |  |
 | resolution_note | TEXT | yes |  |
 | resolved_at | DATETIME | yes |  |
 | supersedes_quarantine_id | CHAR(32) | yes | FK → quarantine_records.id |
 | corrected_snapshot_id | CHAR(32) | yes | FK → raw_snapshots.id |
+| id | CHAR(32) | no | PK |
+| created_at | DATETIME | no |  |
+| updated_at | DATETIME | no |  |
+
+## quarantine_resolutions
+
+| Column | Type | Nullable | Key/Reference |
+|---|---|---:|---|
+| organization_id | CHAR(32) | no | FK → organizations.id |
+| quarantine_id | CHAR(32) | no | FK → quarantine_records.id |
+| revision | INTEGER | no |  |
+| status | VARCHAR(30) | no |  |
+| note | TEXT | no |  |
+| reviewer_id | CHAR(32) | yes |  |
+| recorded_at | DATETIME | no |  |
+| corrected_snapshot_id | CHAR(32) | yes | FK → raw_snapshots.id |
+| imported | BOOLEAN | no |  |
 | id | CHAR(32) | no | PK |
 | created_at | DATETIME | no |  |
 | updated_at | DATETIME | no |  |

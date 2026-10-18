@@ -41,6 +41,12 @@ async def run() -> dict[str, object]:
         if snapshot is None:
             raise SystemExit("HRIS snapshot was not created")
         records = read_snapshot_records(snapshot)
+        source_validation = ValidationService(session).validate(
+            organization.id,
+            snapshot.id,
+            records,
+            load_yaml_model(Path("configs/demo/validations/hris_source_v1.yml"), ValidationConfig),
+        )
         profile_config = load_yaml_model(
             Path("configs/demo/profiles/default_v1.yml"), ProfileConfig
         )
@@ -105,6 +111,8 @@ async def run() -> dict[str, object]:
                 "blocking_failures": validation.result.blocking_failures,
                 "quarantine_records": len(validation.quarantine_ids),
             },
+            "source_validation": {"quarantine_records": len(source_validation.quarantine_ids)},
+            "exception_queue": ValidationService(session).queue_summary(organization.id),
             "matching": asdict(matching.metrics) if matching.metrics else None,
             "probabilistic_run_id": str(probabilistic.run_id),
             "review_queue": asdict(queue),

@@ -75,8 +75,8 @@ export async function reviewRequest<T>(
       401: "Authentication is required. Check the local demo identity configuration.",
       403: "Your account does not have permission to review this organization.",
       404: "This review record is unavailable. Refresh the queue.",
-      409: "Another reviewer changed this candidate. Refresh and inspect the latest decision before saving.",
-      422: "The review request is invalid. Check the decision and reason.",
+      409: "Another reviewer changed this record. Refresh and inspect the latest history before saving.",
+      422: "The review request is invalid. Check the status, note, and optional snapshot ID.",
       429: "Too many requests. Wait a moment before trying again.",
     };
     throw new ReviewApiError(response.status, messages[response.status] ?? "The request failed. No save was confirmed.");

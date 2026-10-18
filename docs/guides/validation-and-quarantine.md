@@ -5,3 +5,5 @@ Validation supports structural, completeness, validity, uniqueness, referential,
 Validation persists one aggregate result per rule and one quarantine row per failed record/rule. Evidence is masked. Quality dimensions report evaluated, failed, and pass-rate counts; no combined score is presented as universal truth.
 
 Blocking failures prevent later publication but do not rewrite source evidence. Quarantine statuses include open, acknowledged, corrected upstream, corrected mapping, waived, and closed. Resolution requires a reviewer and note. Waivers preserve a reason. Corrected snapshots must remain in the same organization scope. Reprocessing creates a new quarantine row linked through `supersedes_quarantine_id`.
+
+The [Connected Exception Desk](exception-desk.md) exposes saved issues, filters, resolution controls, and append-only history. Saves require the observed `expected_revision`, commit with their audit event, and return 409 when another reviewer has saved first. Reopening appends a new resolution and preserves earlier notes.

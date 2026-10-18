@@ -42,6 +42,8 @@ def verify() -> dict[str, Any]:
         "docs/PROJECT_OVERVIEW.md",
         "docs/evaluator/30-minute-tour.md",
         "docs/guides/review-workbench.md",
+        "docs/guides/exception-desk.md",
+        "docs/assets/exception-desk-v0.60.jpg",
         f"docs/release/v{version}.md",
         "docs/evidence/release-manifest.json",
         "benchmark-results/current.json",

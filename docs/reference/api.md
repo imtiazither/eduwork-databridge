@@ -12,7 +12,10 @@
 - `POST /api/v1/profiles` — requires `profiles:write`; scoped snapshot and same-source baseline checks before comparison, with audit attribution
 - `POST /api/v1/mappings/preview` — bounded mapping dry run with masked row errors
 - `POST /api/v1/validations` — multi-category validation, quality dimensions, persisted results, and quarantine IDs; optional `mapping_id` and `lookup_ids` validate the mapped canonical records instead of the raw snapshot, and the response labels its `record_source`
-- `POST /api/v1/quarantine/{quarantine_id}/resolve` — requires `validation:write`; authenticated actor attribution and audit, with a status and non-blank note
+- `GET /api/v1/quarantine` — organization-scoped saved issues, masked evidence and remediation, with status, severity, `needs_attention`, escaped record/rule `q`, and bounded pagination
+- `GET /api/v1/quarantine/summary` — organization totals, attention count, and status/severity breakdowns
+- `GET /api/v1/quarantine/{quarantine_id}/history` — append-only resolutions, latest revision first, with bounded pagination
+- `POST /api/v1/quarantine/{quarantine_id}/resolve` — requires `validation:write`, a status, non-blank note, and `expected_revision`; saves resolution/status/audit atomically and returns 409 for a stale revision
 - `POST /api/v1/matches/deterministic/synthetic` — organization-scoped deterministic linkage and synthetic truth evaluation
 - `GET /api/v1/matches/review-queue` — permission-gated candidate queue with status, `needs_review`, `unreviewed`, and escaped record-key `q` search, plus bounded pagination
 - `GET /api/v1/matches/review-queue/summary` — organization-scoped workload totals, unreviewed count, and current status counts
@@ -33,7 +36,13 @@ Health, readiness, version, and the public synthetic summary remain available wi
 
 Organization-scoped routes require `X-Organization-ID` and actor membership. Source connection/discovery also require a registered active source in that organization and `sources:read`. Snapshot processing checks ownership before reading files. Quarantine resolution derives the reviewer from the actor and rejects caller-supplied `reviewer_id` fields.
 
-## Match review
+## Exception review
+
+Exception routes require `validation:write`. Queue and history limits default to 50 and accept 1–200, with non-negative offsets. Search is limited to 100 characters; `%` and `_` are literal. Severity is `blocking`, `error`, or `warning`. Status is `open`, `acknowledged`, `corrected_upstream`, `corrected_mapping`, `waived`, or `closed`; `needs_attention=true` selects open and acknowledged issues. Summary counts describe the entire organization, independent of queue filters.
+
+Resolution requests accept `status`, `note` (1–2000 characters, non-blank), required non-negative `expected_revision`, and optional `corrected_snapshot_id` for the same source object and organization. Caller-supplied reviewer identities are rejected. The response contains `id`, `quarantine_id`, `revision`, `status`, `note`, authenticated `reviewer_id`, `recorded_at` (UTC), `corrected_snapshot_id`, and `imported`. History preserves all new resolutions, including reopen actions. Imported entries contain the latest note retained by older versions. Notes are retained in history; audit details contain status and revision without duplicating note text.
+
+## Identity queue
 
 The queue and summary require `matching:write`. Queue `limit` defaults to 50 and accepts 1–200; `offset` starts at zero. Status accepts `pending`, `auto_match`, `review`, `trusted_id_conflict`, `match`, `no_match`, `defer`, or `escalate`. `q` searches either record key case-insensitively with a maximum of 100 characters; percent and underscore are literal characters. Filters combine when supplied together.
 

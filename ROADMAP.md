@@ -31,7 +31,7 @@ Completion means the corresponding acceptance criteria and evidence are present 
 
 ## Next bounded updates
 
-- [ ] Connect the exception desk to persisted quarantine queues and resolution history
+- [x] Connect the exception desk to persisted quarantine queues and resolution history (v0.60.0)
 - [ ] Replace the illustrative orchestration assets with configured processing jobs
 - [ ] Verify a deployment identity provider and PostgreSQL concurrency in a target environment
 - [ ] Add workload-specific review assignment and production-calibrated matching labels

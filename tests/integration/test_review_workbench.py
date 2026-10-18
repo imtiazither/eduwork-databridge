@@ -266,7 +266,11 @@ def test_profile_and_quarantine_permissions_and_actor_attribution(review_environ
     path = f"/api/v1/quarantine/{quarantine_id}/resolve"
     assert (
         call(
-            "POST", path, org, {"status": "waived", "note": "Source reviewed"}, user="demo-viewer"
+            "POST",
+            path,
+            org,
+            {"status": "waived", "note": "Source reviewed", "expected_revision": 0},
+            user="demo-viewer",
         ).status_code
         == 403
     )
@@ -279,7 +283,9 @@ def test_profile_and_quarantine_permissions_and_actor_attribution(review_environ
         ).status_code
         == 422
     )
-    resolved = call("POST", path, org, {"status": "waived", "note": "Source reviewed"})
+    resolved = call(
+        "POST", path, org, {"status": "waived", "note": "Source reviewed", "expected_revision": 0}
+    )
     assert resolved.status_code == 200
     row = session.get(QuarantineRecord, uuid.UUID(quarantine_id))
     assert row.reviewer_id == DemoIdentityProvider(True, "test").authenticate("demo-admin").actor_id

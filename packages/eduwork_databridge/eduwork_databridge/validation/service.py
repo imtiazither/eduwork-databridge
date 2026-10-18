@@ -3,13 +3,14 @@ from dataclasses import dataclass
 from datetime import UTC, datetime
 from typing import Any
 
-from sqlalchemy import select
+from sqlalchemy import func, or_, select, update
 from sqlalchemy.orm import Session
 
 from eduwork_databridge.connectors.base import ConnectorError
 from eduwork_databridge.db.models.control import (
     IngestionRun,
     QuarantineRecord,
+    QuarantineResolution,
     RawSnapshot,
     SourceObject,
     SourceSystem,
@@ -18,6 +19,8 @@ from eduwork_databridge.db.models.control import (
 )
 from eduwork_databridge.schemas.config import ValidationConfig, ValidationRuleConfig
 from eduwork_databridge.validation.engine import ValidationEngine, ValidationRunResult
+
+ATTENTION_STATUSES = ("open", "acknowledged")
 
 
 @dataclass(frozen=True)
@@ -152,29 +155,172 @@ class ValidationService:
         note: str,
         corrected_snapshot_id: uuid.UUID | None = None,
         *,
+        expected_revision: int,
         commit: bool = True,
     ) -> QuarantineRecord:
-        allowed = {"acknowledged", "corrected_upstream", "corrected_mapping", "waived", "closed"}
+        allowed = {
+            "open",
+            "acknowledged",
+            "corrected_upstream",
+            "corrected_mapping",
+            "waived",
+            "closed",
+        }
         if status not in allowed:
             raise ConnectorError("invalid_quarantine_status", "Quarantine status is invalid")
-        record = self.session.get(QuarantineRecord, quarantine_id)
-        if record is None or record.organization_id != organization_id:
-            raise ConnectorError("quarantine_not_found", "Quarantine record was not found")
+        record = self.get_quarantine(organization_id, quarantine_id)
         if not note.strip():
             raise ConnectorError("resolution_note_required", "Resolution note is required")
         if corrected_snapshot_id:
-            self._snapshot_context(organization_id, corrected_snapshot_id)
-        record.status = status
-        record.reviewer_id = reviewer_id
-        record.resolution_note = note.strip()
-        record.waiver_reason = note.strip() if status == "waived" else None
-        record.corrected_snapshot_id = corrected_snapshot_id
-        record.resolved_at = datetime.now(UTC)
+            corrected, _ = self._snapshot_context(organization_id, corrected_snapshot_id)
+            original = self.session.get(RawSnapshot, record.raw_snapshot_id)
+            if original is None or corrected.source_object_id != original.source_object_id:
+                raise ConnectorError(
+                    "corrected_snapshot_mismatch",
+                    "Corrected snapshot must describe the same source object",
+                )
+        now = datetime.now(UTC)
+        changed = self.session.scalar(
+            update(QuarantineRecord)
+            .where(
+                QuarantineRecord.id == quarantine_id,
+                QuarantineRecord.organization_id == organization_id,
+                QuarantineRecord.revision == expected_revision,
+            )
+            .values(
+                status=status,
+                reviewer_id=reviewer_id,
+                resolution_note=note.strip(),
+                waiver_reason=note.strip() if status == "waived" else None,
+                corrected_snapshot_id=corrected_snapshot_id,
+                resolved_at=None if status in ATTENTION_STATUSES else now,
+                revision=expected_revision + 1,
+            )
+            .returning(QuarantineRecord.id)
+            .execution_options(synchronize_session=False)
+        )
+        if changed is None:
+            self.session.rollback()
+            raise ConnectorError(
+                "quarantine_conflict", "Exception changed. Refresh before recording a resolution."
+            )
+        self.session.add(
+            QuarantineResolution(
+                organization_id=organization_id,
+                quarantine_id=quarantine_id,
+                revision=expected_revision + 1,
+                status=status,
+                reviewer_id=reviewer_id,
+                note=note.strip(),
+                recorded_at=now,
+                corrected_snapshot_id=corrected_snapshot_id,
+                imported=False,
+            )
+        )
+        self.session.expire(record)
         if commit:
             self.session.commit()
         else:
             self.session.flush()
         return record
+
+    def get_quarantine(
+        self, organization_id: uuid.UUID, quarantine_id: uuid.UUID
+    ) -> QuarantineRecord:
+        record = self.session.get(QuarantineRecord, quarantine_id)
+        if record is None or record.organization_id != organization_id:
+            raise ConnectorError("quarantine_not_found", "Exception was not found")
+        return record
+
+    def review_queue(
+        self,
+        organization_id: uuid.UUID,
+        *,
+        status: str | None = None,
+        severity: str | None = None,
+        needs_attention: bool = False,
+        q: str | None = None,
+        limit: int = 50,
+        offset: int = 0,
+    ) -> list[tuple[QuarantineRecord, ValidationRule]]:
+        query = (
+            select(QuarantineRecord, ValidationRule)
+            .join(ValidationRule, QuarantineRecord.validation_rule_id == ValidationRule.id)
+            .where(
+                QuarantineRecord.organization_id == organization_id,
+                ValidationRule.organization_id == organization_id,
+            )
+        )
+        if status is not None:
+            query = query.where(QuarantineRecord.status == status)
+        if severity is not None:
+            query = query.where(ValidationRule.severity == severity)
+        if needs_attention:
+            query = query.where(QuarantineRecord.status.in_(ATTENTION_STATUSES))
+        if q and q.strip():
+            query = query.where(
+                or_(
+                    QuarantineRecord.source_record_key.icontains(q.strip(), autoescape=True),
+                    ValidationRule.title.icontains(q.strip(), autoescape=True),
+                    ValidationRule.rule_key.icontains(q.strip(), autoescape=True),
+                )
+            )
+        query = (
+            query.order_by(QuarantineRecord.created_at, QuarantineRecord.id)
+            .limit(limit)
+            .offset(offset)
+        )
+        return [(record, rule) for record, rule in self.session.execute(query)]
+
+    def queue_summary(self, organization_id: uuid.UUID) -> dict[str, Any]:
+        by_status = {
+            status: count
+            for status, count in self.session.execute(
+                select(QuarantineRecord.status, func.count())
+                .where(QuarantineRecord.organization_id == organization_id)
+                .group_by(QuarantineRecord.status)
+            ).all()
+        }
+        by_severity = {
+            severity: count
+            for severity, count in self.session.execute(
+                select(ValidationRule.severity, func.count())
+                .join(QuarantineRecord, QuarantineRecord.validation_rule_id == ValidationRule.id)
+                .where(
+                    QuarantineRecord.organization_id == organization_id,
+                    ValidationRule.organization_id == organization_id,
+                )
+                .group_by(ValidationRule.severity)
+            ).all()
+        }
+        return {
+            "total": sum(by_status.values()),
+            "needs_attention": sum(by_status.get(status, 0) for status in ATTENTION_STATUSES),
+            "by_status": by_status,
+            "by_severity": by_severity,
+        }
+
+    def resolution_history(
+        self,
+        organization_id: uuid.UUID,
+        quarantine_id: uuid.UUID,
+        *,
+        limit: int = 50,
+        offset: int = 0,
+    ) -> list[QuarantineResolution]:
+        self.get_quarantine(organization_id, quarantine_id)
+        return list(
+            self.session.scalars(
+                select(QuarantineResolution)
+                .where(
+                    QuarantineResolution.organization_id == organization_id,
+                    QuarantineResolution.quarantine_id == quarantine_id,
+                )
+                .order_by(QuarantineResolution.revision.desc())
+                .limit(limit)
+                .offset(offset)
+            )
+        )
 
     def reprocess_link(
         self,
