@@ -13,3 +13,9 @@ python3 scripts/demo_doctor.py
 ```
 
 The checker makes no changes. Each `[FIX]` item explains what is missing and how to fix it. `--json` prints the same checks for automation. The API and reviewer screen use separate local ports; `--api-port 8001 --ui-port 5174` checks alternatives when the usual ports are occupied.
+
+## Where demo data lives
+
+The quickstart workspace is `var/demos/quickstart/` inside your checkout. Its SQLite database, snapshots, exports, and logs are separate from the application's normal database and `.env` settings. The demo only reads the committed synthetic fixture. Existing company database settings are not used by this workflow.
+
+The launcher holds a workspace lock while running, so a second launcher cannot reset the same data. A reset must target a directory carrying the demo's ownership marker; unrecognized folders and symbolic links are refused. The workspace is excluded from Git.
