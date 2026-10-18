@@ -68,6 +68,20 @@ See [ARCHITECTURE.md](ARCHITECTURE.md) and [the context diagram](docs/architectu
 
 ## Quickstart
 
+### Try the synthetic demo
+
+Install Python 3.12 or 3.13, uv, and Node.js 24 LTS, then open this repository folder in a terminal:
+
+```bash
+python3 scripts/demo.py
+```
+
+On Windows use `python`. The launcher prepares a separate fictional-data database, starts both servers, and opens the reviewer screen. No Docker, GitHub login, or company data is required. Press Ctrl+C to stop; your demo notes are kept. See the [beginner demo guide](docs/guides/demo-quickstart.md) for installation links, a five-minute walkthrough, and safe reset instructions.
+
+Check prerequisites without changing anything: `python3 scripts/demo_doctor.py`.
+
+### Developer setup
+
 ### Prerequisites
 
 - Python 3.12

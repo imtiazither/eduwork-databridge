@@ -1,4 +1,4 @@
-.PHONY: install lock lint format type test test-fast test-migration frontend frontend-test frontend-build generate generate-synthetic generate-check check docs-build benchmark-smoke backup-verify sbom security-scan package-build package-verify release-checksums release-verify api ui seed migrate demo clean
+.PHONY: install lock lint format type test test-fast test-migration frontend frontend-test frontend-build generate generate-synthetic generate-check check docs-build benchmark-smoke backup-verify sbom security-scan package-build package-verify release-checksums release-verify api ui seed migrate demo demo-start demo-doctor clean
 
 install:
 	uv sync --frozen --extra dev
@@ -61,6 +61,12 @@ migrate:
 
 demo: migrate seed
 	uv run python scripts/run_demo.py
+
+demo-start:
+	python3 scripts/demo.py
+
+demo-doctor:
+	python3 scripts/demo_doctor.py
 
 docs-build:
 	uv run mkdocs build --strict

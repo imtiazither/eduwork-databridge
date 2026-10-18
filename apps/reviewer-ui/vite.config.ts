@@ -1,8 +1,10 @@
 import { defineConfig } from "vitest/config";
 import react from "@vitejs/plugin-react";
+import { loadEnv } from "vite";
 
 export default defineConfig(({ mode }) => {
   const isPages = mode === "pages";
+  const apiTarget = loadEnv(mode, ".", "VITE_DEMO_").VITE_DEMO_PROXY_TARGET || "http://127.0.0.1:8000";
 
   return {
     base: isPages ? "/eduwork-databridge/" : "/",
@@ -12,9 +14,9 @@ export default defineConfig(({ mode }) => {
     plugins: [react()],
     server: {
       proxy: {
-        "/api": "http://127.0.0.1:8000",
-        "/healthz": "http://127.0.0.1:8000",
-        "/readyz": "http://127.0.0.1:8000",
+        "/api": apiTarget,
+        "/healthz": apiTarget,
+        "/readyz": apiTarget,
       },
     },
     test: {

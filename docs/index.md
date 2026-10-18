@@ -38,6 +38,7 @@ The screenshot and walkthrough below show the earlier static case file. For the 
 
 ## Start based on your goal
 
+- **First-time user:** [start the synthetic demo](guides/demo-quickstart.md) with one command and follow the five-minute walkthrough.
 - **Evaluator:** follow the [30-minute tour](evaluator/30-minute-tour.md).
 - **Developer:** use the [developer setup](developer/getting-started.md).
 - **Security reviewer:** read the [connector threat model](security/connector-threat-model.md) and [release checklists](release/release-checklist.md).
