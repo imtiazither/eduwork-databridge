@@ -44,6 +44,7 @@ nav:
       - Plain-English explainer source: EduWork_DataBridge_Explanation_ELI5.md
       - Project overview: PROJECT_OVERVIEW.md
   - Evaluate:
+      - Try the local demo: guides/demo-quickstart.md
       - 30-minute tour: evaluator/30-minute-tour.md
       - Demo walkthrough: evaluator/demo-walkthrough.md
   - Build:
