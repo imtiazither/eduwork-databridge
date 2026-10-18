@@ -2,10 +2,10 @@
   "$schema": "http://cyclonedx.org/schema/bom-1.5.schema.json",
   "bomFormat": "CycloneDX",
   "specVersion": "1.5",
-  "serialNumber": "urn:uuid:84a4fc08-0621-45d7-b8a1-f69afc145972",
+  "serialNumber": "urn:uuid:9e9b7404-6ef3-4706-8ba9-3042e1ac966b",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-10-18T17:03:50.341Z",
+    "timestamp": "2026-10-18T17:32:00.924Z",
     "lifecycles": [
       {
         "phase": "pre-build"
@@ -19,12 +19,12 @@
       }
     ],
     "component": {
-      "bom-ref": "eduwork-databridge-reviewer-ui@0.60.0",
+      "bom-ref": "eduwork-databridge-reviewer-ui@0.61.0",
       "type": "library",
       "name": "reviewer-ui",
-      "version": "0.60.0",
+      "version": "0.61.0",
       "scope": "required",
-      "purl": "pkg:npm/eduwork-databridge-reviewer-ui@0.60.0",
+      "purl": "pkg:npm/eduwork-databridge-reviewer-ui@0.61.0",
       "properties": [
         {
           "name": "cdx:npm:package:private",
@@ -1983,6 +1983,39 @@
       ]
     },
     {
+      "bom-ref": "@playwright/test@1.64.1",
+      "type": "library",
+      "name": "@playwright/test",
+      "version": "1.64.1",
+      "scope": "optional",
+      "purl": "pkg:npm/%40playwright/test@1.64.1",
+      "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/@playwright/test/-/test-1.64.1.tgz"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "21a6069a5fe748e89959139f3edb882fb9debaef6a0ce6774cdbcd963508ae10ccc6219380f8f38ff83da7d471a52dad49ea4f0d163e53001a11e88ab54bc802"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ]
+    },
+    {
       "bom-ref": "@rolldown/pluginutils@1.0.0-beta.27",
       "type": "library",
       "name": "@rolldown/pluginutils",
@@ -3282,6 +3315,39 @@
         {
           "alg": "SHA-512",
           "content": "1a174f832d5e978fc898fd395f4e54c38730dbf33ddc10949a712f599352b650b310a304e05924f98a680393a21cd426a12ec269f6fc5dadcfc9af26d50af37a"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ]
+    },
+    {
+      "bom-ref": "@types/node@24.19.2",
+      "type": "library",
+      "name": "@types/node",
+      "version": "24.19.2",
+      "scope": "optional",
+      "purl": "pkg:npm/%40types/node@24.19.2",
+      "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/@types/node/-/node-24.19.2.tgz"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "f77778f700962640b237ceccc4ba4d37a2973c2c05c3b6d5520efd986515d4e4b8d09196c150abf27eb50d7092ab3ec257afd57cf91bef179ceee3f633e40759"
         }
       ],
       "licenses": [
@@ -5108,6 +5174,72 @@
       ]
     },
     {
+      "bom-ref": "playwright@1.64.1",
+      "type": "library",
+      "name": "playwright",
+      "version": "1.64.1",
+      "scope": "optional",
+      "purl": "pkg:npm/playwright@1.64.1",
+      "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/playwright/-/playwright-1.64.1.tgz"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "1c2ad5847af9410bb0628b301141936fb806a79db6c9f95bbff493f27178b05586b8b8d00add7b43f12e6e918648d2989f5b6c4c23d9c6a1e11c27d5511bbb50"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ]
+    },
+    {
+      "bom-ref": "playwright-core@1.64.1",
+      "type": "library",
+      "name": "playwright-core",
+      "version": "1.64.1",
+      "scope": "optional",
+      "purl": "pkg:npm/playwright-core@1.64.1",
+      "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/playwright-core/-/playwright-core-1.64.1.tgz"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "042e2cf32e9211503a435ad2c594eda3c848d4a508df15e51c6660bc6a8fe08a8f748fdae855fd1f6f480cdcfbbcaa3d976d5be8b7d8a2c49c3cbe8cdf1c720d"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ]
+    },
+    {
       "bom-ref": "postcss@8.5.26",
       "type": "library",
       "name": "postcss",
@@ -6017,6 +6149,39 @@
       ]
     },
     {
+      "bom-ref": "undici-types@7.24.6",
+      "type": "library",
+      "name": "undici-types",
+      "version": "7.24.6",
+      "scope": "optional",
+      "purl": "pkg:npm/undici-types@7.24.6",
+      "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/undici-types/-/undici-types-7.24.6.tgz"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "591356fac2608f9381378ff42691c5aadab38696e75741ae07e3a8cc0f6008bedaf7ddd2994fb5241642ccb37162c6cc7c87832fe953b29843e6337937e9f4ce"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ]
+    },
+    {
       "bom-ref": "update-browserslist-db@1.3.2",
       "type": "library",
       "name": "update-browserslist-db",
@@ -6448,13 +6613,15 @@
   ],
   "dependencies": [
     {
-      "ref": "eduwork-databridge-reviewer-ui@0.60.0",
+      "ref": "eduwork-databridge-reviewer-ui@0.61.0",
       "dependsOn": [
         "@tanstack/react-query@5.101.2",
         "react@19.2.7",
         "react-dom@19.2.7",
+        "@playwright/test@1.64.1",
         "@testing-library/jest-dom@6.9.1",
         "@testing-library/react@16.3.2",
+        "@types/node@24.19.2",
         "@types/react@19.2.17",
         "@types/react-dom@19.2.3",
         "@vitejs/plugin-react@4.7.0",
@@ -6792,6 +6959,12 @@
       ]
     },
     {
+      "ref": "@playwright/test@1.64.1",
+      "dependsOn": [
+        "playwright@1.64.1"
+      ]
+    },
+    {
       "ref": "@rolldown/pluginutils@1.0.0-beta.27",
       "dependsOn": []
     },
@@ -6992,6 +7165,12 @@
     {
       "ref": "@types/estree@1.0.9",
       "dependsOn": []
+    },
+    {
+      "ref": "@types/node@24.19.2",
+      "dependsOn": [
+        "undici-types@7.24.6"
+      ]
     },
     {
       "ref": "@types/react@19.2.17",
@@ -7316,6 +7495,16 @@
       "dependsOn": []
     },
     {
+      "ref": "playwright@1.64.1",
+      "dependsOn": [
+        "playwright-core@1.64.1"
+      ]
+    },
+    {
+      "ref": "playwright-core@1.64.1",
+      "dependsOn": []
+    },
+    {
       "ref": "postcss@8.5.26",
       "dependsOn": [
         "nanoid@3.3.18",
@@ -7483,6 +7672,10 @@
       "dependsOn": []
     },
     {
+      "ref": "undici-types@7.24.6",
+      "dependsOn": []
+    },
+    {
       "ref": "update-browserslist-db@1.3.2",
       "dependsOn": [
         "browserslist@4.28.9",
@@ -7493,6 +7686,7 @@
     {
       "ref": "vite@7.3.6",
       "dependsOn": [
+        "@types/node@24.19.2",
         "esbuild@0.28.1",
         "fdir@6.5.0",
         "picomatch@4.0.7",
@@ -7506,6 +7700,7 @@
       "ref": "vitest@5.0.0",
       "dependsOn": [
         "vite@7.3.6",
+        "@types/node@24.19.2",
         "jsdom@26.1.0",
         "@types/chai@5.2.3",
         "@vitest/mocker@5.0.0",

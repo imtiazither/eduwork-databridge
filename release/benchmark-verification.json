@@ -1,22 +1,22 @@
 {
   "status": "passed",
-  "version": "0.60.0",
+  "version": "0.61.0",
   "current": "benchmark-results/current.json",
   "interpretation": "Local regression check only; not a production SLA.",
   "baseline": "benchmark-baseline/small-v0.14.0.json",
   "budgets": "benchmark-baseline/budgets.json",
   "duration_ratios": {
-    "csv_connector": 0.7987,
-    "deterministic_matching": 0.7582,
-    "json_connector": 0.6866,
-    "mapping": 0.6352,
-    "parquet_connector": 1.0317,
-    "parquet_export": 0.8942,
-    "probabilistic_matching": 0.6232,
-    "profiling": 0.6295,
-    "synthetic_generation": 0.6406,
-    "training_mart": 0.684,
-    "validation": 0.6264,
-    "xlsx_connector": 0.643
+    "csv_connector": 1.1724,
+    "deterministic_matching": 2.0642,
+    "json_connector": 0.8366,
+    "mapping": 0.6628,
+    "parquet_connector": 1.0642,
+    "parquet_export": 0.9123,
+    "probabilistic_matching": 0.6303,
+    "profiling": 0.6152,
+    "synthetic_generation": 0.6274,
+    "training_mart": 0.6493,
+    "validation": 0.9384,
+    "xlsx_connector": 0.6627
   }
 }

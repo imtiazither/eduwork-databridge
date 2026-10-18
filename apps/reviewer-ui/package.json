@@ -1,14 +1,15 @@
 {
   "name": "eduwork-databridge-reviewer-ui",
   "private": true,
-  "version": "0.60.0",
+  "version": "0.61.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "build:pages": "tsc -b && vite build --mode pages",
     "test": "vitest",
-    "typecheck": "tsc -b --pretty false"
+    "typecheck": "tsc -b --pretty false",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.83.0",
@@ -16,8 +17,10 @@
     "react-dom": "^19.1.0"
   },
   "devDependencies": {
+    "@playwright/test": "1.64.1",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
+    "@types/node": "^24.19.2",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
     "@vitejs/plugin-react": "^4.6.0",

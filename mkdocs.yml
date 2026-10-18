@@ -76,6 +76,7 @@ nav:
       - Troubleshooting: troubleshooting.md
       - FAQ: faq.md
   - Release:
+      - v0.61.0: release/v0.61.0.md
       - v0.60.0: release/v0.60.0.md
       - v0.50.0: release/v0.50.0.md
       - v0.20.0: release/v0.20.0.md

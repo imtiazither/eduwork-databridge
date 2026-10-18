@@ -2,9 +2,9 @@
   "bomFormat": "CycloneDX",
   "specVersion": "1.5",
   "version": 1,
-  "serialNumber": "urn:uuid:6d5588dd-f014-4871-a548-a52b21bf78a0",
+  "serialNumber": "urn:uuid:833a0457-b350-4683-8740-9cd1a0758baf",
   "metadata": {
-    "timestamp": "2026-10-18T17:03:49.916496000Z",
+    "timestamp": "2026-10-18T17:32:00.504493000Z",
     "tools": [
       {
         "vendor": "Astral Software Inc.",
@@ -14,9 +14,9 @@
     ],
     "component": {
       "type": "library",
-      "bom-ref": "eduwork-databridge-1@0.60.0",
+      "bom-ref": "eduwork-databridge-1@0.61.0",
       "name": "eduwork-databridge",
-      "version": "0.60.0",
+      "version": "0.61.0",
       "properties": [
         {
           "name": "uv:package:is_project_root",

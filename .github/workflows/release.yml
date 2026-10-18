@@ -25,6 +25,8 @@ jobs:
       - run: uv sync --frozen --extra dev
       - run: npm --prefix apps/reviewer-ui ci
       - run: make check docs-build benchmark-smoke sbom security-scan package-build package-verify
+      - run: npm --prefix apps/reviewer-ui exec -- playwright install --with-deps chromium
+      - run: npm --prefix apps/reviewer-ui run test:e2e
       - name: Build and smoke-test Compose stack
         run: |
           docker compose config

@@ -12,6 +12,8 @@ htmlcov/
 node_modules/
 *.tsbuildinfo
 apps/reviewer-ui/dist/
+apps/reviewer-ui/playwright-report/
+apps/reviewer-ui/test-results/
 *.sqlite3
 *.db
 .DS_Store

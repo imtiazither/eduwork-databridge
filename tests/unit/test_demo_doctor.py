@@ -52,3 +52,17 @@ def test_report_is_readable_and_machine_readable(capsys):
     assert "Install uv" in capsys.readouterr().out
     assert doctor.report([checks[0]], as_json=True)
     assert '"ready": true' in capsys.readouterr().out
+
+
+def test_recently_closed_listener_does_not_block_restart():
+    with doctor.socket.socket() as listener:
+        listener.setsockopt(doctor.socket.SOL_SOCKET, doctor.socket.SO_REUSEADDR, 1)
+        listener.bind(("127.0.0.1", 0))
+        listener.listen(1)
+        port = listener.getsockname()[1]
+        assert not doctor.port_check("API", port).ok
+        with doctor.socket.create_connection(("127.0.0.1", port)) as client:
+            connection, _ = listener.accept()
+            connection.close()
+            client.recv(1)
+    assert doctor.port_check("API", port).ok

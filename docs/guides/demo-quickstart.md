@@ -2,6 +2,10 @@
 
 The demo uses fictional HR, learning, assessment, and credential records. You do not need a GitHub account, Docker, a company database, or real learner information to try it.
 
+## Get the project
+
+For a no-install look, [open the public example](https://imtiazither.github.io/eduwork-databridge/). To save review notes on your own computer, [download the v0.61.0 repository ZIP](https://github.com/imtiazither/eduwork-databridge/archive/refs/tags/v0.61.0.zip), extract it, and use the extracted folder for the steps below. You can also use an existing GitHub Desktop checkout updated to this version. The Python wheel alone is not the complete demo: the repository supplies the UI, configurations, migrations, and fictional datasets.
+
 ## Check your computer
 
 Install Python 3.12 or 3.13, [uv](https://docs.astral.sh/uv/getting-started/installation/), and [Node.js 24 LTS](https://nodejs.org/en/download) with npm. Internet access is needed to download dependencies on the first run. Reopen your terminal after installing tools.
@@ -58,6 +62,17 @@ Type `RESET quickstart` when prompted. This removes only the owned synthetic wor
 - Workspace already in use: stop its existing launcher. After a crash, remove the named `.lock` file only after confirming neither of its servers is still running.
 
 This is a local evaluation workflow, not a company deployment installer. For an organizational deployment, arrange authentication, backups, approved data access, and security review with your IT team; see [local deployment](../deployment/local.md).
+
+## Automated verification for maintainers
+
+After installing the locked Python and frontend dependencies, install the browser once and run the same journey used in CI:
+
+```bash
+npm --prefix apps/reviewer-ui exec -- playwright install chromium
+npm --prefix apps/reviewer-ui run test:e2e
+```
+
+The check uses a separate owned `browser-check` workspace on ports 8186 and 5186 and explicitly resets only that workspace. It tests desktop and mobile layouts, saves a real resolution, reloads its history, and checks viewer restrictions. It does not reuse another running server. A report and screenshots are written under the frontend's ignored `playwright-report/` and `test-results/` folders; CI retains them for seven days.
 
 ## Where demo data lives
 

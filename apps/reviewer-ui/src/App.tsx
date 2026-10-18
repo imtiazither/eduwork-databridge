@@ -366,7 +366,7 @@ export function App({ preview = staticDemo }: { preview?: boolean } = {}) {
               <a className="button text" href="#story">Read the Monday story <span aria-hidden="true">→</span></a>
             </div>
             <div className="hero-footnote">
-              <span>Public synthetic demo · v0.60.0</span>
+              <span>Public synthetic demo · v0.61.0</span>
               <p>No customer records. No hidden matches. No outcome claims.</p>
             </div>
           </div>

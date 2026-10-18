@@ -49,7 +49,10 @@ def port_check(name: str, port: int) -> Check:
         return Check(name, False, f"Invalid port {port}", "Choose a port from 1024 to 65535.")
     try:
         with socket.socket() as probe:
+            if sys.platform != "win32":
+                probe.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
             probe.bind(("127.0.0.1", port))
+            probe.listen(1)
         return Check(name, True, f"127.0.0.1:{port} is available")
     except OSError:
         return Check(

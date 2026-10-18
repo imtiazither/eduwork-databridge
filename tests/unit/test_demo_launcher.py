@@ -1,3 +1,4 @@
+import socket
 import subprocess
 from pathlib import Path
 from unittest.mock import Mock
@@ -9,7 +10,7 @@ from scripts.demo_workspace import DemoWorkspace
 
 
 def test_automatic_ports_skip_occupied_and_explicit_ports_fail():
-    with demo.socket.socket() as listener:
+    with socket.socket() as listener:
         listener.bind(("127.0.0.1", 0))
         port = listener.getsockname()[1]
         assert demo.choose_port(port, None) != port
@@ -121,3 +122,14 @@ def test_failed_readiness_stops_every_started_server(monkeypatch, tmp_path: Path
         with pytest.raises(ValueError, match="not ready"):
             demo.serve(workspace, tmp_path / "python", 8000, 5173, False)
     stop.assert_called_once_with(children)
+
+
+def test_interrupted_preparation_stops_its_child(monkeypatch, tmp_path: Path):
+    child = Mock()
+    child.wait.side_effect = KeyboardInterrupt
+    monkeypatch.setattr(demo.subprocess, "Popen", Mock(return_value=child))
+    stop = Mock()
+    monkeypatch.setattr(demo, "stop", stop)
+    with pytest.raises(KeyboardInterrupt):
+        demo.run_step("Install", ["uv", "sync"], tmp_path, {}, tmp_path / "setup.log")
+    stop.assert_called_once_with([child])

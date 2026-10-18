@@ -13,7 +13,7 @@ function mockSuccessfulApi() {
   vi.stubGlobal("fetch", vi.fn((input: RequestInfo | URL) => {
     const url = String(input);
     const body = url.endsWith("/api/v1/version")
-      ? { version: "0.60.0" }
+      ? { version: "0.61.0" }
       : url.endsWith("/api/v1/organizations")
         ? []
         : url.endsWith("/api/v1/me")
@@ -35,7 +35,7 @@ test("renders the case story and live API version", async () => {
   mockSuccessfulApi();
   renderApp();
   expect(screen.getByRole("heading", { name: "Can we trust the training report?" })).toBeInTheDocument();
-  expect(await screen.findByText("API 0.60.0")).toBeInTheDocument();
+  expect(await screen.findByText("API 0.61.0")).toBeInTheDocument();
   expect(screen.getByText("366")).toBeInTheDocument();
 });
 
@@ -112,7 +112,7 @@ test("keeps the Pages preview free of API requests", () => {
 test("opens the connected exception desk when the API is available", async () => {
   mockSuccessfulApi();
   renderApp();
-  await screen.findByText("API 0.60.0");
+  await screen.findByText("API 0.61.0");
   fireEvent.click(screen.getByRole("button", { name: /Exceptions/ }));
   expect(screen.getByRole("heading", { name: "Exception desk" })).toBeInTheDocument();
 });
@@ -120,7 +120,7 @@ test("opens the connected exception desk when the API is available", async () =>
 test("opens the connected review desk when the API is available", async () => {
   mockSuccessfulApi();
   renderApp();
-  await screen.findByText("API 0.60.0");
+  await screen.findByText("API 0.61.0");
   fireEvent.click(screen.getByRole("button", { name: /Identity review/ }));
   expect(screen.getByRole("heading", { name: /Evidence, a reason, and a recorded decision/ })).toBeInTheDocument();
   expect(await screen.findByText(/No accessible organizations/)).toBeInTheDocument();

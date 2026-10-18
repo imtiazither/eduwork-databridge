@@ -4,6 +4,17 @@ All notable changes will be documented here. The project follows Semantic Versio
 
 ## Unreleased
 
+## [0.61.0] - 2026-10-18
+
+### Added
+
+- Read-only prerequisite checker with actionable Python, uv, Node/npm, checkout, and port diagnostics
+- One-command local demo startup with readiness checks, automatic free ports, logs, browser opening, and server cleanup
+- Owned synthetic workspaces that ignore company database settings, preserve saved reviews on restart, and require explicit reset confirmation
+- Workspace locking and path/ownership safeguards against resetting unrelated data
+- Desktop/mobile Playwright journeys covering a saved exception resolution, reload persistence, and viewer permission denial
+- CI browser evidence and a beginner-friendly installation, five-minute walkthrough, and troubleshooting guide
+
 ## [0.60.0] - 2026-10-18
 
 ### Added

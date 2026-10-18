@@ -31,6 +31,8 @@ Completion means the corresponding acceptance criteria and evidence are present 
 
 ## Next bounded updates
 
+- [x] One-command synthetic demo, setup diagnostics, isolated storage, safe reset, and automated browser journey (v0.61.0)
+
 - [x] Connect the exception desk to persisted quarantine queues and resolution history (v0.60.0)
 - [ ] Replace the illustrative orchestration assets with configured processing jobs
 - [ ] Verify a deployment identity provider and PostgreSQL concurrency in a target environment

@@ -104,6 +104,7 @@ class DemoWorkspace:
         )
 
     def environment(self) -> dict[str, str]:
+        database = (self.path / "control.db").as_posix()
         env = {
             key: value
             for key, value in os.environ.items()
@@ -111,7 +112,7 @@ class DemoWorkspace:
         }
         env.update(
             {
-                "EDUWORK_DATABASE_URL": f"sqlite+pysqlite:///{self.path / 'control.db'}",
+                "EDUWORK_DATABASE_URL": f"sqlite+pysqlite:///{database}",
                 "EDUWORK_ENVIRONMENT": "development",
                 "EDUWORK_DEMO_MODE": "true",
                 "EDUWORK_DEMO_IDENTITY_ENABLED": "true",

@@ -5,7 +5,6 @@ import json
 import os
 import shutil
 import signal
-import socket
 import subprocess
 import sys
 import time
@@ -17,10 +16,10 @@ from urllib.error import URLError
 from urllib.request import ProxyHandler, Request, build_opener
 
 if TYPE_CHECKING or not __package__:
-    from demo_doctor import ROOT, inspect, report
+    from demo_doctor import ROOT, inspect, port_check, report
     from demo_workspace import DemoWorkspace
 else:
-    from scripts.demo_doctor import ROOT, inspect, report
+    from scripts.demo_doctor import ROOT, inspect, port_check, report
     from scripts.demo_workspace import DemoWorkspace
 
 
@@ -29,12 +28,8 @@ def choose_port(preferred: int, explicit: int | None, excluded: int | None = Non
     for port in candidates:
         if port == excluded or not 1024 <= port <= 65535:
             continue
-        try:
-            with socket.socket() as probe:
-                probe.bind(("127.0.0.1", port))
+        if port_check("Demo port", port).ok:
             return port
-        except OSError:
-            continue
     raise ValueError(
         "The requested port is occupied or invalid. Choose another --api-port or --ui-port."
     )
@@ -56,7 +51,21 @@ def run_step(label: str, command: list[str], root: Path, env: dict[str, str], lo
     with log.open("a", encoding="utf-8") as stream:
         stream.write(f"\n{label}\n")
         stream.flush()
-        subprocess.run(command, cwd=root, env=env, stdout=stream, stderr=stream, check=True)
+        child = subprocess.Popen(
+            command,
+            cwd=root,
+            env=env,
+            stdout=stream,
+            stderr=stream,
+            start_new_session=os.name == "posix",
+        )
+        try:
+            code = child.wait()
+        except BaseException:
+            stop([child])
+            raise
+        if code:
+            raise subprocess.CalledProcessError(code, command)
 
 
 def prepare(workspace: DemoWorkspace, skip_install: bool) -> Path:

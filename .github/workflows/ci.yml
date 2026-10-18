@@ -64,3 +64,31 @@ jobs:
       - run: uv run python scripts/scan_secrets.py --root .
       - run: rm -rf release/packages && mkdir -p release/packages && uv run python -m build --outdir release/packages
       - run: uv run python scripts/verify_packages.py
+
+  demo-browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: "24"
+          cache: npm
+          cache-dependency-path: apps/reviewer-ui/package-lock.json
+      - run: python -m pip install uv==0.11.29
+      - run: uv sync --frozen --extra dev
+      - run: npm --prefix apps/reviewer-ui ci
+      - run: npm --prefix apps/reviewer-ui exec -- playwright install --with-deps chromium
+      - run: npm --prefix apps/reviewer-ui run test:e2e
+      - name: Preserve browser evidence
+        if: always()
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: demo-browser-evidence
+          path: |
+            apps/reviewer-ui/playwright-report/
+            apps/reviewer-ui/test-results/
+          retention-days: 7

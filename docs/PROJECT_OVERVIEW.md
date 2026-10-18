@@ -1,6 +1,6 @@
 # EduWork DataBridge: Project Overview, Usage Guide, and Benefits
 
-**Version:** 0.60.0
+**Version:** 0.61.0
 **License:** MIT
 
 For the human problem that motivated the platform, read [the project story](PROJECT_STORY.md). The [five-page field guide](EduWork_DataBridge_Field_Guide.pdf) pairs that story with the current reviewer desk.
@@ -67,7 +67,11 @@ Typical uses include:
 5. **Faster evaluation and extension.** Synthetic fixtures, a 30-minute evaluator tour, developer instructions, JSON Schemas, docs, tests, and reproducible evidence make the project inspectable and extendable.
 6. **Lower pilot risk.** A real organization can begin with one authorized, bounded workflow while keeping proprietary data, credentials, mappings, endpoints, and results private.
 
-## v0.60.0: Connected exception desk
+## v0.61.0: One-command demo
+
+New users can run `python3 scripts/demo.py` from the repository folder to prepare fictional data and start both servers. The workflow checks prerequisites, uses an isolated database, preserves demo notes on restart, and requires confirmation before resetting them. See the [beginner demo guide](guides/demo-quickstart.md).
+
+## Connected exception desk
 
 v0.60.0 connects the exception desk to saved validation issues. Reviewers can search and filter the queue, inspect masked evidence and remediation guidance, record a resolution, and revisit append-only history. Revision checks reject stale saves; each resolution commits with its audit event. The identity review workflow from v0.50 remains available. See the [exception desk guide](guides/exception-desk.md).
 
@@ -122,10 +126,11 @@ Use `docs/evaluator/30-minute-tour.md` to inspect the synthetic data, run the co
 
 ## Verification and release evidence
 
-The v0.60.0 release includes:
+The v0.61.0 release includes:
 
 - Automated Python and frontend tests with enforced repository-wide coverage
-- Ruff, format, and strict mypy checks across 81 Python source and script files
+- Ruff, format, and strict mypy checks across the Python application and scripts
+- Automated desktop/mobile browser checks against the actual demo launcher and saved review history
 - Frontend workflow tests and TypeScript/Vite production and Pages builds
 - Generated JSON Schema contracts and six Alembic migrations, including review and resolution history
 - Protected exception queue, summary, and resolution history endpoints with atomic audit persistence
