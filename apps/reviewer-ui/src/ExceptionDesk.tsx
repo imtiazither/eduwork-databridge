@@ -163,7 +163,7 @@ function ExceptionQueue({ user, organizationId }: { user: string; organizationId
     {notice && <p className="review-notice" role="status">{notice}</p>}
     <ErrorNotice error={queue.error} />
     {queue.isPending && <p role="status">Loading exceptions…</p>}
-    {queue.data && !queue.error && <p className="exception-results" role="status">Showing {total ? pageOffset + 1 : 0}-{pageOffset + queue.data.items.length} of {total} matching issues</p>}
+    {queue.data && !queue.error && <p className="exception-results" role="status">Showing {queue.data.items.length ? pageOffset + 1 : 0}-{queue.data.items.length ? pageOffset + queue.data.items.length : 0} of {total} matching issues</p>}
     {queue.data?.items.length === 0 && !queue.error && <div className="review-empty">
       <h3>No exceptions in this view.</h3><p>{summary.data?.total === 0 ? "Run a validation to create issues for this organization." : "Change the filters or search to find other issues."}</p>
     </div>}
@@ -181,7 +181,7 @@ function ExceptionQueue({ user, organizationId }: { user: string; organizationId
     <div className="review-pagination" aria-label="Exception pagination">
       <button type="button" disabled={pageOffset === 0 || queue.isFetching || queue.isError} onClick={() => guard.leave(() => { setOffset(Math.max(0, pageOffset - pageSize)); setSelectedId(null); })}>Previous page</button>
       <span>{queue.isError ? "Page unavailable" : `Page ${Math.floor(pageOffset / pageSize) + 1} of ${Math.max(1, Math.ceil(total / pageSize))}`}</span>
-      <button type="button" disabled={!queue.data || pageOffset + queue.data.items.length >= total || queue.isFetching || queue.isError} onClick={() => guard.leave(() => { setOffset(pageOffset + pageSize); setSelectedId(null); })}>Next page</button>
+      <button type="button" disabled={!queue.data || queue.data.items.length === 0 || pageOffset + queue.data.items.length >= total || queue.isFetching || queue.isError} onClick={() => guard.leave(() => { setOffset(pageOffset + pageSize); setSelectedId(null); })}>Next page</button>
     </div>
   </>;
 }

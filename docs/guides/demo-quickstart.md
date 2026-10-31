@@ -4,7 +4,7 @@ The demo uses fictional HR, learning, assessment, and credential records. You do
 
 ## Get the project
 
-For a no-install look, [open the public example](https://imtiazither.github.io/eduwork-databridge/). To save review notes on your own computer, [download the v0.61.0 repository ZIP](https://github.com/imtiazither/eduwork-databridge/archive/refs/tags/v0.61.0.zip), extract it, and use the extracted folder for the steps below. You can also use an existing GitHub Desktop checkout updated to this version. The Python wheel alone is not the complete demo: the repository supplies the UI, configurations, migrations, and fictional datasets.
+For a no-install look, [open the public example](https://imtiazither.github.io/eduwork-databridge/). To save review notes on your own computer, [download the v0.62.0 repository ZIP](https://github.com/imtiazither/eduwork-databridge/archive/refs/tags/v0.62.0.zip), extract it, and use the extracted folder for the steps below. You can also use an existing GitHub Desktop checkout updated to this version. The Python wheel alone is not the complete demo: the repository supplies the UI, configurations, migrations, and fictional datasets.
 
 ## Check your computer
 

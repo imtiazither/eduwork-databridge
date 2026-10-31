@@ -104,7 +104,7 @@ test("shows empty and unavailable queues without fixture substitution", async ()
   expect(screen.queryByRole("button", { name: "Save resolution" })).not.toBeInTheDocument();
 });
 
-test.each(["record", "filter", "severity", "sort", "organization", "identity", "refresh", "page"])("protects an unfinished note before changing %s", async action => {
+test.each(["record", "filter", "severity", "sort", "organization", "identity", "refresh", "page", "search", "reset"])("protects an unfinished note before changing %s", async action => {
   setupApi({ count: 21 }); renderDesk();
   await screen.findByRole("heading", { name: "Missing employee ID" });
   const confirm = vi.spyOn(window, "confirm").mockReturnValue(false);
@@ -117,6 +117,8 @@ test.each(["record", "filter", "severity", "sort", "organization", "identity", "
   if (action === "identity") fireEvent.change(screen.getByLabelText("Local demo identity"), { target: { value: "demo-viewer" } });
   if (action === "refresh") fireEvent.click(screen.getByRole("button", { name: "Refresh exceptions" }));
   if (action === "page") fireEvent.click(screen.getByRole("button", { name: "Next page" }));
+  if (action === "search") { fireEvent.change(screen.getByLabelText("Search record or rule"), { target: { value: "HR-1" } }); fireEvent.click(screen.getByRole("button", { name: "Search" })); }
+  if (action === "reset") fireEvent.click(screen.getByRole("button", { name: "Reset filters" }));
   expect(confirm).toHaveBeenCalledWith("Discard unsaved resolution changes?");
   expect(screen.getByLabelText("Resolution note")).toHaveValue("Unfinished review");
   expect(screen.getByLabelText("Exception filter")).toHaveValue("needs_attention");

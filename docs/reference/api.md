@@ -12,7 +12,8 @@
 - `POST /api/v1/profiles` — requires `profiles:write`; scoped snapshot and same-source baseline checks before comparison, with audit attribution
 - `POST /api/v1/mappings/preview` — bounded mapping dry run with masked row errors
 - `POST /api/v1/validations` — multi-category validation, quality dimensions, persisted results, and quarantine IDs; optional `mapping_id` and `lookup_ids` validate the mapped canonical records instead of the raw snapshot, and the response labels its `record_source`
-- `GET /api/v1/quarantine` — organization-scoped saved issues, masked evidence and remediation, with status, severity, `needs_attention`, escaped record/rule `q`, and bounded pagination
+- `GET /api/v1/quarantine` — organization-scoped saved issues, masked evidence and remediation, with status, severity, `needs_attention`, escaped record/rule `q`, `sort=oldest|newest|severity`, and bounded pagination; the response remains a list
+- `GET /api/v1/quarantine/page` — the same protected filters and sorting with `items`, filtered `total`, `limit`, and effective `offset`; out-of-range offsets are clamped to the last valid page
 - `GET /api/v1/quarantine/summary` — organization totals, attention count, and status/severity breakdowns
 - `GET /api/v1/quarantine/{quarantine_id}/history` — append-only resolutions, latest revision first, with bounded pagination
 - `POST /api/v1/quarantine/{quarantine_id}/resolve` — requires `validation:write`, a status, non-blank note, and `expected_revision`; saves resolution/status/audit atomically and returns 409 for a stale revision

@@ -1,14 +1,14 @@
 {
   "project": "EduWork DataBridge",
-  "version": "0.61.0",
-  "verified_at": "2026-10-18",
+  "version": "0.62.0",
+  "verified_at": "2026-10-31",
   "application_tables": 53,
   "alembic_revisions": 6,
   "python_source_files_checked": 84,
-  "python_tests_passed": 127,
-  "python_coverage_percent": 91.18,
-  "frontend_tests_passed": 24,
-  "browser_tests_passed": 4,
+  "python_tests_passed": 129,
+  "python_coverage_percent": 91.23,
+  "frontend_tests_passed": 50,
+  "browser_tests_passed": 8,
   "generated_json_schemas": 11,
   "synthetic_presets_committed": [
     "small",
@@ -42,7 +42,12 @@
     "one_command_loopback_demo_launcher",
     "isolated_synthetic_demo_workspace",
     "confirmed_owned_workspace_reset",
-    "automated_desktop_mobile_demo_journey"
+    "automated_desktop_mobile_demo_journey",
+    "unfinished_resolution_navigation_guard",
+    "stable_exception_priority_sorting",
+    "filtered_exception_page_totals",
+    "last_valid_exception_page_recovery",
+    "scoped_privacy_conscious_filter_preferences"
   ],
   "reviewer_experience": [
     "synthetic_manifest_summary_api",
@@ -74,15 +79,15 @@
   "live_postgresql_connector_validation": "not_run_no_daemon",
   "dagster_daemon_validation": "not_run_no_daemon",
   "lockfile_sha256": {
-    "uv.lock": "0e074726a5a1a49d5e25dc082f3f4584ef595d19df21294fb4cf0b6ff7dcb3e5",
-    "apps/reviewer-ui/package-lock.json": "4e08ad5399ca2f079f7f7dc00f8f380eec361159fd442e15a781027475834eba"
+    "uv.lock": "44d8558d20d4e9ab37db9da081f45a61328b4aec42c3b835a3ac859a2cdd007f",
+    "apps/reviewer-ui/package-lock.json": "f72d09fabf391c946183e407f77c950114dc7070b4b9d41df417f62f29c55c7f"
   },
   "verification_environment": {
     "backend_python": "3.13",
     "wheel_install_python": "3.12",
-    "frontend_node": "24.19.0",
+    "frontend_node": "24.22.1",
     "migration_database": "SQLite",
-    "live_ui_smoke": "Playwright launcher startup, saved exception resolution, reload persistence, viewer boundary, desktop/mobile layout",
+    "live_ui_smoke": "Playwright launcher startup, saved history, viewer boundary, unfinished-note cancel/discard, native unload warning, restored filters, empty results, desktop/mobile layout",
     "demo_launcher": "fresh dependency installation and preparation, repeated browser startup/shutdown, occupied-port selection, isolated SQLite workspace",
     "browser_engine": "Chromium 156 via Playwright 1.64.1"
   }

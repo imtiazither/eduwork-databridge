@@ -4,6 +4,23 @@ All notable changes will be documented here. The project follows Semantic Versio
 
 ## Unreleased
 
+## [0.62.0] - 2026-10-31
+
+### Added
+
+- Confirmation before discarding an unfinished exception resolution, plus supported-browser unload warnings and pending-save navigation protection
+- Stable oldest-first, newest-first, and severity-first exception sorting across the full filtered queue
+- An additive, permission-protected `/api/v1/quarantine/page` endpoint with filtered totals and bounded offsets
+- Accurate result ranges/page counts, last-page detection, and recovery after the last matching issue on a page is resolved
+- Identity/organization-scoped session preferences for status, severity, and sorting, with a reset command and no stored review notes or search text
+- API, frontend, and real-browser regression coverage for the updated reviewer workflow
+
+### Compatibility
+
+- Updated Vite/Vitest and targeted Python dependency locks to address reported advisories; OpenTelemetry SDK now requires at least 1.45.1
+- The original quarantine list endpoint and its oldest-first default remain unchanged
+- No new database migration is required
+
 ## [0.61.0] - 2026-10-18
 
 ### Added

@@ -9,7 +9,7 @@
       "rapidfuzz": "3.14.5",
       "sqlalchemy": "2.0.51"
     },
-    "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "platform": "macOS-27.2-arm64-arm-64bit-Mach-O",
     "processor": "arm",
     "python": "3.13.14"
   },
@@ -28,11 +28,11 @@
     "Filesystem cache and shared-host load may affect results"
   ],
   "preset": "small",
-  "project_version": "0.61.0",
+  "project_version": "0.62.0",
   "seed": 20260719,
   "stages": [
     {
-      "duration_seconds": 0.018152,
+      "duration_seconds": 0.017009,
       "generated_counts": {
         "assessment_results": 120,
         "credential_awards": 25,
@@ -41,79 +41,79 @@
         "lms_courses": 6,
         "lms_participations": 366
       },
-      "max_rss_kb": 124784,
+      "max_rss_kb": 125392,
       "record_count": 1,
-      "records_per_second": 55.09,
-      "rss_increase_kb": 4560,
+      "records_per_second": 58.79,
+      "rss_increase_kb": 4736,
       "stage": "synthetic_generation"
     },
     {
-      "duration_seconds": 0.001095,
-      "max_rss_kb": 124880,
+      "duration_seconds": 0.000906,
+      "max_rss_kb": 125472,
       "record_count": 120,
-      "records_per_second": 109605.66,
-      "rss_increase_kb": 96,
+      "records_per_second": 132505.18,
+      "rss_increase_kb": 80,
       "stage": "csv_connector"
     },
     {
-      "duration_seconds": 0.001121,
-      "max_rss_kb": 125120,
+      "duration_seconds": 0.001137,
+      "max_rss_kb": 126080,
       "record_count": 366,
-      "records_per_second": 326470.03,
-      "rss_increase_kb": 240,
+      "records_per_second": 321923.23,
+      "rss_increase_kb": 608,
       "stage": "json_connector"
     },
     {
-      "duration_seconds": 0.009995,
-      "max_rss_kb": 125472,
+      "duration_seconds": 0.009702,
+      "max_rss_kb": 126464,
       "record_count": 120,
-      "records_per_second": 12005.95,
-      "rss_increase_kb": 352,
+      "records_per_second": 12368.21,
+      "rss_increase_kb": 384,
       "stage": "xlsx_connector"
     },
     {
-      "duration_seconds": 0.038711,
-      "max_rss_kb": 138720,
+      "duration_seconds": 0.036414,
+      "max_rss_kb": 139824,
       "record_count": 25,
-      "records_per_second": 645.81,
-      "rss_increase_kb": 13248,
+      "records_per_second": 686.55,
+      "rss_increase_kb": 13360,
       "stage": "parquet_connector"
     },
     {
-      "duration_seconds": 0.002625,
-      "max_rss_kb": 146624,
+      "duration_seconds": 0.002556,
+      "max_rss_kb": 147584,
       "record_count": 366,
-      "records_per_second": 139410.83,
-      "rss_increase_kb": 7856,
+      "records_per_second": 143178.48,
+      "rss_increase_kb": 7744,
       "stage": "profiling"
     },
     {
-      "duration_seconds": 0.000456,
-      "max_rss_kb": 146672,
+      "duration_seconds": 0.00045,
+      "max_rss_kb": 147728,
       "record_count": 120,
-      "records_per_second": 263109.43,
-      "rss_increase_kb": 32,
+      "records_per_second": 266814.89,
+      "rss_increase_kb": 48,
       "stage": "mapping"
     },
     {
-      "duration_seconds": 0.000746,
-      "max_rss_kb": 146768,
+      "duration_seconds": 0.000493,
+      "max_rss_kb": 147792,
       "record_count": 111,
-      "records_per_second": 148801.94,
+      "records_per_second": 225209.23,
       "rss_increase_kb": 0,
       "stage": "validation"
     },
     {
-      "duration_seconds": 0.005437,
-      "max_rss_kb": 147424,
+      "duration_seconds": 0.001928,
+      "max_rss_kb": 148448,
       "record_count": 246,
-      "records_per_second": 45247.27,
-      "rss_increase_kb": 48,
+      "records_per_second": 127607.19,
+      "rss_increase_kb": 16,
       "stage": "deterministic_matching"
     },
     {
-      "duration_seconds": 0.230949,
-      "max_rss_kb": 150112,
+      "duration_seconds": 0.230008,
+      "max_rss_kb": 151232,
       "metrics": {
         "auto_false_positives": 0,
         "auto_match_pairs": 121,
@@ -126,24 +126,24 @@
         "total_truth_pairs": 132
       },
       "record_count": 246,
-      "records_per_second": 1065.17,
-      "rss_increase_kb": 2688,
+      "records_per_second": 1069.53,
+      "rss_increase_kb": 2784,
       "stage": "probabilistic_matching"
     },
     {
-      "duration_seconds": 0.000187,
-      "max_rss_kb": 150112,
+      "duration_seconds": 0.000185,
+      "max_rss_kb": 151232,
       "record_count": 366,
-      "records_per_second": 1958968.7,
+      "records_per_second": 1981055.53,
       "rss_increase_kb": 0,
       "stage": "training_mart"
     },
     {
       "bytes": 6001,
-      "duration_seconds": 0.001457,
-      "max_rss_kb": 150592,
+      "duration_seconds": 0.001539,
+      "max_rss_kb": 151712,
       "record_count": 366,
-      "records_per_second": 251244.21,
+      "records_per_second": 237791.11,
       "rss_increase_kb": 480,
       "stage": "parquet_export"
     }

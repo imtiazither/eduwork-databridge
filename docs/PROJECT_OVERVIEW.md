@@ -1,6 +1,6 @@
 # EduWork DataBridge: Project Overview, Usage Guide, and Benefits
 
-**Version:** 0.61.0
+**Version:** 0.62.0
 **License:** MIT
 
 For the human problem that motivated the platform, read [the project story](PROJECT_STORY.md). The [five-page field guide](EduWork_DataBridge_Field_Guide.pdf) pairs that story with the current reviewer desk.
@@ -67,7 +67,11 @@ Typical uses include:
 5. **Faster evaluation and extension.** Synthetic fixtures, a 30-minute evaluator tour, developer instructions, JSON Schemas, docs, tests, and reproducible evidence make the project inspectable and extendable.
 6. **Lower pilot risk.** A real organization can begin with one authorized, bounded workflow while keeping proprietary data, credentials, mappings, endpoints, and results private.
 
-## v0.61.0: One-command demo
+## v0.62.0: Reviewer workflow
+
+The v0.62.0 reviewer workflow adds unfinished-note protection, full-queue sorting, filtered result/page totals, automatic recovery from removed last pages, and scoped menu preferences that do not store notes or search text. See the [exception desk guide](guides/exception-desk.md).
+
+## One-command demo
 
 New users can run `python3 scripts/demo.py` from the repository folder to prepare fictional data and start both servers. The workflow checks prerequisites, uses an isolated database, preserves demo notes on restart, and requires confirmation before resetting them. See the [beginner demo guide](guides/demo-quickstart.md).
 
@@ -126,7 +130,7 @@ Use `docs/evaluator/30-minute-tour.md` to inspect the synthetic data, run the co
 
 ## Verification and release evidence
 
-The v0.61.0 release includes:
+The v0.62.0 release includes:
 
 - Automated Python and frontend tests with enforced repository-wide coverage
 - Ruff, format, and strict mypy checks across the Python application and scripts
