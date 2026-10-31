@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useCallback, useLayoutEffect, useState, type FormEvent } from "react";
 import { useDraftGuard } from "./DraftGuard";
-import { exceptionSorts, exceptionStatuses, type ExceptionRecord, type ExceptionSummary, type Resolution } from "./exceptionApi";
+import { exceptionSorts, exceptionStatuses, type ExceptionPage, type ExceptionRecord, type ExceptionSummary, type Resolution } from "./exceptionApi";
 import { reviewRequest, ReviewApiError, type Actor, type Organization } from "./reviewApi";
 
 const pageSize = 20;
@@ -115,10 +115,15 @@ function ExceptionQueue({ user, organizationId }: { user: string; organizationId
   });
   const queue = useQuery({
     queryKey: ["exception-queue", user, organizationId, filter, severity, sort, query, offset],
-    queryFn: () => reviewRequest<ExceptionRecord[]>(`/quarantine?${params}`, user, organizationId), retry: false,
+    queryFn: () => reviewRequest<ExceptionPage>(`/quarantine/page?${params}`, user, organizationId), retry: false,
     refetchOnWindowFocus: false, refetchOnReconnect: false,
   });
-  const selected = queue.data?.find(item => item.quarantine_id === selectedId) ?? queue.data?.[0];
+  useLayoutEffect(() => {
+    if (queue.data && !queue.isError && queue.data.offset !== offset) setOffset(queue.data.offset);
+  }, [queue.data, queue.isError, offset]);
+  const selected = queue.data?.items.find(item => item.quarantine_id === selectedId) ?? queue.data?.items[0];
+  const pageOffset = queue.data?.offset ?? offset;
+  const total = queue.data?.total ?? 0;
   async function refresh() {
     await Promise.all([
       client.invalidateQueries({ queryKey: ["exception-queue", user, organizationId] }),
@@ -154,12 +159,13 @@ function ExceptionQueue({ user, organizationId }: { user: string; organizationId
     {notice && <p className="review-notice" role="status">{notice}</p>}
     <ErrorNotice error={queue.error} />
     {queue.isPending && <p role="status">Loading exceptions…</p>}
-    {queue.data?.length === 0 && !queue.error && <div className="review-empty">
+    {queue.data && !queue.error && <p className="exception-results" role="status">Showing {total ? pageOffset + 1 : 0}-{pageOffset + queue.data.items.length} of {total} matching issues</p>}
+    {queue.data?.items.length === 0 && !queue.error && <div className="review-empty">
       <h3>No exceptions in this view.</h3><p>{summary.data?.total === 0 ? "Run a validation to create issues for this organization." : "Change the filters or search to find other issues."}</p>
     </div>}
-    {queue.data && !queue.error && queue.data.length > 0 && <div className="review-layout">
+    {queue.data && !queue.error && queue.data.items.length > 0 && <div className="review-layout">
       <ul className="candidate-list exception-queue" aria-label="Exceptions">
-        {queue.data.map(issue => <li key={issue.quarantine_id}><button type="button"
+        {queue.data.items.map(issue => <li key={issue.quarantine_id}><button type="button"
           aria-pressed={selected?.quarantine_id === issue.quarantine_id} onClick={() => { if (selected?.quarantine_id !== issue.quarantine_id) guard.leave(() => { setSelectedId(issue.quarantine_id); setNotice(""); }); }}>
           <strong>{issue.source_record_key}</strong><span>{issue.rule_title}</span>
           <small>{issue.severity} · {exceptionStatuses[issue.status]}</small>
@@ -169,9 +175,9 @@ function ExceptionQueue({ user, organizationId }: { user: string; organizationId
         organizationId={organizationId} refresh={refresh} saved={async () => { setNotice("Resolution saved. The note and reviewer are recorded in history."); await refresh(); }} />}
     </div>}
     <div className="review-pagination" aria-label="Exception pagination">
-      <button type="button" disabled={offset === 0 || queue.isFetching} onClick={() => guard.leave(() => { setOffset(offset - pageSize); setSelectedId(null); })}>Previous page</button>
-      <span>Page {Math.floor(offset / pageSize) + 1}</span>
-      <button type="button" disabled={!queue.data || queue.data.length < pageSize || queue.isFetching || queue.isError} onClick={() => guard.leave(() => { setOffset(offset + pageSize); setSelectedId(null); })}>Next page</button>
+      <button type="button" disabled={pageOffset === 0 || queue.isFetching || queue.isError} onClick={() => guard.leave(() => { setOffset(Math.max(0, pageOffset - pageSize)); setSelectedId(null); })}>Previous page</button>
+      <span>{queue.isError ? "Page unavailable" : `Page ${Math.floor(pageOffset / pageSize) + 1} of ${Math.max(1, Math.ceil(total / pageSize))}`}</span>
+      <button type="button" disabled={!queue.data || pageOffset + queue.data.items.length >= total || queue.isFetching || queue.isError} onClick={() => guard.leave(() => { setOffset(pageOffset + pageSize); setSelectedId(null); })}>Next page</button>
     </div>
   </>;
 }

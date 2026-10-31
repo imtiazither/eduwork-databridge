@@ -18,7 +18,7 @@ function renderDesk() {
   return render(<QueryClientProvider client={client}><DraftGuardProvider><ExceptionDesk /></DraftGuardProvider></QueryClientProvider>);
 }
 function setupApi({ saveStatus = 200, queueStatus = 200, count = 1 } = {}) {
-  let current = { ...issue };
+  const records = Array.from({ length: count }, (_, index) => ({ ...issue, quarantine_id: `issue-${index + 1}` }));
   const history: Resolution[] = [];
   const fetch = vi.fn((input: RequestInfo | URL, init?: RequestInit) => {
     const url = new URL(String(input), "http://test");
@@ -29,12 +29,19 @@ function setupApi({ saveStatus = 200, queueStatus = 200, count = 1 } = {}) {
     else if (url.pathname.endsWith("/summary")) body = { total: count, needs_attention: count, by_status: { open: count }, by_severity: { blocking: count } };
     else if (url.pathname.endsWith("/resolve")) {
       status = saveStatus;
+      const current = records.find(row => row.quarantine_id === url.pathname.split("/").at(-2))!;
       const payload = JSON.parse(String(init?.body));
-      const saved: Resolution = { id: "resolution-1", quarantine_id: current.quarantine_id, revision: 1, status: payload.status, note: payload.note, reviewer_id: "reviewer-1", recorded_at: "2026-10-18T12:01:00Z", corrected_snapshot_id: null, imported: false };
-      if (status === 200) { history.unshift(saved); current = { ...current, status: saved.status, revision: 1 }; }
+      const saved: Resolution = { id: `resolution-${history.length + 1}`, quarantine_id: current.quarantine_id, revision: current.revision + 1, status: payload.status, note: payload.note, reviewer_id: "reviewer-1", recorded_at: "2026-10-18T12:01:00Z", corrected_snapshot_id: null, imported: false };
+      if (status === 200) { history.unshift(saved); Object.assign(current, { status: saved.status, revision: saved.revision }); }
       body = saved;
-    } else if (url.pathname.endsWith("/history")) body = history;
-    else if (url.pathname.endsWith("/quarantine")) { status = queueStatus; body = Array.from({ length: count }, (_, index) => ({ ...current, quarantine_id: `issue-${index + 1}` })); }
+    } else if (url.pathname.endsWith("/history")) body = history.filter(row => row.quarantine_id === url.pathname.split("/").at(-2));
+    else if (url.pathname.endsWith("/quarantine/page")) {
+      status = queueStatus;
+      const filtered = records.filter(row => (!url.searchParams.has("status") || row.status === url.searchParams.get("status")) && (url.searchParams.get("needs_attention") !== "true" || ["open", "acknowledged"].includes(row.status)));
+      const limit = Number(url.searchParams.get("limit") ?? 20);
+      const offset = Math.min(Number(url.searchParams.get("offset") ?? 0), Math.floor(Math.max(0, filtered.length - 1) / limit) * limit);
+      body = { items: filtered.slice(offset, offset + limit), total: filtered.length, limit, offset };
+    }
     else throw new Error(`Unhandled request ${url.pathname}`);
     return Promise.resolve({ ok: status === 200, status, json: async () => body } as Response);
   });
@@ -67,7 +74,7 @@ test.each([409, 403, 500])("keeps save error %s visible without confirming a sav
 });
 
 test("filters, searches, and pages the persisted queue", async () => {
-  const fetch = setupApi({ count: 20 }); renderDesk();
+  const fetch = setupApi({ count: 21 }); renderDesk();
   await screen.findByRole("heading", { name: "Missing employee ID" });
   fireEvent.click(screen.getByRole("button", { name: "Next page" }));
   await waitFor(() => expect(fetch.mock.calls.some(([url]) => String(url).includes("offset=20"))).toBe(true));
@@ -82,7 +89,7 @@ test("separates organization caches and denies viewer controls", async () => {
   const fetch = setupApi(); renderDesk();
   await screen.findByRole("heading", { name: "Missing employee ID" });
   fireEvent.change(screen.getByLabelText("Organization"), { target: { value: "org-2" } });
-  await waitFor(() => expect(fetch.mock.calls.some(([url, init]) => String(url).includes("/quarantine?") && (init?.headers as Record<string, string>)["X-Organization-ID"] === "org-2")).toBe(true));
+  await waitFor(() => expect(fetch.mock.calls.some(([url, init]) => String(url).includes("/quarantine/page?") && (init?.headers as Record<string, string>)["X-Organization-ID"] === "org-2")).toBe(true));
   fireEvent.change(screen.getByLabelText("Local demo identity"), { target: { value: "demo-viewer" } });
   await screen.findByText(/cannot review exceptions/);
   expect(screen.queryByRole("button", { name: "Save resolution" })).not.toBeInTheDocument();
@@ -98,7 +105,7 @@ test("shows empty and unavailable queues without fixture substitution", async ()
 });
 
 test.each(["record", "filter", "severity", "sort", "organization", "identity", "refresh", "page"])("protects an unfinished note before changing %s", async action => {
-  setupApi({ count: 20 }); renderDesk();
+  setupApi({ count: 21 }); renderDesk();
   await screen.findByRole("heading", { name: "Missing employee ID" });
   const confirm = vi.spyOn(window, "confirm").mockReturnValue(false);
   fireEvent.change(screen.getByLabelText("Resolution note"), { target: { value: "Unfinished review" } });
@@ -118,7 +125,7 @@ test.each(["record", "filter", "severity", "sort", "organization", "identity", "
 });
 
 test("requests the selected server-side sort from the first page", async () => {
-  const fetch = setupApi({ count: 20 }); renderDesk();
+  const fetch = setupApi({ count: 21 }); renderDesk();
   await screen.findByLabelText("Resolution note");
   fireEvent.click(screen.getByRole("button", { name: "Next page" }));
   await waitFor(() => expect(fetch.mock.calls.some(([url]) => String(url).includes("offset=20"))).toBe(true));
@@ -155,4 +162,24 @@ test("clears the unload warning after a successful save", async () => {
     const event = new Event("beforeunload", { cancelable: true }); window.dispatchEvent(event);
     expect(event.defaultPrevented).toBe(false);
   });
+});
+
+test.each([0, 20])("has no extra page when the matching total is %s", async count => {
+  setupApi({ count }); renderDesk();
+  await screen.findByText(count ? "Showing 1-20 of 20 matching issues" : "Showing 0-0 of 0 matching issues");
+  expect(screen.getByRole("button", { name: "Next page" })).toBeDisabled();
+  expect(screen.getByText("Page 1 of 1")).toBeInTheDocument();
+});
+
+test("returns to the last valid page after closing its final matching issue", async () => {
+  setupApi({ count: 21 }); renderDesk();
+  await screen.findByText("Showing 1-20 of 21 matching issues");
+  fireEvent.click(screen.getByRole("button", { name: "Next page" }));
+  await screen.findByText("Showing 21-21 of 21 matching issues");
+  fireEvent.change(screen.getByLabelText("Resolution status"), { target: { value: "closed" } });
+  fireEvent.change(screen.getByLabelText("Resolution note"), { target: { value: "Checked the source" } });
+  fireEvent.click(screen.getByRole("button", { name: "Save resolution" }));
+  await screen.findByText("Showing 1-20 of 20 matching issues");
+  expect(screen.getByText("Page 1 of 1")).toBeInTheDocument();
+  expect(screen.getByRole("button", { name: "Next page" })).toBeDisabled();
 });

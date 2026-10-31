@@ -19,7 +19,7 @@ from eduwork_databridge.config_loader import (
     source_config_path,
 )
 from eduwork_databridge.connectors import ConnectorError, build_connector
-from eduwork_databridge.db.models.control import DataMartSnapshot
+from eduwork_databridge.db.models.control import DataMartSnapshot, QuarantineRecord, ValidationRule
 from eduwork_databridge.db.session import get_session
 from eduwork_databridge.ingestion import IngestionService, read_snapshot_records
 from eduwork_databridge.lineage import LineageService
@@ -69,6 +69,7 @@ from eduwork_databridge.schemas.api import (
     ProfileRequest,
     ProfileResponse,
     QuarantineItemResponse,
+    QuarantinePageResponse,
     QuarantineResolutionResponse,
     QuarantineResolveRequest,
     QuarantineStatus,
@@ -595,25 +596,69 @@ def quarantine_queue(
         limit=limit,
         offset=offset,
     )
-    return [
-        QuarantineItemResponse(
-            quarantine_id=row.id,
-            source_record_key=row.source_record_key,
-            field_name=row.field_name,
-            evidence_masked=row.evidence_masked,
-            explanation=row.explanation,
-            status=row.status,
-            revision=row.revision,
-            created_at=row.created_at,
-            raw_snapshot_id=row.raw_snapshot_id,
-            supersedes_quarantine_id=row.supersedes_quarantine_id,
-            rule_key=rule.rule_key,
-            rule_title=rule.title,
-            severity=rule.severity,
-            remediation=rule.remediation,
-        )
-        for row, rule in rows
-    ]
+    return [_quarantine_item(row, rule) for row, rule in rows]
+
+
+def _quarantine_item(row: QuarantineRecord, rule: ValidationRule) -> QuarantineItemResponse:
+    return QuarantineItemResponse(
+        quarantine_id=row.id,
+        source_record_key=row.source_record_key,
+        field_name=row.field_name,
+        evidence_masked=row.evidence_masked,
+        explanation=row.explanation,
+        status=row.status,
+        revision=row.revision,
+        created_at=row.created_at,
+        raw_snapshot_id=row.raw_snapshot_id,
+        supersedes_quarantine_id=row.supersedes_quarantine_id,
+        rule_key=rule.rule_key,
+        rule_title=rule.title,
+        severity=rule.severity,
+        remediation=rule.remediation,
+    )
+
+
+@app.get("/api/v1/quarantine/page", response_model=QuarantinePageResponse, tags=["validation"])
+def quarantine_page(
+    session: SessionDep,
+    actor: ActorDep,
+    x_organization_id: OrganizationHeader = None,
+    status: QuarantineStatus | None = None,
+    severity: Literal["blocking", "error", "warning"] | None = None,
+    needs_attention: bool = False,
+    q: str | None = Query(default=None, max_length=100),
+    sort: Literal["oldest", "newest", "severity"] = "oldest",
+    limit: int = Query(default=50, ge=1, le=200),
+    offset: int = Query(default=0, ge=0),
+) -> QuarantinePageResponse:
+    organization_id = _required_organization(x_organization_id)
+    require_organization(actor, organization_id)
+    require_permission(actor, "validation:write")
+    service = ValidationService(session)
+    total = service.review_queue_count(
+        organization_id,
+        status=status,
+        severity=severity,
+        needs_attention=needs_attention,
+        q=q,
+    )
+    offset = min(offset, (max(0, total - 1) // limit) * limit)
+    rows = service.review_queue(
+        organization_id,
+        status=status,
+        severity=severity,
+        needs_attention=needs_attention,
+        q=q,
+        sort=sort,
+        limit=limit,
+        offset=offset,
+    )
+    return QuarantinePageResponse(
+        items=[_quarantine_item(row, rule) for row, rule in rows],
+        total=total,
+        limit=limit,
+        offset=offset,
+    )
 
 
 @app.get(

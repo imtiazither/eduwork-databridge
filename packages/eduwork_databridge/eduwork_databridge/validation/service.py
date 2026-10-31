@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from datetime import UTC, datetime
 from typing import Any
 
-from sqlalchemy import case, func, or_, select, update
+from sqlalchemy import Select, case, func, or_, select, update
 from sqlalchemy.orm import Session
 
 from eduwork_databridge.connectors.base import ConnectorError
@@ -232,7 +232,7 @@ class ValidationService:
             raise ConnectorError("quarantine_not_found", "Exception was not found")
         return record
 
-    def review_queue(
+    def _review_query(
         self,
         organization_id: uuid.UUID,
         *,
@@ -240,10 +240,7 @@ class ValidationService:
         severity: str | None = None,
         needs_attention: bool = False,
         q: str | None = None,
-        sort: str = "oldest",
-        limit: int = 50,
-        offset: int = 0,
-    ) -> list[tuple[QuarantineRecord, ValidationRule]]:
+    ) -> Select[tuple[QuarantineRecord, ValidationRule]]:
         query = (
             select(QuarantineRecord, ValidationRule)
             .join(ValidationRule, QuarantineRecord.validation_rule_id == ValidationRule.id)
@@ -266,6 +263,45 @@ class ValidationService:
                     ValidationRule.rule_key.icontains(q.strip(), autoescape=True),
                 )
             )
+        return query
+
+    def review_queue_count(
+        self,
+        organization_id: uuid.UUID,
+        *,
+        status: str | None = None,
+        severity: str | None = None,
+        needs_attention: bool = False,
+        q: str | None = None,
+    ) -> int:
+        query = self._review_query(
+            organization_id,
+            status=status,
+            severity=severity,
+            needs_attention=needs_attention,
+            q=q,
+        )
+        return int(self.session.scalar(select(func.count()).select_from(query.subquery())) or 0)
+
+    def review_queue(
+        self,
+        organization_id: uuid.UUID,
+        *,
+        status: str | None = None,
+        severity: str | None = None,
+        needs_attention: bool = False,
+        q: str | None = None,
+        sort: str = "oldest",
+        limit: int = 50,
+        offset: int = 0,
+    ) -> list[tuple[QuarantineRecord, ValidationRule]]:
+        query = self._review_query(
+            organization_id,
+            status=status,
+            severity=severity,
+            needs_attention=needs_attention,
+            q=q,
+        )
         ordering = {
             "oldest": (QuarantineRecord.created_at.asc(), QuarantineRecord.id.asc()),
             "newest": (QuarantineRecord.created_at.desc(), QuarantineRecord.id.desc()),

@@ -1,5 +1,11 @@
 # Connected Exception Desk
 
+## Results and pages
+
+The desk displays the filtered matching total, visible result range, and page count. **Next page** is disabled on the last page, including when it contains exactly 20 issues. If a resolution removes the last issue on the current filtered page, the desk returns to the last valid page. The workload totals above the filters describe the whole organization; the matching total describes the current filters and search.
+
+The desk uses the additive `GET /api/v1/quarantine/page` endpoint. Its response contains `items`, `total`, `limit`, and the effective `offset`, with the same filters, sorting, organization scope, and `validation:write` permission as the original list route. An out-of-range offset is clamped to the last valid page (zero for an empty result). The original `GET /api/v1/quarantine` still returns a plain list for existing clients. Counts and rows reflect database reads; concurrent changes can affect later refreshes.
+
 ## Queue order
 
 Use **Sort order** to review oldest issues first, newest issues first, or highest severity first. Severity order is blocking, error, then warning; equal-severity issues are ordered oldest first. Equal timestamps use the issue ID as a stable tie-breaker. Sorting applies to the full filtered queue on the server, not just the visible page. API clients can add `sort=oldest`, `sort=newest`, or `sort=severity` to `GET /api/v1/quarantine`; omitting it retains the oldest-first default.

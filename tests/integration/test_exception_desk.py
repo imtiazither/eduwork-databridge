@@ -257,6 +257,7 @@ def test_exception_access_and_foreign_snapshots(exceptions):
     payload = {"status": "closed", "note": "Review", "expected_revision": 0}
     for method, path, body in [
         ("GET", "/api/v1/quarantine", None),
+        ("GET", "/api/v1/quarantine/page", None),
         ("GET", "/api/v1/quarantine/summary", None),
         ("GET", root + "/history", None),
         ("POST", root + "/resolve", payload),
@@ -264,6 +265,7 @@ def test_exception_access_and_foreign_snapshots(exceptions):
         assert call(method, path, org, body, user=None).status_code == 401
         assert call(method, path, org, body, user="demo-viewer").status_code == 403
     assert call("GET", "/api/v1/quarantine", other.id).json() == []
+    assert call("GET", "/api/v1/quarantine/page", other.id).json()["total"] == 0
     assert call("GET", root + "/history", other.id).status_code == 404
     assert call("POST", root + "/resolve", other.id, payload).status_code == 404
     assert (
@@ -278,3 +280,35 @@ def test_exception_access_and_foreign_snapshots(exceptions):
     )
     app.dependency_overrides[get_actor] = lambda: actor
     assert call("GET", "/api/v1/quarantine", other.id).status_code == 403
+    assert call("GET", "/api/v1/quarantine/page", other.id).status_code == 403
+
+
+def test_filtered_page_totals_exact_boundaries_and_removed_last_page(exceptions):
+    _, org, _, _ = exceptions
+    page = call("GET", "/api/v1/quarantine/page?severity=blocking&limit=1", org).json()
+    assert page["total"] == 2 and len(page["items"]) == 1
+    assert page["limit"] == 1 and page["offset"] == 0
+    last = call("GET", "/api/v1/quarantine/page?severity=blocking&limit=1&offset=1", org).json()
+    issue = last["items"][0]
+    assert (
+        call(
+            "POST",
+            f"/api/v1/quarantine/{issue['quarantine_id']}/resolve",
+            org,
+            {"status": "closed", "note": "Reviewed", "expected_revision": 0},
+        ).status_code
+        == 200
+    )
+    clamped = call(
+        "GET",
+        "/api/v1/quarantine/page?needs_attention=true&severity=blocking&limit=1&offset=1",
+        org,
+    ).json()
+    assert clamped["offset"] == 0 and clamped["total"] == 1 and len(clamped["items"]) == 1
+    exact = call("GET", "/api/v1/quarantine/page?limit=3&offset=3", org).json()
+    assert exact["total"] == 3 and exact["offset"] == 0 and len(exact["items"]) == 3
+    empty = call("GET", "/api/v1/quarantine/page?q=absent&offset=999", org).json()
+    assert empty == {"items": [], "total": 0, "limit": 50, "offset": 0}
+    assert call("GET", "/api/v1/quarantine/page?q=%25", org).json()["total"] == 2
+    for query in ["sort=invalid", "limit=201", "offset=-1", "q=" + "x" * 101]:
+        assert call("GET", f"/api/v1/quarantine/page?{query}", org).status_code == 422

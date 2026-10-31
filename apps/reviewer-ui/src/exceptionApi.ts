@@ -36,6 +36,13 @@ export interface Resolution {
   imported: boolean;
 }
 
+export interface ExceptionPage {
+  items: ExceptionRecord[];
+  total: number;
+  limit: number;
+  offset: number;
+}
+
 export interface ExceptionSummary {
   total: number;
   needs_attention: number;

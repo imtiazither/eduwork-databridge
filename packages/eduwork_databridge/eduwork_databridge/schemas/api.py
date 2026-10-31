@@ -196,6 +196,13 @@ class QuarantineSummaryResponse(APIModel):
     by_severity: dict[str, int]
 
 
+class QuarantinePageResponse(APIModel):
+    items: list[QuarantineItemResponse]
+    total: int
+    limit: int
+    offset: int
+
+
 class DeterministicMatchRequest(APIModel):
     match_config_id: str
     dataset_preset: str = "small"
