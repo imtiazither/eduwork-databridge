@@ -4,11 +4,11 @@ The demo uses fictional HR, learning, assessment, and credential records. You do
 
 ## Get the project
 
-For a no-install look, [open the public example](https://imtiazither.github.io/eduwork-databridge/). To save review notes on your own computer, [download the v0.62.0 repository ZIP](https://github.com/imtiazither/eduwork-databridge/archive/refs/tags/v0.62.0.zip), extract it, and use the extracted folder for the steps below. You can also use an existing GitHub Desktop checkout updated to this version. The Python wheel alone is not the complete demo: the repository supplies the UI, configurations, migrations, and fictional datasets.
+For a no-install look, [open the public example](https://imtiazither.github.io/eduwork-databridge/). To save review notes on your own computer, [download the v0.62.1 repository ZIP](https://github.com/imtiazither/eduwork-databridge/archive/refs/tags/v0.62.1.zip), extract it, and use the extracted folder for the steps below. You can also use an existing GitHub Desktop checkout updated to this version. The Python wheel alone is not the complete demo: the repository supplies the UI, configurations, migrations, and fictional datasets.
 
 ## Check your computer
 
-Install Python 3.12 or 3.13, [uv](https://docs.astral.sh/uv/getting-started/installation/), and [Node.js 24 LTS](https://nodejs.org/en/download) with npm. Internet access is needed to download dependencies on the first run. Reopen your terminal after installing tools.
+Install Python 3.12 or 3.13, [uv 0.13.4 or later](https://docs.astral.sh/uv/getting-started/installation/), and [Node.js 24 LTS](https://nodejs.org/en/download) with npm. Internet access is needed to download dependencies on the first run. Reopen your terminal after installing tools.
 
 Open the downloaded repository folder in a terminal. In GitHub Desktop, use **Repository > Open in Terminal**. On Windows, use `python` instead of `python3` in the commands below.
 

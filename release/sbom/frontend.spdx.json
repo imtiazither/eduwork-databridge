@@ -2,22 +2,22 @@
   "spdxVersion": "SPDX-2.3",
   "dataLicense": "CC0-1.0",
   "SPDXID": "SPDXRef-DOCUMENT",
-  "name": "eduwork-databridge-reviewer-ui@0.62.0",
-  "documentNamespace": "http://spdx.org/spdxdocs/eduwork-databridge-reviewer-ui-0.62.0-b3439c9c-91c0-4e0f-bf6b-d357ee45eba5",
+  "name": "eduwork-databridge-reviewer-ui@0.62.1",
+  "documentNamespace": "http://spdx.org/spdxdocs/eduwork-databridge-reviewer-ui-0.62.1-fe7a9420-8aec-4f31-a631-39296d990190",
   "creationInfo": {
-    "created": "2026-10-31T17:01:16.509Z",
+    "created": "2026-10-31T17:11:10.703Z",
     "creators": [
       "Tool: npm/cli-11.21.1"
     ]
   },
   "documentDescribes": [
-    "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.62.0"
+    "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.62.1"
   ],
   "packages": [
     {
       "name": "eduwork-databridge-reviewer-ui",
-      "SPDXID": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.62.0",
-      "versionInfo": "0.62.0",
+      "SPDXID": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.62.1",
+      "versionInfo": "0.62.1",
       "packageFileName": "",
       "primaryPackagePurpose": "LIBRARY",
       "downloadLocation": "NOASSERTION",
@@ -28,7 +28,7 @@
         {
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
-          "referenceLocator": "pkg:npm/eduwork-databridge-reviewer-ui@0.62.0"
+          "referenceLocator": "pkg:npm/eduwork-databridge-reviewer-ui@0.62.1"
         }
       ]
     },
@@ -4590,77 +4590,77 @@
   "relationships": [
     {
       "spdxElementId": "SPDXRef-DOCUMENT",
-      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.62.0",
+      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.62.1",
       "relationshipType": "DESCRIBES"
     },
     {
       "spdxElementId": "SPDXRef-Package-tanstack.react-query-5.101.2",
-      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.62.0",
+      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.62.1",
       "relationshipType": "DEPENDENCY_OF"
     },
     {
       "spdxElementId": "SPDXRef-Package-react-19.2.7",
-      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.62.0",
+      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.62.1",
       "relationshipType": "DEPENDENCY_OF"
     },
     {
       "spdxElementId": "SPDXRef-Package-react-dom-19.2.7",
-      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.62.0",
+      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.62.1",
       "relationshipType": "DEPENDENCY_OF"
     },
     {
       "spdxElementId": "SPDXRef-Package-playwright.test-1.64.1",
-      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.62.0",
+      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.62.1",
       "relationshipType": "DEV_DEPENDENCY_OF"
     },
     {
       "spdxElementId": "SPDXRef-Package-testing-library.jest-dom-6.9.1",
-      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.62.0",
+      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.62.1",
       "relationshipType": "DEV_DEPENDENCY_OF"
     },
     {
       "spdxElementId": "SPDXRef-Package-testing-library.react-16.3.2",
-      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.62.0",
+      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.62.1",
       "relationshipType": "DEV_DEPENDENCY_OF"
     },
     {
       "spdxElementId": "SPDXRef-Package-types.node-24.19.2",
-      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.62.0",
+      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.62.1",
       "relationshipType": "DEV_DEPENDENCY_OF"
     },
     {
       "spdxElementId": "SPDXRef-Package-types.react-19.2.17",
-      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.62.0",
+      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.62.1",
       "relationshipType": "DEV_DEPENDENCY_OF"
     },
     {
       "spdxElementId": "SPDXRef-Package-types.react-dom-19.2.3",
-      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.62.0",
+      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.62.1",
       "relationshipType": "DEV_DEPENDENCY_OF"
     },
     {
       "spdxElementId": "SPDXRef-Package-vitejs.plugin-react-4.7.0",
-      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.62.0",
+      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.62.1",
       "relationshipType": "DEV_DEPENDENCY_OF"
     },
     {
       "spdxElementId": "SPDXRef-Package-jsdom-26.1.0",
-      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.62.0",
+      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.62.1",
       "relationshipType": "DEV_DEPENDENCY_OF"
     },
     {
       "spdxElementId": "SPDXRef-Package-typescript-5.9.3",
-      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.62.0",
+      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.62.1",
       "relationshipType": "DEV_DEPENDENCY_OF"
     },
     {
       "spdxElementId": "SPDXRef-Package-vite-7.3.7",
-      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.62.0",
+      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.62.1",
       "relationshipType": "DEV_DEPENDENCY_OF"
     },
     {
       "spdxElementId": "SPDXRef-Package-vitest-5.0.5",
-      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.62.0",
+      "relatedSpdxElement": "SPDXRef-Package-eduwork-databridge-reviewer-ui-0.62.1",
       "relationshipType": "DEV_DEPENDENCY_OF"
     },
     {

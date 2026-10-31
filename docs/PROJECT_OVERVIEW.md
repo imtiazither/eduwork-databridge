@@ -1,6 +1,6 @@
 # EduWork DataBridge: Project Overview, Usage Guide, and Benefits
 
-**Version:** 0.62.0
+**Version:** 0.62.1
 **License:** MIT
 
 For the human problem that motivated the platform, read [the project story](PROJECT_STORY.md). The [five-page field guide](EduWork_DataBridge_Field_Guide.pdf) pairs that story with the current reviewer desk.
@@ -130,7 +130,7 @@ Use `docs/evaluator/30-minute-tour.md` to inspect the synthetic data, run the co
 
 ## Verification and release evidence
 
-The v0.62.0 release includes:
+The v0.62.1 release includes:
 
 - Automated Python and frontend tests with enforced repository-wide coverage
 - Ruff, format, and strict mypy checks across the Python application and scripts

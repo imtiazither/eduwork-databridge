@@ -4,6 +4,14 @@ All notable changes will be documented here. The project follows Semantic Versio
 
 ## Unreleased
 
+## [0.62.1] - 2026-10-31
+
+### Fixed
+
+- Updated uv to 0.13.4 in the container and all workflows to remove the affected bundled certificate authority (GHSA-hq85-5cpj-mr62)
+- The demo checker rejects uv versions older than 0.13.4; regression tests keep workflow and container pins aligned
+- Preserves all reviewer workflow improvements from v0.62.0 without changing published tag history
+
 ## [0.62.0] - 2026-10-31
 
 ### Added

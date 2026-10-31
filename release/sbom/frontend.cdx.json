@@ -2,10 +2,10 @@
   "$schema": "http://cyclonedx.org/schema/bom-1.5.schema.json",
   "bomFormat": "CycloneDX",
   "specVersion": "1.5",
-  "serialNumber": "urn:uuid:c255ea40-f48c-4d0f-a1bb-42183ccd95a8",
+  "serialNumber": "urn:uuid:c40f14a5-610f-4c1e-8c38-20175a2ada6b",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-10-31T17:01:16.224Z",
+    "timestamp": "2026-10-31T17:11:10.410Z",
     "lifecycles": [
       {
         "phase": "pre-build"
@@ -19,12 +19,12 @@
       }
     ],
     "component": {
-      "bom-ref": "eduwork-databridge-reviewer-ui@0.62.0",
+      "bom-ref": "eduwork-databridge-reviewer-ui@0.62.1",
       "type": "library",
       "name": "reviewer-ui",
-      "version": "0.62.0",
+      "version": "0.62.1",
       "scope": "required",
-      "purl": "pkg:npm/eduwork-databridge-reviewer-ui@0.62.0",
+      "purl": "pkg:npm/eduwork-databridge-reviewer-ui@0.62.1",
       "properties": [
         {
           "name": "cdx:npm:package:private",
@@ -6547,7 +6547,7 @@
   ],
   "dependencies": [
     {
-      "ref": "eduwork-databridge-reviewer-ui@0.62.0",
+      "ref": "eduwork-databridge-reviewer-ui@0.62.1",
       "dependsOn": [
         "@tanstack/react-query@5.101.2",
         "react@19.2.7",

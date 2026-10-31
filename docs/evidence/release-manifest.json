@@ -1,11 +1,11 @@
 {
   "project": "EduWork DataBridge",
-  "version": "0.62.0",
+  "version": "0.62.1",
   "verified_at": "2026-10-31",
   "application_tables": 53,
   "alembic_revisions": 6,
   "python_source_files_checked": 84,
-  "python_tests_passed": 129,
+  "python_tests_passed": 134,
   "python_coverage_percent": 91.23,
   "frontend_tests_passed": 50,
   "browser_tests_passed": 8,
@@ -79,10 +79,11 @@
   "live_postgresql_connector_validation": "not_run_no_daemon",
   "dagster_daemon_validation": "not_run_no_daemon",
   "lockfile_sha256": {
-    "uv.lock": "44d8558d20d4e9ab37db9da081f45a61328b4aec42c3b835a3ac859a2cdd007f",
-    "apps/reviewer-ui/package-lock.json": "f72d09fabf391c946183e407f77c950114dc7070b4b9d41df417f62f29c55c7f"
+    "uv.lock": "57fb84e1cf80a5f071b1981f9debc24bf94a1f80ba5788ec9b7c5f8ddb491f3b",
+    "apps/reviewer-ui/package-lock.json": "07de67074688b1973f9ac3fa736ae8e78773b9dc893b33ad69ce69c688eba4de"
   },
   "verification_environment": {
+    "uv": "0.13.4",
     "backend_python": "3.13",
     "wheel_install_python": "3.12",
     "frontend_node": "24.22.1",

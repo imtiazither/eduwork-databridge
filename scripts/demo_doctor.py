@@ -72,7 +72,7 @@ def inspect(root: Path = ROOT, api_port: int = 8000, ui_port: int = 5173) -> lis
             sys.version.split()[0],
             "" if python_ok else "Install Python 3.12 or 3.13: https://www.python.org/downloads/",
         ),
-        tool_version("uv", (0, 11, 29)),
+        tool_version("uv", (0, 13, 4)),
         tool_version("node", (24, 0, 0)),
         tool_version("npm", (10, 0, 0)),
     ]

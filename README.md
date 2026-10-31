@@ -9,9 +9,9 @@
 
 [Open EduWork DataBridge on GitHub Pages](https://imtiazither.github.io/eduwork-databridge/) · [Browse the documentation](https://imtiazither.github.io/eduwork-databridge/docs/)
 
-## Current version: v0.62.0
+## Current version: v0.62.1
 
-v0.62.0 improves the connected reviewer workflow: protection for unfinished notes, oldest/newest/severity sorting, accurate filtered result counts and pagination, and remembered status/severity/sort selections. Read the [release notes](docs/release/v0.62.0.md), the [exception desk guide](docs/guides/exception-desk.md), or start with the [five-minute demo guide](docs/guides/demo-quickstart.md).
+v0.62.1 improves the connected reviewer workflow: protection for unfinished notes, oldest/newest/severity sorting, accurate filtered result counts and pagination, and remembered status/severity/sort selections. It also updates the build tool's certificate bundle. Read the [release notes](docs/release/v0.62.1.md), the [exception desk guide](docs/guides/exception-desk.md), or start with the [five-minute demo guide](docs/guides/demo-quickstart.md).
 
 EduWork DataBridge is an open-source platform for making that reconciliation inspectable. It keeps source evidence, checks the awkward records, separates uncertain identity matches from safe ones, and carries lineage into governed outputs.
 

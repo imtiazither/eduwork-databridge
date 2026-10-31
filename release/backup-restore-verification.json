@@ -1,6 +1,6 @@
 {
   "status": "passed",
-  "version": "0.62.0",
+  "version": "0.62.1",
   "database": "sqlite reference verification",
   "table_count": 54,
   "organization_count": 1,

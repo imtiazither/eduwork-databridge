@@ -15,7 +15,7 @@ jobs:
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: "3.12"
-      - run: python -m pip install uv==0.11.29
+      - run: python -m pip install uv==0.13.4
       - run: uv sync --frozen --extra dev
       - run: uv run ruff check .
       - run: uv run ruff format --check .
@@ -53,7 +53,7 @@ jobs:
           node-version: "24"
           cache: npm
           cache-dependency-path: apps/reviewer-ui/package-lock.json
-      - run: python -m pip install uv==0.11.29
+      - run: python -m pip install uv==0.13.4
       - run: uv sync --frozen --extra dev
       - run: npm --prefix apps/reviewer-ui ci
       - run: uv run mkdocs build --strict
@@ -78,7 +78,7 @@ jobs:
           node-version: "24"
           cache: npm
           cache-dependency-path: apps/reviewer-ui/package-lock.json
-      - run: python -m pip install uv==0.11.29
+      - run: python -m pip install uv==0.13.4
       - run: uv sync --frozen --extra dev
       - run: npm --prefix apps/reviewer-ui ci
       - run: npm --prefix apps/reviewer-ui exec -- playwright install --with-deps chromium

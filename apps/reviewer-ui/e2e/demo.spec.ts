@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 
 test("a first-time reviewer can save a note and see it after a reload", async ({ page }, testInfo) => {
   await page.goto("/#workspace");
-  await expect(page.getByText("API 0.62.0", { exact: true })).toBeAttached();
+  await expect(page.getByText("API 0.62.1", { exact: true })).toBeAttached();
   await page.getByRole("navigation", { name: "Reviewer console sections" })
     .getByRole("button", { name: /Exceptions/ }).click();
   await expect(page.getByRole("heading", { name: "Exception desk", exact: true })).toBeVisible();
@@ -22,7 +22,7 @@ test("a first-time reviewer can save a note and see it after a reload", async ({
 
 test("the demo viewer cannot submit exception resolutions", async ({ page }) => {
   await page.goto("/#workspace");
-  await expect(page.getByText("API 0.62.0", { exact: true })).toBeAttached();
+  await expect(page.getByText("API 0.62.1", { exact: true })).toBeAttached();
   await page.getByRole("navigation", { name: "Reviewer console sections" })
     .getByRole("button", { name: /Exceptions/ }).click();
   await page.getByRole("combobox", { name: "Local demo identity", exact: true }).selectOption("demo-viewer");
@@ -32,7 +32,7 @@ test("the demo viewer cannot submit exception resolutions", async ({ page }) => 
 
 test("protects unfinished notes and restores safe filters on return", async ({ page }, testInfo) => {
   await page.goto("/#workspace");
-  await expect(page.getByText("API 0.62.0", { exact: true })).toBeAttached();
+  await expect(page.getByText("API 0.62.1", { exact: true })).toBeAttached();
   const navigation = page.getByRole("navigation", { name: "Reviewer console sections" });
   await navigation.getByRole("button", { name: /Exceptions/ }).click();
   await page.getByRole("combobox", { name: "Exception filter", exact: true }).selectOption("all");
@@ -68,7 +68,7 @@ test("protects unfinished notes and restores safe filters on return", async ({ p
 
 test("warns before a document navigation discards an unfinished note", async ({ page }) => {
   await page.goto("/#workspace");
-  await expect(page.getByText("API 0.62.0", { exact: true })).toBeAttached();
+  await expect(page.getByText("API 0.62.1", { exact: true })).toBeAttached();
   await page.getByRole("navigation", { name: "Reviewer console sections" })
     .getByRole("button", { name: /Exceptions/ }).click();
   await page.getByLabel("Resolution note", { exact: true }).fill("Keep this unfinished note");

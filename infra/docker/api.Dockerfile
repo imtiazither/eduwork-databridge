@@ -3,7 +3,7 @@ FROM python:3.12-slim
 ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PATH="/app/.venv/bin:$PATH"
 WORKDIR /app
 
-RUN pip install --no-cache-dir uv==0.11.29
+RUN pip install --no-cache-dir uv==0.13.4
 COPY pyproject.toml uv.lock README.md ./
 COPY packages ./packages
 COPY migrations ./migrations

@@ -66,3 +66,12 @@ def test_recently_closed_listener_does_not_block_restart():
             connection.close()
             client.recv(1)
     assert doctor.port_check("API", port).ok
+
+
+def test_rejects_uv_with_the_affected_certificate_bundle(monkeypatch):
+    monkeypatch.setattr(doctor.shutil, "which", lambda name: "/tools/uv")
+    run = Mock(return_value=subprocess.CompletedProcess([], 0, "uv 0.11.29", ""))
+    monkeypatch.setattr(doctor.subprocess, "run", run)
+    assert not doctor.tool_version("uv", (0, 13, 4)).ok
+    run.return_value = subprocess.CompletedProcess([], 0, "uv 0.13.4", "")
+    assert doctor.tool_version("uv", (0, 13, 4)).ok
