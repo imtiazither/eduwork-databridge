@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useState, type FormEvent } from "react";
+import { useCallback, useLayoutEffect, useState, type FormEvent } from "react";
+import { useDraftGuard } from "./DraftGuard";
 import { exceptionStatuses, type ExceptionRecord, type ExceptionSummary, type Resolution } from "./exceptionApi";
 import { reviewRequest, ReviewApiError, type Actor, type Organization } from "./reviewApi";
 
@@ -17,6 +18,8 @@ function ExceptionDetail({ issue, user, organizationId, refresh, saved }: {
   const [note, setNote] = useState("");
   const [snapshot, setSnapshot] = useState("");
   const [offset, setOffset] = useState(0);
+  const guard = useDraftGuard();
+  const clear = useCallback(() => { setNote(""); setSnapshot(""); setStatus("acknowledged"); }, []);
   const history = useQuery({
     queryKey: ["exception-history", user, organizationId, issue.quarantine_id, offset],
     queryFn: () => reviewRequest<Resolution[]>(`/quarantine/${issue.quarantine_id}/history?limit=${pageSize}&offset=${offset}`, user, organizationId),
@@ -27,8 +30,12 @@ function ExceptionDetail({ issue, user, organizationId, refresh, saved }: {
       status, note: note.trim(), expected_revision: issue.revision,
       corrected_snapshot_id: snapshot.trim() || null,
     }),
-    onSuccess: saved, retry: false,
+    onSuccess: async () => { clear(); await saved(); }, retry: false,
   });
+  useLayoutEffect(() => {
+    guard.update({ dirty: Boolean(note || snapshot || status !== "acknowledged"), busy: save.isPending, discard: clear });
+    return () => guard.update({ dirty: false, busy: false, discard: () => {} });
+  }, [note, snapshot, status, save.isPending, clear, guard.update]);
   const conflict = save.error instanceof ReviewApiError && save.error.status === 409;
   function submit(event: FormEvent) {
     event.preventDefault();
@@ -61,7 +68,7 @@ function ExceptionDetail({ issue, user, organizationId, refresh, saved }: {
         pattern="[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}" />
       <p className="review-help">A status records the review outcome. Source corrections still need validation before publication.</p>
       <ErrorNotice error={save.error} />
-      {conflict && <button type="button" className="review-button quiet" onClick={() => void refresh()}>Refresh exception</button>}
+      {conflict && <button type="button" className="review-button quiet" onClick={() => guard.leave(() => void refresh())}>Refresh exception</button>}
       <button type="submit" className="review-button" disabled={!note.trim() || save.isPending || conflict}>
         {save.isPending ? "Saving resolution…" : "Save resolution"}
       </button>
@@ -87,6 +94,7 @@ function ExceptionDetail({ issue, user, organizationId, refresh, saved }: {
 }
 
 function ExceptionQueue({ user, organizationId }: { user: string; organizationId: string }) {
+  const guard = useDraftGuard();
   const client = useQueryClient();
   const [filter, setFilter] = useState("needs_attention");
   const [severity, setSeverity] = useState("all");
@@ -107,6 +115,7 @@ function ExceptionQueue({ user, organizationId }: { user: string; organizationId
   const queue = useQuery({
     queryKey: ["exception-queue", user, organizationId, filter, severity, query, offset],
     queryFn: () => reviewRequest<ExceptionRecord[]>(`/quarantine?${params}`, user, organizationId), retry: false,
+    refetchOnWindowFocus: false, refetchOnReconnect: false,
   });
   const selected = queue.data?.find(item => item.quarantine_id === selectedId) ?? queue.data?.[0];
   async function refresh() {
@@ -122,18 +131,18 @@ function ExceptionQueue({ user, organizationId }: { user: string; organizationId
       <div><strong>{summary.data?.needs_attention ?? "—"}</strong><span>Need attention</span></div>
       <div><strong>{summary.data ? summary.data.by_severity.blocking ?? 0 : "—"}</strong><span>Blocking issues · all statuses</span></div>
       <div><strong>{summary.data?.total ?? "—"}</strong><span>Total issues</span></div>
-      <button type="button" className="review-button quiet" disabled={queue.isFetching} onClick={() => void refresh()}>Refresh exceptions</button>
+      <button type="button" className="review-button quiet" disabled={queue.isFetching} onClick={() => guard.leave(() => void refresh())}>Refresh exceptions</button>
     </div>
     <ErrorNotice error={summary.error} />
     <div className="review-toolbar exception-toolbar">
-      <label>Exception filter<select value={filter} onChange={event => { setFilter(event.target.value); resetSelection(); }}>
+      <label>Exception filter<select value={filter} onChange={event => { const value = event.target.value; guard.leave(() => { setFilter(value); resetSelection(); }); }}>
         <option value="needs_attention">Needs attention</option><option value="all">All statuses</option>
         {Object.entries(exceptionStatuses).map(([value, label]) => <option key={value} value={value}>{label}</option>)}
       </select></label>
-      <label>Severity<select value={severity} onChange={event => { setSeverity(event.target.value); resetSelection(); }}>
+      <label>Severity<select value={severity} onChange={event => { const value = event.target.value; guard.leave(() => { setSeverity(value); resetSelection(); }); }}>
         <option value="all">All severities</option><option value="blocking">Blocking</option><option value="error">Error</option><option value="warning">Warning</option>
       </select></label>
-      <form onSubmit={event => { event.preventDefault(); setQuery(search.trim()); resetSelection(); }}>
+      <form onSubmit={event => { event.preventDefault(); guard.leave(() => { setQuery(search.trim()); resetSelection(); }); }}>
         <label htmlFor="exception-search">Search record or rule</label>
         <div><input id="exception-search" maxLength={100} value={search} onChange={event => setSearch(event.target.value)} /><button type="submit">Search</button></div>
       </form>
@@ -147,7 +156,7 @@ function ExceptionQueue({ user, organizationId }: { user: string; organizationId
     {queue.data && !queue.error && queue.data.length > 0 && <div className="review-layout">
       <ul className="candidate-list exception-queue" aria-label="Exceptions">
         {queue.data.map(issue => <li key={issue.quarantine_id}><button type="button"
-          aria-pressed={selected?.quarantine_id === issue.quarantine_id} onClick={() => { setSelectedId(issue.quarantine_id); setNotice(""); }}>
+          aria-pressed={selected?.quarantine_id === issue.quarantine_id} onClick={() => { if (selected?.quarantine_id !== issue.quarantine_id) guard.leave(() => { setSelectedId(issue.quarantine_id); setNotice(""); }); }}>
           <strong>{issue.source_record_key}</strong><span>{issue.rule_title}</span>
           <small>{issue.severity} · {exceptionStatuses[issue.status]}</small>
         </button></li>)}
@@ -156,14 +165,15 @@ function ExceptionQueue({ user, organizationId }: { user: string; organizationId
         organizationId={organizationId} refresh={refresh} saved={async () => { setNotice("Resolution saved. The note and reviewer are recorded in history."); await refresh(); }} />}
     </div>}
     <div className="review-pagination" aria-label="Exception pagination">
-      <button type="button" disabled={offset === 0 || queue.isFetching} onClick={() => { setOffset(offset - pageSize); setSelectedId(null); }}>Previous page</button>
+      <button type="button" disabled={offset === 0 || queue.isFetching} onClick={() => guard.leave(() => { setOffset(offset - pageSize); setSelectedId(null); })}>Previous page</button>
       <span>Page {Math.floor(offset / pageSize) + 1}</span>
-      <button type="button" disabled={!queue.data || queue.data.length < pageSize || queue.isFetching || queue.isError} onClick={() => { setOffset(offset + pageSize); setSelectedId(null); }}>Next page</button>
+      <button type="button" disabled={!queue.data || queue.data.length < pageSize || queue.isFetching || queue.isError} onClick={() => guard.leave(() => { setOffset(offset + pageSize); setSelectedId(null); })}>Next page</button>
     </div>
   </>;
 }
 
 export function ExceptionDesk() {
+  const guard = useDraftGuard();
   const [user, setUser] = useState("demo-admin");
   const [organizationId, setOrganizationId] = useState("");
   const organizations = useQuery({ queryKey: ["review-organizations", user], queryFn: () => reviewRequest<Organization[]>("/organizations", user), retry: false });
@@ -173,10 +183,10 @@ export function ExceptionDesk() {
   return <section className="view live-review live-exceptions" aria-labelledby="exceptions-title">
     <div className="view-heading"><div><p className="section-kicker">Data quality</p><h2 id="exceptions-title">Exception desk</h2></div><p className="view-intro">Review held records and record the next step.</p></div>
     <div className="review-session">
-      <label>Local demo identity<select value={user} onChange={event => { setUser(event.target.value); setOrganizationId(""); }}>
+      <label>Local demo identity<select value={user} onChange={event => { const value = event.target.value; guard.leave(() => { setUser(value); setOrganizationId(""); }); }}>
         <option value="demo-admin">Demo administrator</option><option value="demo-viewer">Demo viewer</option>
       </select></label>
-      <label>Organization<select value={activeOrganization?.id ?? ""} disabled={!organizations.data?.length} onChange={event => setOrganizationId(event.target.value)}>
+      <label>Organization<select value={activeOrganization?.id ?? ""} disabled={!organizations.data?.length} onChange={event => { const value = event.target.value; guard.leave(() => setOrganizationId(value)); }}>
         {!organizations.data?.length && <option value="">No organization available</option>}
         {organizations.data?.map(item => <option key={item.id} value={item.id}>{item.name}</option>)}
       </select></label>

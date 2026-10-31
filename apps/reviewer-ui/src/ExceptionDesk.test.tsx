@@ -2,6 +2,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { afterEach, expect, test, vi } from "vitest";
 import { ExceptionDesk } from "./ExceptionDesk";
+import { DraftGuardProvider } from "./DraftGuard";
 import type { ExceptionRecord, Resolution } from "./exceptionApi";
 
 const issue: ExceptionRecord = {
@@ -14,7 +15,7 @@ const clients: QueryClient[] = [];
 function renderDesk() {
   const client = new QueryClient({ defaultOptions: { queries: { retry: false }, mutations: { retry: false } } });
   clients.push(client);
-  return render(<QueryClientProvider client={client}><ExceptionDesk /></QueryClientProvider>);
+  return render(<QueryClientProvider client={client}><DraftGuardProvider><ExceptionDesk /></DraftGuardProvider></QueryClientProvider>);
 }
 function setupApi({ saveStatus = 200, queueStatus = 200, count = 1 } = {}) {
   let current = { ...issue };
@@ -40,7 +41,7 @@ function setupApi({ saveStatus = 200, queueStatus = 200, count = 1 } = {}) {
   vi.stubGlobal("fetch", fetch);
   return fetch;
 }
-afterEach(() => { cleanup(); clients.splice(0).forEach(client => client.clear()); vi.unstubAllGlobals(); });
+afterEach(() => { cleanup(); clients.splice(0).forEach(client => client.clear()); vi.unstubAllGlobals(); vi.restoreAllMocks(); });
 
 test("records a reasoned resolution and reads its saved history after remount", async () => {
   const fetch = setupApi();
@@ -94,4 +95,54 @@ test("shows empty and unavailable queues without fixture substitution", async ()
   setupApi({ queueStatus: 403 }); renderDesk();
   expect(await screen.findByRole("alert")).toHaveTextContent(/permission/);
   expect(screen.queryByRole("button", { name: "Save resolution" })).not.toBeInTheDocument();
+});
+
+test.each(["record", "filter", "severity", "organization", "identity", "refresh", "page"])("protects an unfinished note before changing %s", async action => {
+  setupApi({ count: 20 }); renderDesk();
+  await screen.findByRole("heading", { name: "Missing employee ID" });
+  const confirm = vi.spyOn(window, "confirm").mockReturnValue(false);
+  fireEvent.change(screen.getByLabelText("Resolution note"), { target: { value: "Unfinished review" } });
+  if (action === "record") fireEvent.click(screen.getAllByRole("button", { name: /HR-1/ })[1]);
+  if (action === "filter") fireEvent.change(screen.getByLabelText("Exception filter"), { target: { value: "closed" } });
+  if (action === "severity") fireEvent.change(screen.getByLabelText("Severity"), { target: { value: "blocking" } });
+  if (action === "organization") fireEvent.change(screen.getByLabelText("Organization"), { target: { value: "org-2" } });
+  if (action === "identity") fireEvent.change(screen.getByLabelText("Local demo identity"), { target: { value: "demo-viewer" } });
+  if (action === "refresh") fireEvent.click(screen.getByRole("button", { name: "Refresh exceptions" }));
+  if (action === "page") fireEvent.click(screen.getByRole("button", { name: "Next page" }));
+  expect(confirm).toHaveBeenCalledWith("Discard unsaved resolution changes?");
+  expect(screen.getByLabelText("Resolution note")).toHaveValue("Unfinished review");
+  expect(screen.getByLabelText("Exception filter")).toHaveValue("needs_attention");
+  expect(screen.getByLabelText("Local demo identity")).toHaveValue("demo-admin");
+  expect(screen.getByLabelText("Organization")).toHaveValue("org-1");
+});
+
+test("warns on browser unload only while a draft is unfinished", async () => {
+  setupApi(); renderDesk();
+  await screen.findByRole("heading", { name: "Missing employee ID" });
+  const clean = new Event("beforeunload", { cancelable: true });
+  window.dispatchEvent(clean);
+  expect(clean.defaultPrevented).toBe(false);
+  fireEvent.change(screen.getByLabelText("Resolution note"), { target: { value: "Draft" } });
+  const dirty = new Event("beforeunload", { cancelable: true });
+  window.dispatchEvent(dirty);
+  expect(dirty.defaultPrevented).toBe(true);
+  vi.spyOn(window, "confirm").mockReturnValue(true);
+  fireEvent.change(screen.getByLabelText("Severity"), { target: { value: "warning" } });
+  expect(await screen.findByLabelText("Resolution note")).toHaveValue("");
+  const discarded = new Event("beforeunload", { cancelable: true });
+  window.dispatchEvent(discarded);
+  expect(discarded.defaultPrevented).toBe(false);
+});
+
+test("clears the unload warning after a successful save", async () => {
+  setupApi(); renderDesk();
+  await screen.findByLabelText("Resolution note");
+  fireEvent.change(screen.getByLabelText("Resolution note"), { target: { value: "Completed review" } });
+  fireEvent.click(screen.getByRole("button", { name: "Save resolution" }));
+  await screen.findByText(/Resolution saved/);
+  await waitFor(() => expect(screen.getByRole("button", { name: "Save resolution" })).toBeDisabled());
+  await waitFor(() => {
+    const event = new Event("beforeunload", { cancelable: true }); window.dispatchEvent(event);
+    expect(event.defaultPrevented).toBe(false);
+  });
 });

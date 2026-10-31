@@ -1,5 +1,11 @@
 # Connected Exception Desk
 
+## Unfinished resolutions
+
+Changing records, filters, pages, identity, organization, or workspace sections prompts before discarding an unfinished resolution. Cancel keeps the current note and selection. A pending save must finish before leaving. Refreshing a stale exception also requires confirmation before discarding the draft. Queue background refresh is disabled so window focus cannot silently replace an edited record; use **Refresh exceptions** to load current data.
+
+Supported browsers also warn before closing or reloading the page after editing. This browser warning is not guaranteed on every device, especially when a mobile app is forcibly closed. Draft notes are kept only in memory, not browser storage, and are saved to the server only after **Save resolution** succeeds.
+
 The local Exceptions screen reads saved validation issues from the selected organization's database. It shows the affected record key, rule, severity, masked evidence, source snapshot, and suggested next step.
 
 ## Run and review

@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
 import { ReviewDesk } from "./ReviewDesk";
 import { ExceptionDesk } from "./ExceptionDesk";
+import { DraftGuardProvider, useDraftGuard } from "./DraftGuard";
 import {
   fallbackSummary,
   issueDefinitions,
@@ -269,6 +270,11 @@ function Evidence() {
 }
 
 export function App({ preview = staticDemo }: { preview?: boolean } = {}) {
+  return <DraftGuardProvider><Application preview={preview} /></DraftGuardProvider>;
+}
+
+function Application({ preview }: { preview: boolean }) {
+  const guard = useDraftGuard();
   const [view, setView] = useState<ViewKey>("overview");
   const [theme, setTheme] = useState<Theme>(getInitialTheme);
   const version = useQuery({
@@ -442,7 +448,7 @@ export function App({ preview = staticDemo }: { preview?: boolean } = {}) {
           <nav className="workspace-nav" aria-label="Reviewer console sections">
             <p>REVIEW DESK</p>
             {navigation.map((item, index) => (
-              <button key={item.key} className={view === item.key ? "active" : ""} aria-current={view === item.key ? "page" : undefined} onClick={() => setView(item.key)}>
+              <button key={item.key} className={view === item.key ? "active" : ""} aria-current={view === item.key ? "page" : undefined} onClick={() => { if (view !== item.key) guard.leave(() => setView(item.key)); }}>
                 <span>0{index + 1}</span>{item.label}
                 {item.key === "exceptions" && (preview || !version.data) && <b>{issueTotal}</b>}
               </button>
