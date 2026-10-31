@@ -48,7 +48,7 @@ function setupApi({ saveStatus = 200, queueStatus = 200, count = 1 } = {}) {
   vi.stubGlobal("fetch", fetch);
   return fetch;
 }
-afterEach(() => { cleanup(); clients.splice(0).forEach(client => client.clear()); vi.unstubAllGlobals(); vi.restoreAllMocks(); });
+afterEach(() => { cleanup(); clients.splice(0).forEach(client => client.clear()); vi.unstubAllGlobals(); vi.restoreAllMocks(); window.sessionStorage.clear(); });
 
 test("records a reasoned resolution and reads its saved history after remount", async () => {
   const fetch = setupApi();
@@ -182,4 +182,29 @@ test("returns to the last valid page after closing its final matching issue", as
   await screen.findByText("Showing 1-20 of 20 matching issues");
   expect(screen.getByText("Page 1 of 1")).toBeInTheDocument();
   expect(screen.getByRole("button", { name: "Next page" })).toBeDisabled();
+});
+
+test("remembers safe filters when returning to the same organization", async () => {
+  setupApi(); const view = renderDesk();
+  await screen.findByLabelText("Resolution note");
+  fireEvent.change(screen.getByLabelText("Severity"), { target: { value: "blocking" } });
+  fireEvent.change(screen.getByLabelText("Sort order"), { target: { value: "newest" } });
+  fireEvent.change(screen.getByLabelText("Exception filter"), { target: { value: "all" } });
+  fireEvent.change(screen.getByLabelText("Search record or rule"), { target: { value: "Private record name" } });
+  view.unmount(); renderDesk();
+  await screen.findByLabelText("Resolution note");
+  expect(screen.getByLabelText("Sort order")).toHaveValue("newest");
+  expect(screen.getByLabelText("Severity")).toHaveValue("blocking");
+  expect(screen.getByLabelText("Exception filter")).toHaveValue("all");
+  expect(screen.getByLabelText("Search record or rule")).toHaveValue("");
+  expect(JSON.stringify(window.sessionStorage)).not.toContain("Private record name");
+  fireEvent.change(screen.getByLabelText("Organization"), { target: { value: "org-2" } });
+  await waitFor(() => expect(screen.getByLabelText("Severity")).toHaveValue("all"));
+  expect(screen.getByLabelText("Sort order")).toHaveValue("oldest");
+  fireEvent.change(screen.getByLabelText("Organization"), { target: { value: "org-1" } });
+  await waitFor(() => expect(screen.getByLabelText("Severity")).toHaveValue("blocking"));
+  fireEvent.click(screen.getByRole("button", { name: "Reset filters" }));
+  expect(screen.getByLabelText("Severity")).toHaveValue("all");
+  expect(screen.getByLabelText("Exception filter")).toHaveValue("needs_attention");
+  expect(screen.getByLabelText("Sort order")).toHaveValue("oldest");
 });

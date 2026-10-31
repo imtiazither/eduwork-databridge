@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useCallback, useLayoutEffect, useState, type FormEvent } from "react";
+import { useCallback, useEffect, useLayoutEffect, useState, type FormEvent } from "react";
 import { useDraftGuard } from "./DraftGuard";
+import { readExceptionPreferences, writeExceptionPreferences } from "./exceptionPreferences";
 import { exceptionSorts, exceptionStatuses, type ExceptionPage, type ExceptionRecord, type ExceptionSummary, type Resolution } from "./exceptionApi";
 import { reviewRequest, ReviewApiError, type Actor, type Organization } from "./reviewApi";
 
@@ -96,9 +97,11 @@ function ExceptionDetail({ issue, user, organizationId, refresh, saved }: {
 function ExceptionQueue({ user, organizationId }: { user: string; organizationId: string }) {
   const guard = useDraftGuard();
   const client = useQueryClient();
-  const [filter, setFilter] = useState("needs_attention");
-  const [severity, setSeverity] = useState("all");
-  const [sort, setSort] = useState("oldest");
+  const [initialPreferences] = useState(() => readExceptionPreferences(user, organizationId));
+  const [filter, setFilter] = useState(initialPreferences.filter);
+  const [severity, setSeverity] = useState(initialPreferences.severity);
+  const [sort, setSort] = useState(initialPreferences.sort);
+  useEffect(() => { writeExceptionPreferences(user, organizationId, { filter, severity, sort }); }, [user, organizationId, filter, severity, sort]);
   const [search, setSearch] = useState("");
   const [query, setQuery] = useState("");
   const [offset, setOffset] = useState(0);
@@ -138,6 +141,7 @@ function ExceptionQueue({ user, organizationId }: { user: string; organizationId
       <div><strong>{summary.data ? summary.data.by_severity.blocking ?? 0 : "—"}</strong><span>Blocking issues · all statuses</span></div>
       <div><strong>{summary.data?.total ?? "—"}</strong><span>Total issues</span></div>
       <button type="button" className="review-button quiet" disabled={queue.isFetching} onClick={() => guard.leave(() => void refresh())}>Refresh exceptions</button>
+      <button type="button" className="review-button quiet" onClick={() => guard.leave(() => { setFilter("needs_attention"); setSeverity("all"); setSort("oldest"); setSearch(""); setQuery(""); resetSelection(); })}>Reset filters</button>
     </div>
     <ErrorNotice error={summary.error} />
     <div className="review-toolbar exception-toolbar">

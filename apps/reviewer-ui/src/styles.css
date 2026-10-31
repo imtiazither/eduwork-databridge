@@ -2421,6 +2421,7 @@ footer > div a {
 .exception-inspector { min-width: 0; border-top: 3px solid var(--teal); padding: 20px 0; }
 .exception-inspector h3 { margin: 8px 0; font: 700 1.2rem/1.4 "Avenir Next", Avenir, sans-serif; letter-spacing: 0; overflow-wrap: anywhere; }
 .exception-record-key { font-size: .8rem; color: var(--muted); overflow-wrap: anywhere; }
+.exception-results { margin: 16px 0; font-size: .8rem; color: var(--muted); }
 .exception-evidence { margin: 24px 0; font-size: .8rem; line-height: 1.6; }
 .exception-evidence > div { padding: 10px 0; border-bottom: 1px solid var(--line); }
 .exception-evidence dt { color: var(--muted); font-size: .7rem; }

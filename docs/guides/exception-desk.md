@@ -1,5 +1,11 @@
 # Connected Exception Desk
 
+## Remembered filters
+
+Status, severity, and sort order are remembered in this browser tab separately for each identity and organization. Returning to the desk or reloading restores them; **Reset filters** restores Needs attention, All severities, and Oldest first, and clears the current search. Malformed preferences or blocked storage fall back safely to defaults. Server permissions are checked on every request; a stored preference grants no access.
+
+Only those three menu selections are stored in session storage. Search text, review notes, record selections, page offsets, and snapshot identifiers are not stored. Browser tab/session restoration behavior varies, so do not treat closing a tab as a secure data-erasure mechanism. The public static preview does not use these connected-desk preferences.
+
 ## Results and pages
 
 The desk displays the filtered matching total, visible result range, and page count. **Next page** is disabled on the last page, including when it contains exactly 20 issues. If a resolution removes the last issue on the current filtered page, the desk returns to the last valid page. The workload totals above the filters describe the whole organization; the matching total describes the current filters and search.
