@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useCallback, useLayoutEffect, useState, type FormEvent } from "react";
 import { useDraftGuard } from "./DraftGuard";
-import { exceptionStatuses, type ExceptionRecord, type ExceptionSummary, type Resolution } from "./exceptionApi";
+import { exceptionSorts, exceptionStatuses, type ExceptionRecord, type ExceptionSummary, type Resolution } from "./exceptionApi";
 import { reviewRequest, ReviewApiError, type Actor, type Organization } from "./reviewApi";
 
 const pageSize = 20;
@@ -98,12 +98,13 @@ function ExceptionQueue({ user, organizationId }: { user: string; organizationId
   const client = useQueryClient();
   const [filter, setFilter] = useState("needs_attention");
   const [severity, setSeverity] = useState("all");
+  const [sort, setSort] = useState("oldest");
   const [search, setSearch] = useState("");
   const [query, setQuery] = useState("");
   const [offset, setOffset] = useState(0);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [notice, setNotice] = useState("");
-  const params = new URLSearchParams({ limit: String(pageSize), offset: String(offset) });
+  const params = new URLSearchParams({ limit: String(pageSize), offset: String(offset), sort });
   if (filter === "needs_attention") params.set("needs_attention", "true");
   else if (filter !== "all") params.set("status", filter);
   if (severity !== "all") params.set("severity", severity);
@@ -113,7 +114,7 @@ function ExceptionQueue({ user, organizationId }: { user: string; organizationId
     queryFn: () => reviewRequest<ExceptionSummary>("/quarantine/summary", user, organizationId), retry: false,
   });
   const queue = useQuery({
-    queryKey: ["exception-queue", user, organizationId, filter, severity, query, offset],
+    queryKey: ["exception-queue", user, organizationId, filter, severity, sort, query, offset],
     queryFn: () => reviewRequest<ExceptionRecord[]>(`/quarantine?${params}`, user, organizationId), retry: false,
     refetchOnWindowFocus: false, refetchOnReconnect: false,
   });
@@ -141,6 +142,9 @@ function ExceptionQueue({ user, organizationId }: { user: string; organizationId
       </select></label>
       <label>Severity<select value={severity} onChange={event => { const value = event.target.value; guard.leave(() => { setSeverity(value); resetSelection(); }); }}>
         <option value="all">All severities</option><option value="blocking">Blocking</option><option value="error">Error</option><option value="warning">Warning</option>
+      </select></label>
+      <label>Sort order<select value={sort} onChange={event => { const value = event.target.value; guard.leave(() => { setSort(value); resetSelection(); }); }}>
+        {Object.entries(exceptionSorts).map(([value, label]) => <option key={value} value={value}>{label}</option>)}
       </select></label>
       <form onSubmit={event => { event.preventDefault(); guard.leave(() => { setQuery(search.trim()); resetSelection(); }); }}>
         <label htmlFor="exception-search">Search record or rule</label>

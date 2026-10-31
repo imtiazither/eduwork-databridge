@@ -3,6 +3,7 @@ import uuid
 from collections.abc import Generator
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import replace
+from datetime import UTC, datetime, timedelta
 from threading import Barrier
 
 import httpx
@@ -104,9 +105,44 @@ def test_queue_filters_literal_search_and_bounds(exceptions):
         "offset=-1",
         "status=no",
         "severity=no",
+        "sort=no",
         "q=" + "x" * 101,
     ]:
         assert call("GET", f"/api/v1/quarantine?{query}", org).status_code == 422
+
+
+def test_queue_sorting_and_stable_page_boundaries(exceptions):
+    session, org, _, _ = exceptions
+    service = ValidationService(session)
+    rows = service.review_queue(org)
+    warning = next(row for row, rule in rows if rule.severity == "warning")
+    blocking = [row for row, rule in rows if rule.severity == "blocking"]
+    ordered = [warning, *blocking]
+    start = datetime(2026, 10, 1, tzinfo=UTC)
+    for index, row in enumerate(ordered):
+        row.created_at = start + timedelta(days=index)
+    session.commit()
+    ids = [str(row.id) for row in ordered]
+    for sort, expected in [("oldest", ids), ("newest", ids[::-1]), ("severity", ids[1:] + ids[:1])]:
+        response = call("GET", f"/api/v1/quarantine?sort={sort}", org)
+        assert response.status_code == 200
+        assert [row["quarantine_id"] for row in response.json()] == expected
+        paged = [
+            call("GET", f"/api/v1/quarantine?sort={sort}&limit=1&offset={index}", org).json()[0][
+                "quarantine_id"
+            ]
+            for index in range(3)
+        ]
+        assert paged == expected
+    for row in ordered:
+        row.created_at = start
+    session.commit()
+    assert [
+        row["quarantine_id"] for row in call("GET", "/api/v1/quarantine", org).json()
+    ] == sorted(ids)
+    assert [
+        row["quarantine_id"] for row in call("GET", "/api/v1/quarantine?sort=newest", org).json()
+    ] == sorted(ids, reverse=True)
 
 
 def test_save_history_reopen_and_summary(exceptions):

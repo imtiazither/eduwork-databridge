@@ -97,7 +97,7 @@ test("shows empty and unavailable queues without fixture substitution", async ()
   expect(screen.queryByRole("button", { name: "Save resolution" })).not.toBeInTheDocument();
 });
 
-test.each(["record", "filter", "severity", "organization", "identity", "refresh", "page"])("protects an unfinished note before changing %s", async action => {
+test.each(["record", "filter", "severity", "sort", "organization", "identity", "refresh", "page"])("protects an unfinished note before changing %s", async action => {
   setupApi({ count: 20 }); renderDesk();
   await screen.findByRole("heading", { name: "Missing employee ID" });
   const confirm = vi.spyOn(window, "confirm").mockReturnValue(false);
@@ -105,6 +105,7 @@ test.each(["record", "filter", "severity", "organization", "identity", "refresh"
   if (action === "record") fireEvent.click(screen.getAllByRole("button", { name: /HR-1/ })[1]);
   if (action === "filter") fireEvent.change(screen.getByLabelText("Exception filter"), { target: { value: "closed" } });
   if (action === "severity") fireEvent.change(screen.getByLabelText("Severity"), { target: { value: "blocking" } });
+  if (action === "sort") fireEvent.change(screen.getByLabelText("Sort order"), { target: { value: "severity" } });
   if (action === "organization") fireEvent.change(screen.getByLabelText("Organization"), { target: { value: "org-2" } });
   if (action === "identity") fireEvent.change(screen.getByLabelText("Local demo identity"), { target: { value: "demo-viewer" } });
   if (action === "refresh") fireEvent.click(screen.getByRole("button", { name: "Refresh exceptions" }));
@@ -114,6 +115,15 @@ test.each(["record", "filter", "severity", "organization", "identity", "refresh"
   expect(screen.getByLabelText("Exception filter")).toHaveValue("needs_attention");
   expect(screen.getByLabelText("Local demo identity")).toHaveValue("demo-admin");
   expect(screen.getByLabelText("Organization")).toHaveValue("org-1");
+});
+
+test("requests the selected server-side sort from the first page", async () => {
+  const fetch = setupApi({ count: 20 }); renderDesk();
+  await screen.findByLabelText("Resolution note");
+  fireEvent.click(screen.getByRole("button", { name: "Next page" }));
+  await waitFor(() => expect(fetch.mock.calls.some(([url]) => String(url).includes("offset=20"))).toBe(true));
+  fireEvent.change(screen.getByLabelText("Sort order"), { target: { value: "severity" } });
+  await waitFor(() => expect(fetch.mock.calls.some(([url]) => String(url).includes("sort=severity") && String(url).includes("offset=0"))).toBe(true));
 });
 
 test("warns on browser unload only while a draft is unfinished", async () => {

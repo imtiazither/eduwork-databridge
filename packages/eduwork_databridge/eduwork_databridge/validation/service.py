@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from datetime import UTC, datetime
 from typing import Any
 
-from sqlalchemy import func, or_, select, update
+from sqlalchemy import case, func, or_, select, update
 from sqlalchemy.orm import Session
 
 from eduwork_databridge.connectors.base import ConnectorError
@@ -240,6 +240,7 @@ class ValidationService:
         severity: str | None = None,
         needs_attention: bool = False,
         q: str | None = None,
+        sort: str = "oldest",
         limit: int = 50,
         offset: int = 0,
     ) -> list[tuple[QuarantineRecord, ValidationRule]]:
@@ -265,11 +266,22 @@ class ValidationService:
                     ValidationRule.rule_key.icontains(q.strip(), autoescape=True),
                 )
             )
-        query = (
-            query.order_by(QuarantineRecord.created_at, QuarantineRecord.id)
-            .limit(limit)
-            .offset(offset)
-        )
+        ordering = {
+            "oldest": (QuarantineRecord.created_at.asc(), QuarantineRecord.id.asc()),
+            "newest": (QuarantineRecord.created_at.desc(), QuarantineRecord.id.desc()),
+            "severity": (
+                case(
+                    {"blocking": 0, "error": 1, "warning": 2},
+                    value=ValidationRule.severity,
+                    else_=3,
+                ),
+                QuarantineRecord.created_at.asc(),
+                QuarantineRecord.id.asc(),
+            ),
+        }
+        if sort not in ordering:
+            raise ConnectorError("invalid_quarantine_sort", "Exception sort is invalid")
+        query = query.order_by(*ordering[sort]).limit(limit).offset(offset)
         return [(record, rule) for record, rule in self.session.execute(query)]
 
     def queue_summary(self, organization_id: uuid.UUID) -> dict[str, Any]:

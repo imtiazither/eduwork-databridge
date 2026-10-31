@@ -3,6 +3,10 @@ export const exceptionStatuses: Record<string, string> = {
   corrected_mapping: "Mapping corrected", waived: "Waived", closed: "Closed",
 };
 
+export const exceptionSorts: Record<string, string> = {
+  oldest: "Oldest first", newest: "Newest first", severity: "Highest severity first",
+};
+
 export interface ExceptionRecord {
   quarantine_id: string;
   source_record_key: string;

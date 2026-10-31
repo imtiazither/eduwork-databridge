@@ -578,6 +578,7 @@ def quarantine_queue(
     severity: Literal["blocking", "error", "warning"] | None = None,
     needs_attention: bool = False,
     q: str | None = Query(default=None, max_length=100),
+    sort: Literal["oldest", "newest", "severity"] = "oldest",
     limit: int = Query(default=50, ge=1, le=200),
     offset: int = Query(default=0, ge=0),
 ) -> list[QuarantineItemResponse]:
@@ -590,6 +591,7 @@ def quarantine_queue(
         severity=severity,
         needs_attention=needs_attention,
         q=q,
+        sort=sort,
         limit=limit,
         offset=offset,
     )

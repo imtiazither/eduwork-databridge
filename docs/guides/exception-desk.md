@@ -1,5 +1,9 @@
 # Connected Exception Desk
 
+## Queue order
+
+Use **Sort order** to review oldest issues first, newest issues first, or highest severity first. Severity order is blocking, error, then warning; equal-severity issues are ordered oldest first. Equal timestamps use the issue ID as a stable tie-breaker. Sorting applies to the full filtered queue on the server, not just the visible page. API clients can add `sort=oldest`, `sort=newest`, or `sort=severity` to `GET /api/v1/quarantine`; omitting it retains the oldest-first default.
+
 ## Unfinished resolutions
 
 Changing records, filters, pages, identity, organization, or workspace sections prompts before discarding an unfinished resolution. Cancel keeps the current note and selection. A pending save must finish before leaving. Refreshing a stale exception also requires confirmation before discarding the draft. Queue background refresh is disabled so window focus cannot silently replace an edited record; use **Refresh exceptions** to load current data.
