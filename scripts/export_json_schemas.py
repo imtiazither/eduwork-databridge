@@ -32,7 +32,6 @@ SCHEMAS: dict[str, type[BaseModel]] = {
     "retention-policy-config.schema.json": RetentionPolicyConfig,
 }
 
-
 def render(model: type[BaseModel]) -> str:
     schema = model.model_json_schema(mode="validation")
     schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
