@@ -259,6 +259,7 @@ def test_exception_access_and_foreign_snapshots(exceptions):
         ("GET", "/api/v1/quarantine", None),
         ("GET", "/api/v1/quarantine/page", None),
         ("GET", "/api/v1/quarantine/summary", None),
+        ("GET", root, None),
         ("GET", root + "/history", None),
         ("POST", root + "/resolve", payload),
     ]:
@@ -266,6 +267,10 @@ def test_exception_access_and_foreign_snapshots(exceptions):
         assert call(method, path, org, body, user="demo-viewer").status_code == 403
     assert call("GET", "/api/v1/quarantine", other.id).json() == []
     assert call("GET", "/api/v1/quarantine/page", other.id).json()["total"] == 0
+    wrong_org = call("GET", root, other.id)
+    missing = call("GET", f"/api/v1/quarantine/{uuid.uuid4()}", org)
+    assert wrong_org.status_code == missing.status_code == 404
+    assert wrong_org.json() == missing.json()
     assert call("GET", root + "/history", other.id).status_code == 404
     assert call("POST", root + "/resolve", other.id, payload).status_code == 404
     assert (
@@ -281,6 +286,29 @@ def test_exception_access_and_foreign_snapshots(exceptions):
     app.dependency_overrides[get_actor] = lambda: actor
     assert call("GET", "/api/v1/quarantine", other.id).status_code == 403
     assert call("GET", "/api/v1/quarantine/page", other.id).status_code == 403
+    assert call("GET", root, other.id).status_code == 403
+
+
+def test_direct_lookup_returns_closed_issue_with_queue_evidence(exceptions):
+    _, org, _, ids = exceptions
+    path = f"/api/v1/quarantine/{ids[0]}"
+    before = call("GET", path, org)
+    assert before.status_code == 200
+    assert before.json() in call("GET", "/api/v1/quarantine", org).json()
+    assert (
+        call(
+            "POST",
+            path + "/resolve",
+            org,
+            {"status": "closed", "note": "Reviewed", "expected_revision": 0},
+        ).status_code
+        == 200
+    )
+    after = call("GET", path, org)
+    assert after.status_code == 200
+    assert after.json() == {**before.json(), "status": "closed", "revision": 1}
+    assert after.json() not in call("GET", "/api/v1/quarantine?needs_attention=true", org).json()
+    assert call("GET", "/api/v1/quarantine/invalid-id", org).status_code == 422
 
 
 def test_filtered_page_totals_exact_boundaries_and_removed_last_page(exceptions):

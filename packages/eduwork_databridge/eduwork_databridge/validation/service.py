@@ -265,6 +265,16 @@ class ValidationService:
             )
         return query
 
+    def review_item(
+        self, organization_id: uuid.UUID, quarantine_id: uuid.UUID
+    ) -> tuple[QuarantineRecord, ValidationRule] | None:
+        query = self._review_query(organization_id).where(QuarantineRecord.id == quarantine_id)
+        row = self.session.execute(query).one_or_none()
+        if row is None:
+            return None
+        record, rule = row
+        return record, rule
+
     def review_queue_count(
         self,
         organization_id: uuid.UUID,

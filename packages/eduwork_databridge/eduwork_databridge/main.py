@@ -676,6 +676,24 @@ def quarantine_summary(
 
 
 @app.get(
+    "/api/v1/quarantine/{quarantine_id}", response_model=QuarantineItemResponse, tags=["validation"]
+)
+def quarantine_detail(
+    quarantine_id: uuid.UUID,
+    session: SessionDep,
+    actor: ActorDep,
+    x_organization_id: OrganizationHeader = None,
+) -> QuarantineItemResponse:
+    organization_id = _required_organization(x_organization_id)
+    require_organization(actor, organization_id)
+    require_permission(actor, "validation:write")
+    item = ValidationService(session).review_item(organization_id, quarantine_id)
+    if item is None:
+        raise HTTPException(status_code=404, detail="Exception was not found")
+    return _quarantine_item(*item)
+
+
+@app.get(
     "/api/v1/quarantine/{quarantine_id}/history",
     response_model=list[QuarantineResolutionResponse],
     tags=["validation"],
