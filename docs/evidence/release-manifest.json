@@ -1,6 +1,6 @@
 {
   "project": "EduWork DataBridge",
-  "version": "0.63.0",
+  "version": "0.63.1",
   "application_tables": 53,
   "alembic_revisions": 6,
   "generated_json_schemas": 11,
@@ -70,8 +70,8 @@
     "false_negatives_after_review": 0
   },
   "lockfile_sha256": {
-    "uv.lock": "9af8960aa97b58c95058dca5034784287824647ff20020327940db30c9554886",
-    "apps/reviewer-ui/package-lock.json": "626e5bb03ef7b6fb7f803beeeea9433c233d471ea24bb9095af36b58c704f665"
+    "uv.lock": "543d1107120e205f9dbe746c1825f386fc88bba331706f32eb38393bb9f017f5",
+    "apps/reviewer-ui/package-lock.json": "62ea67679ad0282f90b9b0aa0eda8efa1c3015320e23c6f6db410081b3be8de5"
   },
   "release_verification": "The tag workflow checks this version before publishing the release."
 }

@@ -1,6 +1,6 @@
 # EduWork DataBridge
 
-**Current release: v0.63.0**
+**Current release: v0.63.1**
 
 EduWork DataBridge turns fragmented learning, training, skills, credential, HRIS, LMS, CRM, assessment, and workforce records into documented, validated, reviewable, and traceable data products.
 

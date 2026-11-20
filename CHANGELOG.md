@@ -4,6 +4,12 @@ All notable changes will be documented here. The project follows Semantic Versio
 
 ## Unreleased
 
+## [0.63.1] - 2026-11-20
+
+### Fixed
+
+- Upgraded the API container's Debian `zlib1g` runtime to the security-fixed version for CVE-2026-85091. This patch carries the exception review links from v0.63.0 into the published release.
+
 ## [0.63.0] - 2026-11-20
 
 ### Added
