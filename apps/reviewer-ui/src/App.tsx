@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import { ReviewDesk } from "./ReviewDesk";
 import { ExceptionDesk } from "./ExceptionDesk";
 import { DraftGuardProvider, useDraftGuard } from "./DraftGuard";
+import { exceptionLinkPrefix } from "./exceptionApi";
 import {
   fallbackSummary,
   issueDefinitions,
@@ -274,8 +275,13 @@ export function App({ preview = staticDemo }: { preview?: boolean } = {}) {
 }
 
 function Application({ preview }: { preview: boolean }) {
-  const guard = useDraftGuard();
-  const [view, setView] = useState<ViewKey>("overview");
+  const { leave } = useDraftGuard();
+  const [linkedException, setLinkedException] = useState(() =>
+    !preview && window.location.hash.startsWith(exceptionLinkPrefix)
+      ? window.location.hash.slice(exceptionLinkPrefix.length)
+      : null,
+  );
+  const [view, setView] = useState<ViewKey>(linkedException === null ? "overview" : "exceptions");
   const [theme, setTheme] = useState<Theme>(getInitialTheme);
   const version = useQuery({
     queryKey: ["version"],
@@ -309,10 +315,47 @@ function Application({ preview }: { preview: boolean }) {
     }
   }, [theme]);
 
+  useEffect(() => {
+    if (preview) return;
+    function openException(event: HashChangeEvent) {
+      const hash = window.location.hash;
+      if (!hash.startsWith(exceptionLinkPrefix)) return;
+      const id = hash.slice(exceptionLinkPrefix.length);
+      if (id === linkedException && view === "exceptions") return;
+      let accepted = false;
+      leave(() => { accepted = true; setLinkedException(id); setView("exceptions"); });
+      if (!accepted) window.history.replaceState(window.history.state, "", event.oldURL);
+    }
+    window.addEventListener("hashchange", openException);
+    return () => window.removeEventListener("hashchange", openException);
+  }, [leave, linkedException, preview, view]);
+
+  useEffect(() => {
+    if (linkedException !== null && view === "exceptions") {
+      document.getElementById("workspace")?.scrollIntoView?.();
+    }
+  }, [linkedException, view]);
+
+  function backToQueue() {
+    if (window.location.hash.startsWith(exceptionLinkPrefix)) {
+      window.history.replaceState(window.history.state, "", "#workspace");
+    }
+    setLinkedException(null);
+  }
+
+  const exceptionLink = linkedException === null ? undefined : { id: linkedException, back: backToQueue };
   const currentView = {
     overview: <Overview issueTotal={issueTotal} />,
     sources: <Sources summary={summary} />,
-    exceptions: !preview && version.data ? <ExceptionDesk /> : <Exceptions summary={summary} />,
+    exceptions: !preview && version.data ? <ExceptionDesk link={exceptionLink} /> : exceptionLink ? (
+      <section className="view" aria-labelledby="linked-exception-title">
+        <h2 id="linked-exception-title">Linked exception</h2>
+        {version.isLoading ? <p role="status">Connecting to the review API…</p> : <>
+          <p className="review-notice error" role="alert">Open this link on the connected reviewer desk to load the exception.</p>
+          <button type="button" className="review-button quiet" onClick={backToQueue}>Back to exception queue</button>
+        </>}
+      </section>
+    ) : <Exceptions summary={summary} />,
     identity: !preview && version.data ? <ReviewDesk /> : <IdentityReview />,
     evidence: <Evidence />,
   }[view];
@@ -448,7 +491,7 @@ function Application({ preview }: { preview: boolean }) {
           <nav className="workspace-nav" aria-label="Reviewer console sections">
             <p>REVIEW DESK</p>
             {navigation.map((item, index) => (
-              <button key={item.key} className={view === item.key ? "active" : ""} aria-current={view === item.key ? "page" : undefined} onClick={() => { if (view !== item.key) guard.leave(() => setView(item.key)); }}>
+              <button key={item.key} className={view === item.key ? "active" : ""} aria-current={view === item.key ? "page" : undefined} onClick={() => { if (view !== item.key) leave(() => setView(item.key)); }}>
                 <span>0{index + 1}</span>{item.label}
                 {item.key === "exceptions" && (preview || !version.data) && <b>{issueTotal}</b>}
               </button>

@@ -82,3 +82,44 @@ test("warns before a document navigation discards an unfinished note", async ({ 
   expect(prompted).toBe(true);
   await expect(page.getByLabel("Resolution note", { exact: true })).toHaveValue("Keep this unfinished note");
 });
+
+test("opens the exact linked exception, preserves filters, and respects review permissions", async ({ page }) => {
+  await page.addInitScript(() => Object.defineProperty(navigator, "clipboard", { value: undefined }));
+  await page.goto("/#workspace");
+  await expect(page.getByText(/^API \d+\.\d+\.\d+$/)).toBeAttached();
+  await page.getByRole("navigation", { name: "Reviewer console sections" })
+    .getByRole("button", { name: /Exceptions/ }).click();
+  await page.getByRole("combobox", { name: "Sort order", exact: true }).selectOption("newest");
+  const queue = page.getByRole("list", { name: "Exceptions", exact: true });
+  const target = queue.getByRole("button").nth(1);
+  const recordKey = await target.locator("strong").innerText();
+  await target.click();
+  await page.getByRole("button", { name: "Copy review link", exact: true }).click();
+  const url = new URL(await page.getByRole("textbox", { name: "Review link", exact: true }).inputValue());
+  expect(url.hash).toMatch(/^#exception=[0-9a-f-]{36}$/);
+  expect(url.search).toBe("");
+
+  await page.goto(url.href);
+  await expect(page.locator(".exception-record-key code")).toHaveText(recordKey);
+  await expect(queue).toHaveCount(0);
+  await page.reload();
+  await expect(page.locator(".exception-record-key code")).toHaveText(recordKey);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+
+  const note = page.getByLabel("Resolution note", { exact: true });
+  const back = page.getByRole("button", { name: "Back to exception queue", exact: true });
+  await note.fill("Keep this linked review draft");
+  page.once("dialog", dialog => dialog.dismiss());
+  await back.click();
+  await expect(note).toHaveValue("Keep this linked review draft");
+  page.once("dialog", dialog => dialog.accept());
+  await back.click();
+  await expect(queue).toBeVisible();
+  await expect(page.getByRole("combobox", { name: "Sort order", exact: true })).toHaveValue("newest");
+  await expect(page).toHaveURL(/#workspace$/);
+
+  await page.goto(url.href);
+  await page.getByRole("combobox", { name: "Local demo identity", exact: true }).selectOption("demo-viewer");
+  await expect(page.getByText("Your account cannot review exceptions.", { exact: true })).toBeVisible();
+  await expect(note).toHaveCount(0);
+});

@@ -2,13 +2,41 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useCallback, useEffect, useLayoutEffect, useState, type FormEvent } from "react";
 import { useDraftGuard } from "./DraftGuard";
 import { readExceptionPreferences, writeExceptionPreferences } from "./exceptionPreferences";
-import { exceptionSorts, exceptionStatuses, type ExceptionPage, type ExceptionRecord, type ExceptionSummary, type Resolution } from "./exceptionApi";
+import { exceptionLinkPrefix, exceptionSorts, exceptionStatuses, type ExceptionPage, type ExceptionRecord, type ExceptionSummary, type Resolution } from "./exceptionApi";
 import { reviewRequest, ReviewApiError, type Actor, type Organization } from "./reviewApi";
 
 const pageSize = 20;
+const exceptionIdPattern = /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i;
+
+interface ExceptionLink {
+  id: string;
+  back: () => void;
+}
 
 function ErrorNotice({ error }: { error: Error | null }) {
   return error ? <p className="review-notice error" role="alert">{error.message}</p> : null;
+}
+
+function CopyReviewLink({ id }: { id: string }) {
+  const [result, setResult] = useState<"copied" | "manual">();
+  const url = new URL(window.location.origin);
+  url.pathname = window.location.pathname;
+  url.hash = `${exceptionLinkPrefix}${id}`;
+  async function copy() {
+    try {
+      await navigator.clipboard.writeText(url.href);
+      setResult("copied");
+    } catch {
+      setResult("manual");
+    }
+  }
+  return <div className="exception-share">
+    <button type="button" className="review-button quiet" onClick={() => void copy()}>Copy review link</button>
+    {result === "copied" && <p className="review-help" role="status">Review link copied.</p>}
+    {result === "manual" && <label>Review link
+      <input value={url.href} readOnly autoFocus onFocus={event => event.currentTarget.select()} />
+    </label>}
+  </div>;
 }
 
 function ExceptionDetail({ issue, user, organizationId, refresh, saved }: {
@@ -47,6 +75,7 @@ function ExceptionDetail({ issue, user, organizationId, refresh, saved }: {
     <p className="section-kicker">{issue.severity} · revision {issue.revision}</p>
     <h3 id="exception-title">{issue.rule_title}</h3>
     <p className="exception-record-key">Record <code>{issue.source_record_key}</code> · {exceptionStatuses[issue.status]}</p>
+    <CopyReviewLink id={issue.quarantine_id} />
     <dl className="exception-evidence">
       <div><dt>Rule</dt><dd><code>{issue.rule_key}</code></dd></div>
       <div><dt>Field</dt><dd>{issue.field_name || "Record"}</dd></div>
@@ -186,7 +215,42 @@ function ExceptionQueue({ user, organizationId }: { user: string; organizationId
   </>;
 }
 
-export function ExceptionDesk() {
+function LinkedException({ id, user, organizationId }: { id: string; user: string; organizationId: string }) {
+  const guard = useDraftGuard();
+  const client = useQueryClient();
+  const [notice, setNotice] = useState("");
+  const validId = exceptionIdPattern.test(id);
+  const issue = useQuery({
+    queryKey: ["linked-exception", user, organizationId, id],
+    queryFn: () => reviewRequest<ExceptionRecord>(`/quarantine/${id}`, user, organizationId),
+    enabled: validId, retry: false, refetchOnWindowFocus: false, refetchOnReconnect: false,
+  });
+  if (!validId) return <p className="review-notice error" role="alert">This review link has an invalid exception ID.</p>;
+
+  async function refresh() {
+    await Promise.all([
+      issue.refetch(),
+      client.invalidateQueries({ queryKey: ["exception-queue", user, organizationId] }),
+      client.invalidateQueries({ queryKey: ["exception-summary", user, organizationId] }),
+      client.invalidateQueries({ queryKey: ["exception-history", user, organizationId, id] }),
+    ]);
+  }
+  const unavailable = issue.error instanceof ReviewApiError && issue.error.status === 404;
+  return <>
+    {notice && <p className="review-notice" role="status">{notice}</p>}
+    {issue.isPending && <p role="status">Loading linked exception…</p>}
+    {unavailable ? <p className="review-notice error" role="alert">This exception is unavailable in the selected organization. Check the organization or open the queue.</p> : <ErrorNotice error={issue.error} />}
+    {issue.error && !unavailable && <button type="button" className="review-button quiet" disabled={issue.isFetching}
+      onClick={() => guard.leave(() => void refresh())}>Retry linked exception</button>}
+    {issue.data && !issue.error && <ExceptionDetail key={issue.data.revision} issue={issue.data} user={user}
+      organizationId={organizationId} refresh={refresh} saved={async () => {
+        setNotice("Resolution saved. The note and reviewer are recorded in history.");
+        await refresh();
+      }} />}
+  </>;
+}
+
+export function ExceptionDesk({ link }: { link?: ExceptionLink } = {}) {
   const guard = useDraftGuard();
   const [user, setUser] = useState("demo-admin");
   const [organizationId, setOrganizationId] = useState("");
@@ -210,6 +274,9 @@ export function ExceptionDesk() {
     {(organizations.isPending || actor.isPending) && <p role="status">Connecting exception desk…</p>}
     {organizations.data?.length === 0 && <p className="review-notice">No accessible organizations.</p>}
     {actor.data && !canReview && <p className="review-notice">Your account cannot review exceptions.</p>}
-    {activeOrganization && canReview && !organizations.error && !actor.error && <ExceptionQueue key={`${user}:${activeOrganization.id}`} user={user} organizationId={activeOrganization.id} />}
+    {link && <div className="exception-link-nav"><button type="button" className="review-button quiet" onClick={() => guard.leave(link.back)}>Back to exception queue</button></div>}
+    {activeOrganization && canReview && !organizations.error && !actor.error && (link
+      ? <LinkedException key={`${user}:${activeOrganization.id}:${link.id}`} id={link.id} user={user} organizationId={activeOrganization.id} />
+      : <ExceptionQueue key={`${user}:${activeOrganization.id}`} user={user} organizationId={activeOrganization.id} />)}
   </section>;
 }

@@ -6,19 +6,19 @@ import { DraftGuardProvider } from "./DraftGuard";
 import type { ExceptionRecord, Resolution } from "./exceptionApi";
 
 const issue: ExceptionRecord = {
-  quarantine_id: "issue-1", source_record_key: "HR-1", field_name: "employee_id", evidence_masked: "[masked]",
+  quarantine_id: "11111111-2222-4333-8444-555555555555", source_record_key: "HR-1", field_name: "employee_id", evidence_masked: "[masked]",
   explanation: "An identifier is required.", rule_key: "required_id", rule_title: "Missing employee ID",
   severity: "blocking", status: "open", revision: 0, created_at: "2026-10-18T12:00:00Z",
   raw_snapshot_id: "snapshot-1", supersedes_quarantine_id: null, remediation: "Contact the source owner.",
 };
 const clients: QueryClient[] = [];
-function renderDesk() {
+function renderDesk(link?: { id: string; back: () => void }) {
   const client = new QueryClient({ defaultOptions: { queries: { retry: false }, mutations: { retry: false } } });
   clients.push(client);
-  return render(<QueryClientProvider client={client}><DraftGuardProvider><ExceptionDesk /></DraftGuardProvider></QueryClientProvider>);
+  return render(<QueryClientProvider client={client}><DraftGuardProvider><ExceptionDesk link={link} /></DraftGuardProvider></QueryClientProvider>);
 }
 function setupApi({ saveStatus = 200, queueStatus = 200, count = 1 } = {}) {
-  const records = Array.from({ length: count }, (_, index) => ({ ...issue, quarantine_id: `issue-${index + 1}` }));
+  const records = Array.from({ length: count }, (_, index) => ({ ...issue, quarantine_id: index === 0 ? issue.quarantine_id : `issue-${index + 1}` }));
   const history: Resolution[] = [];
   const fetch = vi.fn((input: RequestInfo | URL, init?: RequestInit) => {
     const url = new URL(String(input), "http://test");
@@ -41,14 +41,46 @@ function setupApi({ saveStatus = 200, queueStatus = 200, count = 1 } = {}) {
       const limit = Number(url.searchParams.get("limit") ?? 20);
       const offset = Math.min(Number(url.searchParams.get("offset") ?? 0), Math.floor(Math.max(0, filtered.length - 1) / limit) * limit);
       body = { items: filtered.slice(offset, offset + limit), total: filtered.length, limit, offset };
-    }
-    else throw new Error(`Unhandled request ${url.pathname}`);
+    } else if (url.pathname === `/api/v1/quarantine/${issue.quarantine_id}`) {
+      const organization = (init?.headers as Record<string, string>)["X-Organization-ID"];
+      body = organization === "org-1" ? records[0] : undefined;
+      if (!body) status = 404;
+    } else throw new Error(`Unhandled request ${url.pathname}`);
     return Promise.resolve({ ok: status === 200, status, json: async () => body } as Response);
   });
   vi.stubGlobal("fetch", fetch);
   return fetch;
 }
 afterEach(() => { cleanup(); clients.splice(0).forEach(client => client.clear()); vi.unstubAllGlobals(); vi.restoreAllMocks(); window.sessionStorage.clear(); });
+
+test("copies only the exception link and keeps an unfinished note in place", async () => {
+  setupApi(); renderDesk();
+  const clipboard = vi.fn().mockResolvedValue(undefined);
+  const mockBrowser = Object.create(navigator, { clipboard: { value: { writeText: clipboard } } });
+  vi.stubGlobal("navigator", mockBrowser);
+  fireEvent.change(await screen.findByLabelText("Resolution note"), { target: { value: "Unfinished review" } });
+  fireEvent.click(screen.getByRole("button", { name: "Copy review link" }));
+  await screen.findByText("Review link copied.");
+  expect(clipboard).toHaveBeenCalledWith(`${window.location.origin}/#exception=${issue.quarantine_id}`);
+  expect(screen.getByLabelText("Resolution note")).toHaveValue("Unfinished review");
+});
+
+test("loads only the linked issue in the current organization and shows a scoped missing state", async () => {
+  const fetch = setupApi();
+  renderDesk({ id: issue.quarantine_id, back: vi.fn() });
+  expect(await screen.findByRole("heading", { name: "Missing employee ID" })).toBeInTheDocument();
+  expect(fetch.mock.calls.some(([url]) => String(url).includes("/quarantine/page"))).toBe(false);
+  fireEvent.change(screen.getByLabelText("Organization"), { target: { value: "org-2" } });
+  expect(await screen.findByRole("alert")).toHaveTextContent(/unavailable in the selected organization/);
+  expect(screen.queryByLabelText("Resolution note")).not.toBeInTheDocument();
+});
+
+test("rejects a malformed review link without requesting exception data", async () => {
+  const fetch = setupApi();
+  renderDesk({ id: "not-a-uuid", back: vi.fn() });
+  expect(await screen.findByRole("alert")).toHaveTextContent(/invalid exception ID/);
+  expect(fetch.mock.calls.some(([url]) => String(url).includes("/quarantine"))).toBe(false);
+});
 
 test("records a reasoned resolution and reads its saved history after remount", async () => {
   const fetch = setupApi();

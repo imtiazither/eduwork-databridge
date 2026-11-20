@@ -7,6 +7,8 @@ export const exceptionSorts: Record<string, string> = {
   oldest: "Oldest first", newest: "Newest first", severity: "Highest severity first",
 };
 
+export const exceptionLinkPrefix = "#exception=";
+
 export interface ExceptionRecord {
   quarantine_id: string;
   source_record_key: string;
