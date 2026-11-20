@@ -31,6 +31,8 @@ Completion means the corresponding acceptance criteria and evidence are present 
 
 ## Next bounded updates
 
+- [x] Direct links for exception review handoff, with organization and permission checks (v0.63.0)
+
 - [x] Reviewer workflow polish: unfinished-note protection, priority sorting, filtered totals/page recovery, and scoped filter memory (v0.62.0)
 
 - [x] One-command synthetic demo, setup diagnostics, isolated storage, safe reset, and automated browser journey (v0.61.0)

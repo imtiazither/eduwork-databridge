@@ -1,6 +1,6 @@
 # EduWork DataBridge: Project Overview, Usage Guide, and Benefits
 
-**Version:** 0.62.1
+**Version:** 0.63.0
 **License:** MIT
 
 For the human problem that motivated the platform, read [the project story](PROJECT_STORY.md). The [five-page field guide](EduWork_DataBridge_Field_Guide.pdf) pairs that story with the current reviewer desk.
@@ -130,14 +130,14 @@ Use `docs/evaluator/30-minute-tour.md` to inspect the synthetic data, run the co
 
 ## Verification and release evidence
 
-The v0.62.1 release includes:
+The v0.63.0 release workflow checks:
 
 - Automated Python and frontend tests with enforced repository-wide coverage
 - Ruff, format, and strict mypy checks across the Python application and scripts
 - Automated desktop/mobile browser checks against the actual demo launcher and saved review history
 - Frontend workflow tests and TypeScript/Vite production and Pages builds
 - Generated JSON Schema contracts and six Alembic migrations, including review and resolution history
-- Protected exception queue, summary, and resolution history endpoints with atomic audit persistence
+- Protected exception queue, direct lookup, summary, and resolution history endpoints with atomic audit persistence
 - Protected, organization-scoped match-decision endpoints with reversible history and audit events
 - Protected, organization-scoped match-review queue and workload-summary endpoints
 - A strict MkDocs documentation build

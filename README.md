@@ -9,9 +9,9 @@
 
 [Open EduWork DataBridge on GitHub Pages](https://imtiazither.github.io/eduwork-databridge/) · [Browse the documentation](https://imtiazither.github.io/eduwork-databridge/docs/)
 
-## Current version: v0.62.1
+## Current version: v0.63.0
 
-v0.62.1 improves the connected reviewer workflow: protection for unfinished notes, oldest/newest/severity sorting, accurate filtered result counts and pagination, and remembered status/severity/sort selections. It also updates the build tool's certificate bundle. Read the [release notes](docs/release/v0.62.1.md), the [exception desk guide](docs/guides/exception-desk.md), or start with the [five-minute demo guide](docs/guides/demo-quickstart.md).
+v0.63.0 adds direct review links to the connected Exception Desk. Authorized reviewers on the same instance can open a specific issue, inspect its current evidence and history, and record a resolution even when the issue is outside the usual queue filters. Read the [release notes](docs/release/v0.63.0.md), the [exception desk guide](docs/guides/exception-desk.md), or start with the [five-minute demo guide](docs/guides/demo-quickstart.md).
 
 EduWork DataBridge is an open-source platform for making that reconciliation inspectable. It keeps source evidence, checks the awkward records, separates uncertain identity matches from safe ones, and carries lineage into governed outputs.
 
@@ -108,6 +108,7 @@ The public API surface includes source processing, matching, marts, exports, lin
 - `POST /api/v1/profiles`
 - `POST /api/v1/mappings/preview`
 - `POST /api/v1/validations`
+- `GET /api/v1/quarantine/{quarantine_id}`
 - `POST /api/v1/quarantine/{quarantine_id}/resolve`
 - `POST /api/v1/matches/deterministic/synthetic`
 - `GET /api/v1/matches/review-queue`

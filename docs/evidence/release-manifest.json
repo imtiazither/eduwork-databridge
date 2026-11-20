@@ -1,14 +1,8 @@
 {
   "project": "EduWork DataBridge",
-  "version": "0.62.1",
-  "verified_at": "2026-10-31",
+  "version": "0.63.0",
   "application_tables": 53,
   "alembic_revisions": 6,
-  "python_source_files_checked": 84,
-  "python_tests_passed": 134,
-  "python_coverage_percent": 91.23,
-  "frontend_tests_passed": 50,
-  "browser_tests_passed": 8,
   "generated_json_schemas": 11,
   "synthetic_presets_committed": [
     "small",
@@ -47,7 +41,8 @@
     "stable_exception_priority_sorting",
     "filtered_exception_page_totals",
     "last_valid_exception_page_recovery",
-    "scoped_privacy_conscious_filter_preferences"
+    "scoped_privacy_conscious_filter_preferences",
+    "organization_scoped_exception_detail"
   ],
   "reviewer_experience": [
     "synthetic_manifest_summary_api",
@@ -63,7 +58,8 @@
     "explicit_static_pages_preview",
     "connected_exception_desk",
     "exception_severity_status_search",
-    "resolution_history_and_reopening"
+    "resolution_history_and_reopening",
+    "direct_exception_review_links"
   ],
   "probabilistic_small_truth_metrics": {
     "auto_matches": 121,
@@ -73,23 +69,9 @@
     "potential_recall_with_review": 1.0,
     "false_negatives_after_review": 0
   },
-  "local_verification": "passed",
-  "compose_static_validation": "passed",
-  "docker_runtime_validation": "not_run_no_daemon",
-  "live_postgresql_connector_validation": "not_run_no_daemon",
-  "dagster_daemon_validation": "not_run_no_daemon",
   "lockfile_sha256": {
-    "uv.lock": "57fb84e1cf80a5f071b1981f9debc24bf94a1f80ba5788ec9b7c5f8ddb491f3b",
-    "apps/reviewer-ui/package-lock.json": "07de67074688b1973f9ac3fa736ae8e78773b9dc893b33ad69ce69c688eba4de"
+    "uv.lock": "9af8960aa97b58c95058dca5034784287824647ff20020327940db30c9554886",
+    "apps/reviewer-ui/package-lock.json": "626e5bb03ef7b6fb7f803beeeea9433c233d471ea24bb9095af36b58c704f665"
   },
-  "verification_environment": {
-    "uv": "0.13.4",
-    "backend_python": "3.13",
-    "wheel_install_python": "3.12",
-    "frontend_node": "24.22.1",
-    "migration_database": "SQLite",
-    "live_ui_smoke": "Playwright launcher startup, saved history, viewer boundary, unfinished-note cancel/discard, native unload warning, restored filters, empty results, desktop/mobile layout",
-    "demo_launcher": "fresh dependency installation and preparation, repeated browser startup/shutdown, occupied-port selection, isolated SQLite workspace",
-    "browser_engine": "Chromium 156 via Playwright 1.64.1"
-  }
+  "release_verification": "The tag workflow checks this version before publishing the release."
 }

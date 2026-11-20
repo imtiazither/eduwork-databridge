@@ -1,5 +1,13 @@
 # Connected Exception Desk
 
+## Share a review link
+
+Open an exception and select **Copy review link**. If clipboard access is unavailable, copy the URL from the displayed **Review link** field. Send it to a reviewer using the same connected instance and database. Local demo links open the sender's local server address, so try those links in another tab on the same machine.
+
+The link opens the exact issue and its resolution history even if it is closed or hidden by the recipient's queue filters. Select the issue's organization if it differs from the default. The linked view checks the recipient's organization access and `validation:write` permission. Its fragment contains the exception UUID. The browser does not send that fragment in the page request, and the URL contains no evidence, notes, credentials, or filter values. Share links through a channel approved for your organization's review work.
+
+Select **Back to exception queue** to return to your remembered filters. The desk prompts before discarding an unfinished resolution. When the issue has changed, use **Refresh exception** after reviewing the save conflict. Public GitHub Pages continues to show the static synthetic case file.
+
 ## Remembered filters
 
 Status, severity, and sort order are remembered in this browser tab separately for each identity and organization. Returning to the desk or reloading restores them; **Reset filters** restores Needs attention, All severities, and Oldest first, and clears the current search. Malformed preferences or blocked storage fall back safely to defaults. Server permissions are checked on every request; a stored preference grants no access.

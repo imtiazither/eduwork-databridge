@@ -4,6 +4,18 @@ All notable changes will be documented here. The project follows Semantic Versio
 
 ## Unreleased
 
+## [0.63.0] - 2026-11-20
+
+### Added
+
+- Copyable review links for individual exceptions, including issues outside the current queue filters
+- Organization-scoped exception lookup by ID with existing `validation:write` permission checks
+- Manual link copying when the clipboard is unavailable, plus draft protection when leaving the linked review
+
+### Fixed
+
+- Restored schema exporter formatting and made the release workflow generate current backup/restore evidence
+
 ## [0.62.1] - 2026-10-31
 
 ### Fixed

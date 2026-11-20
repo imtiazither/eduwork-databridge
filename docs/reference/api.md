@@ -15,6 +15,7 @@
 - `GET /api/v1/quarantine` — organization-scoped saved issues, masked evidence and remediation, with status, severity, `needs_attention`, escaped record/rule `q`, `sort=oldest|newest|severity`, and bounded pagination; the response remains a list
 - `GET /api/v1/quarantine/page` — the same protected filters and sorting with `items`, filtered `total`, `limit`, and effective `offset`; out-of-range offsets are clamped to the last valid page
 - `GET /api/v1/quarantine/summary` — organization totals, attention count, and status/severity breakdowns
+- `GET /api/v1/quarantine/{quarantine_id}` — one issue with the same fields as a queue item, regardless of status; requires `X-Organization-ID` and `validation:write`. A missing issue and an issue outside the selected organization both return 404 after the organization-access check.
 - `GET /api/v1/quarantine/{quarantine_id}/history` — append-only resolutions, latest revision first, with bounded pagination
 - `POST /api/v1/quarantine/{quarantine_id}/resolve` — requires `validation:write`, a status, non-blank note, and `expected_revision`; saves resolution/status/audit atomically and returns 409 for a stale revision
 - `POST /api/v1/matches/deterministic/synthetic` — organization-scoped deterministic linkage and synthetic truth evaluation
